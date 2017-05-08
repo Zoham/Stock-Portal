@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.sql.*; //S (for Sohamm's edit) - to import sqlpackage for java
+import java.sql.*; //S (for Soham's edit) - to import sqlpackage for java
 
 public class StockPortal extends Application {
     
