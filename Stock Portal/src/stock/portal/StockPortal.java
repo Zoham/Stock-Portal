@@ -11,10 +11,11 @@ import java.sql.*; //S (for Sohamm's edit) - to import sqlpackage for java
 public class StockPortal extends Application {
     
     Connection conn = null; //S - global variable for connection functions
+    Statement stmt = null;
         
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
         
         Scene scene = new Scene(root);
         
@@ -25,6 +26,7 @@ public class StockPortal extends Application {
     public static void main(String[] args) {
         StockPortal obj = new StockPortal();//S- Class object
         obj.connect(); //S - try connecting
+        obj.insert_stock();
         launch(args);
     }
     
@@ -45,7 +47,15 @@ public class StockPortal extends Application {
     {
         try
         {
-            
+            connect();
+            stmt = conn.createStatement();
+            String query = "INSERT INTO STOCK (BRAND, ITEM, QUANTITY, SPORT, SECRETARY, CONDITION, STATUS) "+
+                    "VALUES ('Head', 'Racquet', 1, 'Tennis', 'Small Area Sports', 'New', 'Not Issued');";
+            stmt.executeUpdate(query);
+            stmt.close();
+            conn.commit();
+            conn.close();
+            System.out.println("Data inserted successfully");
         }
         catch(Exception e)
         {
