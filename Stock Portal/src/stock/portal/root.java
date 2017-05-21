@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -39,6 +40,10 @@ public class root implements Initializable{
     @FXML TextField itemTax;
     @FXML Button itemSubmit;
     
+    @FXML TableView itemTable;
+    @FXML TableView studentTable;
+
+    
     @FXML 
     private void onStudentUpdateClick(ActionEvent event)throws Exception
     {     
@@ -53,6 +58,10 @@ public class root implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        studentResidence.getItems().addAll("MHR","SHR");
+        studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
+        //itemTable.getColumns().addAll(/* edit and order these*/firstNameCol, lastNameCol, emailCol);
+        //studentTable.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
+
     }
 }
