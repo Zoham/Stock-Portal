@@ -38,8 +38,15 @@ public class root implements Initializable{
     @FXML TextField itemDate;
     @FXML TextField itemTax;
     @FXML Button itemSubmit;
+    
     @FXML 
-    private void onLoginClick(ActionEvent event)throws Exception
+    private void onStudentUpdateClick(ActionEvent event)throws Exception
+    {     
+        
+    }
+    
+    @FXML 
+    private void onEquipmentUpdateClick(ActionEvent event)throws Exception
     {     
         
     }

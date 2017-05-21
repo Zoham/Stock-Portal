@@ -13,6 +13,6 @@
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Stock Portal" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="stock.portal.StockPortal"  name="Stock Portal" />
+  <jfx:javafx-desc  width="800" height="600" main-class="stock.portal.MainApplication"  name="Stock Portal" />
   <update check="always"/>
 </jnlp>

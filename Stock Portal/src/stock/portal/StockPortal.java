@@ -81,5 +81,5 @@ public class StockPortal extends Application {
         {
             System.out.println(e.getMessage());          
         }
-    }*/
+    }
 }*/
