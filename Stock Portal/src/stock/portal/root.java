@@ -104,6 +104,7 @@ public class root implements Initializable{
             }*/
     }
     }
+    }
     Connection conn = null;
     public void connect()//S - connect to sqlite file
     {
@@ -119,7 +120,7 @@ public class root implements Initializable{
             MessageBox.show(e.getMessage(),"Connection error");
         }
     }
-    }
+    
     
     @FXML 
     private void onEquipmentUpdateClick(ActionEvent event)throws Exception
