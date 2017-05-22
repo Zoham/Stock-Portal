@@ -45,8 +45,22 @@ public class root implements Initializable{
     
     @FXML TableView itemTable;
     @FXML TableView studentTable;
+    Stage primaryStage=(Stage)studentUpdate.getScene().getWindow();
+    primaryStage.setOnCloseRequest(
+    e -> {
+    e.consume();
+    btnClose_Click ();
+    } );
+    private void btnClose_Click()
+    {
+    boolean reallyQuit = false;
+    reallyQuit = ConfirmationBox.show("Are you sure you want to quit?","Confirmation");
+    if (reallyQuit)
+    {
 
-    
+        primaryStage.close();
+    }
+    }
     @FXML 
     private void onStudentUpdateClick(ActionEvent event)throws Exception
     {   
