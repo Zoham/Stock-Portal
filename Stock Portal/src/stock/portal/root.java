@@ -77,6 +77,12 @@ public class root implements Initializable{
             //conn.commit();
             conn.close();
             System.out.println("Data inserted successfully");
+            
+            studentName.setText("");
+            studentEmail.setText("");
+            studentRoll.setText("");
+            studentMobile.setText("");
+            studentRoom.setText("");
         }
         
         catch (SQLException ex) {
