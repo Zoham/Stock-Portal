@@ -57,8 +57,15 @@ public class root implements Initializable{
         String room = studentRoom.getText();
         String residence = (String) studentResidence.getValue();
         String school = (String) studentSchool.getValue();
-        
-        try {
+        if(name==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(email==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(roll==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(mobile==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(room==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(residence==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(school==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else{
+            try {
             connect();
             
             String query =
@@ -76,8 +83,8 @@ public class root implements Initializable{
             preparedStmt.execute();
             //conn.commit();
             conn.close();
-            System.out.println("Data inserted successfully");
-            
+           // System.out.println("Data inserted successfully");
+            MessageBox.show("Data inserted succesfully","Update successful");
             studentName.setText("");
             studentEmail.setText("");
             studentRoll.setText("");
@@ -86,8 +93,13 @@ public class root implements Initializable{
         }
         
         catch (SQLException ex) {
-            System.out.println("Error occured while updating student");
-        }
+           // System.out.println("Error occured while updating student");
+            MessageBox.show("Error occured while updating student","Update Error");
+        }/*finally{            //Maybe this way of closing is better.
+            preparedStmt.close();
+            conn.close();
+            }*/
+    }
     }
     Connection conn = null;
     public void connect()//S - connect to sqlite file
@@ -95,11 +107,13 @@ public class root implements Initializable{
         try
         {
             conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); //S - to establish connection
-            System.out.println("Database opened successfully");
+           // System.out.println("Database opened successfully");
+            MessageBox.show("Database opened successfully","Database connection");
         }
         catch(Exception e)
         {
-            System.out.println(e.getMessage()); //S - to display error message in std-out
+            //System.out.println(e.getMessage()); //S - to display error message in std-out
+            MessageBox.show(e.getMessage(),"Connection error");
         }
     }
     
@@ -115,6 +129,6 @@ public class root implements Initializable{
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
         //itemTable.getColumns().addAll(/* edit and order these*/firstNameCol, lastNameCol, emailCol);
         //studentTable.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
-
+        //Use the messagebox as above
     }
 }
