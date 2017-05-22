@@ -49,7 +49,10 @@ public class root implements Initializable{
     
     @FXML 
     private void onStudentUpdateClick(ActionEvent event)throws Exception
-    {     
+    {   
+        boolean update;
+        update=ConfirmationBox.show("Are you sure that you want to update?","Confirmation");
+        if(update){
         String name = studentName.getText();
         String email = studentEmail.getText();
         String roll = studentRoll.getText();
@@ -116,11 +119,12 @@ public class root implements Initializable{
             MessageBox.show(e.getMessage(),"Connection error");
         }
     }
+    }
     
     @FXML 
     private void onEquipmentUpdateClick(ActionEvent event)throws Exception
     {     
-        
+        //use message and confirmation box as above
     }
     
     @Override
@@ -129,6 +133,6 @@ public class root implements Initializable{
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
         //itemTable.getColumns().addAll(/* edit and order these*/firstNameCol, lastNameCol, emailCol);
         //studentTable.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
-        //Use the messagebox as above
+        
     }
 }
