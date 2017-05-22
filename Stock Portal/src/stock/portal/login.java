@@ -29,6 +29,7 @@ public class login implements Initializable{
         Stage stage  = (Stage) source.getScene().getWindow();
         if(username.getText().equals("Admin") && password.getText().equals("12345"))
         {
+            System.out.println("Okay! Logging in");
             stage.close();
             
             Parent root;
