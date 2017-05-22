@@ -11,8 +11,7 @@ public class ConfirmationBox
 {
 static Stage stage; 
 static boolean btnYesClicked; 
-public static boolean show(String message, String title, 
-String textYes, String textNo)
+public static boolean show(String message, String title)
 {
 btnYesClicked = false;
 stage = new Stage(); 
