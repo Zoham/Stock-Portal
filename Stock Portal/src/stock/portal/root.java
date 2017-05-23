@@ -106,7 +106,61 @@ public class root implements Initializable{
     @FXML 
     private void onEquipmentUpdateClick(ActionEvent event)throws Exception
     {     
+        String iB=(String)itemBrand.getText();
+        String iN=(String)itemName.getText();
+        String iS=(String)itemSport.getText();
+        String iC=(String)itemCondition.getText();
+        String iV=(String)itemVendor.getText();
+        String iI=(String)itemInvoice.getText();
+        String iM=(String)itemModel.getText();
+        String iQ=(String)itemQuantity.getText();
+        String iSec=(String)itemSecretary.getText();
+        String iP=(String)itemPrice.getText();
+        String iD=(String)itemDate.getText();
+        String iT=(String)itemTax.getText();
+        //String iSub=(String)itemSubmit.getText();
+        try {
+            connect();
+            
+            String query =
+                    "INSERT INTO Stock ('Brand','Item','Sport','Condition','Vendor','InvoiceNo','Model','Quantity','Secretary','UnitPrice','PurchaseDate','Tax') "
+                    + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)";
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString (1, iB);
+            preparedStmt.setString (2, iN);
+            preparedStmt.setString (3, iS);
+            preparedStmt.setString (4, iC);
+            preparedStmt.setString (5, iV);
+            preparedStmt.setString (6, iI);
+            preparedStmt.setString (7, iM);
+            preparedStmt.setString (8, iQ);
+            preparedStmt.setString (9, iSec);
+            preparedStmt.setString (10, iP);
+            preparedStmt.setString (11, iD);
+            preparedStmt.setString (12, iT);
+            //preparedStmt.setString (13, iSub);
+            preparedStmt.execute();
+            //conn.commit();
+            conn.close();
+            System.out.println("Data inserted successfully");
+            itemBrand.setText("");
+            itemName.setText("");
+            itemSport.setText("");
+            itemCondition.setText("");
+            itemVendor.setText("");
+            itemInvoice.setText("");
+            itemModel.setText("");
+            itemQuantity.setText("");
+            itemSecretary.setText("");
+            itemPrice.setText("");
+            itemDate.setText("");
+            itemTax.setText("");
+           // itemSubmit.setText("");
+        }
         
+        catch (SQLException ex) {
+            System.out.println("Error occured while updating Stock");
+        }
     }
     
     @Override
