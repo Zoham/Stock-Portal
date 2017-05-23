@@ -159,7 +159,7 @@ public class root implements Initializable{
         }
         
         catch (SQLException ex) {
-            System.out.println("Error occured while updating student");
+            System.out.println("Error occured while updating Stock");
         }
     }
     
