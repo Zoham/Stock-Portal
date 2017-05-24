@@ -46,7 +46,6 @@ public class root implements Initializable{
     @FXML TableView itemTable;
     @FXML TableView studentTable;
 
-    
     @FXML 
     private void onStudentUpdateClick(ActionEvent event)throws Exception
     {     
@@ -106,6 +105,10 @@ public class root implements Initializable{
     @FXML 
     private void onEquipmentUpdateClick(ActionEvent event)throws Exception
     {     
+        boolean submit;
+        submit=ConfirmationBox.show("Are you sure that you want to submit?","Confirmation");
+        if(submit){ 
+
         String iB=(String)itemBrand.getText();
         String iN=(String)itemName.getText();
         String iS=(String)itemSport.getText();
@@ -119,7 +122,21 @@ public class root implements Initializable{
         String iD=(String)itemDate.getText();
         String iT=(String)itemTax.getText();
         //String iSub=(String)itemSubmit.getText();
-        try {
+
+        if(iB==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iN==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iS==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iC==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iV==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iI==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iM==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iQ==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iSec==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iP==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iD==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else if(iT==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
+        else{try {
+
             connect();
             
             String query =
@@ -142,7 +159,9 @@ public class root implements Initializable{
             preparedStmt.execute();
             //conn.commit();
             conn.close();
-            System.out.println("Data inserted successfully");
+
+            MessageBox.show("Data inserted successfully","Update");
+            //System.out.println("Data inserted successfully");
             itemBrand.setText("");
             itemName.setText("");
             itemSport.setText("");
@@ -159,10 +178,12 @@ public class root implements Initializable{
         }
         
         catch (SQLException ex) {
-            System.out.println("Error occured while updating Stock");
+
+         MessageBox.show("Error occured while updating Stock","Error");
+//System.out.println("Error occured while updating Stock");
         }
     }
-    
+    }}
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");

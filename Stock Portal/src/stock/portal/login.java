@@ -21,12 +21,13 @@ public class login implements Initializable{
     @FXML TextField username;
     @FXML PasswordField password;
     @FXML Label invalidLabel;
-    
+    Stage primaryStage;
     @FXML 
     private void onLoginClick(ActionEvent event)throws Exception
     {     
         Node  source = (Node)  event.getSource(); 
         Stage stage  = (Stage) source.getScene().getWindow();
+        primaryStage=stage;
         if(username.getText().equals("Admin") && password.getText().equals("12345"))
         {
             System.out.println("Okay! Logging in");
@@ -39,6 +40,21 @@ public class login implements Initializable{
         
             stage.setScene(scene);
             stage.show();
+            stage.setOnCloseRequest(
+            e -> {
+            e.consume();
+            Close_Click ();
+            } );
+            /*private void Close_Click()
+            {
+            boolean reallyQuit = false;
+            reallyQuit = ConfirmationBox.show("Are you sure you want to quit?","Confirmation");
+            if (reallyQuit)
+            {
+
+            stage.close();
+            }
+            }*/
         }
         else
         {
@@ -47,7 +63,16 @@ public class login implements Initializable{
         
         
     }
-    
+    private void Close_Click()
+            {
+            boolean reallyQuit = false;
+            reallyQuit = ConfirmationBox.show("Are you sure you want to quit?","Confirmation");
+            if (reallyQuit)
+            {
+
+            primaryStage.close();
+            }
+            }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         invalidLabel.setText("");
