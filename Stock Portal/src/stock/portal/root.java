@@ -45,28 +45,10 @@ public class root implements Initializable{
     
     @FXML TableView itemTable;
     @FXML TableView studentTable;
-    //Stage primaryStage=(Stage)studentUpdate.getScene().getWindow();
-   /* primaryStage.setOnCloseRequest(
-    e -> {
-    e.consume();
-    btnClose_Click ();
-    } );
-    private void btnClose_Click()
-    {
-    boolean reallyQuit = false;
-    reallyQuit = ConfirmationBox.show("Are you sure you want to quit?","Confirmation");
-    if (reallyQuit)
-    {
 
-        primaryStage.close();
-    }
-    }*/
     @FXML 
     private void onStudentUpdateClick(ActionEvent event)throws Exception
-    {   
-        boolean update;
-        update=ConfirmationBox.show("Are you sure that you want to update?","Confirmation");
-        if(update){
+    {     
         String name = studentName.getText();
         String email = studentEmail.getText();
         String roll = studentRoll.getText();
@@ -74,15 +56,8 @@ public class root implements Initializable{
         String room = studentRoom.getText();
         String residence = (String) studentResidence.getValue();
         String school = (String) studentSchool.getValue();
-        if(name==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
-        else if(email==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
-        else if(roll==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
-        else if(mobile==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
-        else if(room==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
-        else if(residence==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
-        else if(school==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
-        else{
-            try {
+        
+        try {
             connect();
             
             String query =
@@ -100,8 +75,8 @@ public class root implements Initializable{
             preparedStmt.execute();
             //conn.commit();
             conn.close();
-           // System.out.println("Data inserted successfully");
-            MessageBox.show("Data inserted succesfully","Update successful");
+            System.out.println("Data inserted successfully");
+            
             studentName.setText("");
             studentEmail.setText("");
             studentRoll.setText("");
@@ -110,14 +85,8 @@ public class root implements Initializable{
         }
         
         catch (SQLException ex) {
-           // System.out.println("Error occured while updating student");
-            MessageBox.show("Error occured while updating student","Update Error");
-        }/*finally{            //Maybe this way of closing is better.
-            preparedStmt.close();
-            conn.close();
-            }*/
-    }
-    }
+            System.out.println("Error occured while updating student");
+        }
     }
     Connection conn = null;
     public void connect()//S - connect to sqlite file
@@ -125,24 +94,21 @@ public class root implements Initializable{
         try
         {
             conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); //S - to establish connection
-           // System.out.println("Database opened successfully");
-            MessageBox.show("Database opened successfully","Database connection");
+            System.out.println("Database opened successfully");
         }
         catch(Exception e)
         {
-            //System.out.println(e.getMessage()); //S - to display error message in std-out
-            MessageBox.show(e.getMessage(),"Connection error");
+            System.out.println(e.getMessage()); //S - to display error message in std-out
         }
     }
-    
     
     @FXML 
     private void onEquipmentUpdateClick(ActionEvent event)throws Exception
     {     
-        //use message and confirmation box as above
         boolean submit;
         submit=ConfirmationBox.show("Are you sure that you want to submit?","Confirmation");
         if(submit){ 
+
         String iB=(String)itemBrand.getText();
         String iN=(String)itemName.getText();
         String iS=(String)itemSport.getText();
@@ -156,6 +122,7 @@ public class root implements Initializable{
         String iD=(String)itemDate.getText();
         String iT=(String)itemTax.getText();
         //String iSub=(String)itemSubmit.getText();
+
         if(iB==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
         else if(iN==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
         else if(iS==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
@@ -169,6 +136,7 @@ public class root implements Initializable{
         else if(iD==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
         else if(iT==null)MessageBox.show("All fields are to be filled.","Empty Field Error");
         else{try {
+
             connect();
             
             String query =
@@ -191,6 +159,7 @@ public class root implements Initializable{
             preparedStmt.execute();
             //conn.commit();
             conn.close();
+
             MessageBox.show("Data inserted successfully","Update");
             //System.out.println("Data inserted successfully");
             itemBrand.setText("");
@@ -209,6 +178,7 @@ public class root implements Initializable{
         }
         
         catch (SQLException ex) {
+
          MessageBox.show("Error occured while updating Stock","Error");
 //System.out.println("Error occured while updating Stock");
         }
@@ -220,6 +190,6 @@ public class root implements Initializable{
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
         //itemTable.getColumns().addAll(/* edit and order these*/firstNameCol, lastNameCol, emailCol);
         //studentTable.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
-        
+
     }
 }
