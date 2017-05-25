@@ -15,8 +15,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class login implements Initializable{
-    
+public class login implements Initializable
+{
     @FXML Button login;
     @FXML TextField username;
     @FXML PasswordField password;
@@ -43,9 +43,7 @@ public class login implements Initializable{
         else
         {
             invalidLabel.setText("Invalid Username/Password");
-        }
-        
-        
+        } 
     }
     
     @Override
