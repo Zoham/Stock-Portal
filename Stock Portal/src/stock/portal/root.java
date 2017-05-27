@@ -18,6 +18,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.sql.*;
 import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -45,8 +48,9 @@ public class root implements Initializable{
     @FXML TextField itemDate;
     @FXML TextField itemTax;
     @FXML Button itemSubmit;
-    
-    @FXML TableView<root> itemTable;
+    @FXML Button itemDisplay;
+    @FXML TableView<Person> itemTable=new TableView<>();
+    ObservableList<Person> data=FXCollections.observableArrayList(new Person("A","B"));
     @FXML TableView studentTable;
     
     Connection conn = null;
@@ -117,17 +121,18 @@ public class root implements Initializable{
         }
     }
     
-    @FXML TableColumn<root,String> Brand;
-    @FXML TableColumn <root,String> Model;
-    /*@Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
-    }*/
-    public List<root> parse()
+    @FXML
+    private void onEquipmentDisplayClick(ActionEvent event)throws Exception
     {
-      List a=null;  
-      return a;
+        TableColumn one=new TableColumn("Brand");
+        one.setCellValueFactory(new PropertyValueFactory<>("Brand"));
+        TableColumn two=new TableColumn("Model");
+        two.setCellValueFactory(new PropertyValueFactory<>("Model"));
+        itemTable.setItems(data);
+        itemTable.getColumns().addAll(one,two);
+        data.add(new Person("Eh","Okay"));
     }
+   
     
     @FXML 
     private void onEquipmentUpdateClick(ActionEvent event)throws Exception
@@ -205,11 +210,34 @@ public class root implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
-        Brand.setCellValueFactory(new PropertyValueFactory<root, String>("Brand"));
-        Model.setCellValueFactory(new PropertyValueFactory<root, String>("Model"));
-        itemTable.getItems().setAll(parse());
+        
         //itemTable.getColumns().addAll(/* edit and order these*/firstNameCol, lastNameCol, emailCol);
         //studentTable.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
         
+    }
+    public class Person
+    {
+        SimpleStringProperty Brand,Model;
+        Person(String a,String b)
+        {
+            this.Brand=new SimpleStringProperty(a);
+            this.Model=new SimpleStringProperty(b);
+        }
+        public String getBrand()
+        {
+            return Brand.get();
+        }
+        public String getModel()
+        {
+            return Model.get();
+        }
+        public void setBrand(String a)
+        {
+            Brand.set(a);
+        }
+        public void setModel(String b)
+        {
+            Model.set(b);
+        }
     }
 }
