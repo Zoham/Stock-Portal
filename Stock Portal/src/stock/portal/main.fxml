@@ -178,11 +178,11 @@
             </TabPane>
          </content>
     </Tab>
-      <Tab text="Student">
+      <Tab fx:id="studentDisplay" text="Student">
          <content>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Register">
+                <Tab fx:id="studentRegister" text="Register">
                      <content>
                         <GridPane>
                            <children>
@@ -267,7 +267,7 @@
                         </GridPane>
                      </content>
                 </Tab>
-                <Tab text="Search">
+                <Tab fx:id="studentDisplay" text="Search">
                      <content>
                         <GridPane>
                           <columnConstraints>
@@ -304,7 +304,7 @@
          <content>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
-                  <Tab text="Update">
+                  <Tab fx:id="itemUpdate" text="Update">
                      <content>
                         <GridPane>
                           <columnConstraints>
@@ -437,7 +437,7 @@
                         </GridPane>
                      </content>
                   </Tab>
-                  <Tab text="Display">
+                  <Tab fx:id="itemDisplay" text="Display">
                      <content>
                         <GridPane>
                           <columnConstraints>

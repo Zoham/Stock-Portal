@@ -45,6 +45,12 @@ public class root implements Initializable{
     
     @FXML TableView itemTable;
     @FXML TableView studentTable;
+
+	@FXML Tab studentRegister;
+	@FXML Tab studentDisplay;
+
+	@FXML Tab itemUpate
+	@FXML Tab itemDisplay
     
     Connection conn = null;
     
