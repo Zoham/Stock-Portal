@@ -19,11 +19,30 @@ import javafx.stage.Stage;
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class root extends Student implements Initializable {
+    
+    @FXML ComboBox issueSport;
+    @FXML ComboBox issueBrand;
+    @FXML ComboBox issueItem;
+    @FXML ComboBox issueModel;
+    @FXML TextField IssueRoll;
+    @FXML TextField issueQuantity;
+    @FXML DatePicker issueDate;
+    @FXML Button issueUpdate;
+    
+    @FXML ComboBox returnSport;
+    @FXML ComboBox returnBrand;
+    @FXML ComboBox returnItem;
+    @FXML ComboBox returnModel;
+    @FXML TextField returnRoll;
+    @FXML TextField returnQuantity;
+    @FXML DatePicker returnDate;
+    @FXML Button returnUpdate;
     
     @FXML TextField studentEmail;
     @FXML TextField studentRoom;
