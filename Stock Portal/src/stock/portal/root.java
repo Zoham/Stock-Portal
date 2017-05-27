@@ -67,6 +67,17 @@ public class root extends Student implements Initializable {
     @FXML TextField itemTax;
     @FXML Button itemSubmit;
     
+    
+    @FXML ComboBox studentField;
+    @FXML TextField studentSearchT;
+    @FXML Button studentSearchB;
+    @FXML Button studentRefresh;
+    
+    @FXML ComboBox itemField;
+    @FXML TextField itemSearchT;
+    @FXML Button itemSearchB;
+    @FXML Button itemRefresh;
+    
     @FXML TableView itemTable;
     @FXML TableView studentTable;
 
