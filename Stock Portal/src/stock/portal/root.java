@@ -17,8 +17,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.sql.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-public class root implements Initializable{
+public class root extends Student implements Initializable {
     
     @FXML TextField studentEmail;
     @FXML TextField studentRoom;
@@ -46,15 +51,79 @@ public class root implements Initializable{
     @FXML TableView itemTable;
     @FXML TableView studentTable;
 
-	@FXML Tab studentRegister;
-	@FXML Tab studentDisplay;
+    @FXML Tab studentRegister;
+    @FXML Tab studentDisplay;
 
-	@FXML Tab itemUpate
-	@FXML Tab itemDisplay
+    @FXML Tab itemUpate;
+    @FXML Tab itemDisplay;
     
     Connection conn = null;
     
-     @FXML 
+    TableColumn<Student, String> colRoll =new TableColumn<Student, String>();
+    TableColumn<Student, String> colName =new TableColumn<Student, String>();
+    TableColumn<Student, String> colEmail =new TableColumn<Student, String>();
+    TableColumn<Student, String> colMobile =new TableColumn<Student, String>();
+    TableColumn<Student, String> colRoom =new TableColumn<Student, String>();
+    TableColumn<Student, String> colResidence =new TableColumn<Student, String>();
+    TableColumn<Student, String> colItemissued =new TableColumn<Student, String>();
+    TableColumn<Student, String> colQuality =new TableColumn<Student, String>();
+    TableColumn<Student, String> colIssuedate =new TableColumn<Student, String>();
+    TableColumn<Student, String> colReturndate =new TableColumn<Student, String>();
+    
+//    @FXML 
+//    private void showStudent(ActionEvent e) throws Exception
+//    {
+//        colRoll.setCellValueFactory(new PropertyValueFactory<Student,String>("Roll"));
+//        colName.setCellValueFactory(new PropertyValueFactory<Student,String>("Name"));
+//        colEmail.setCellValueFactory(new PropertyValueFactory<Student,String>("Email"));
+//        colMobile.setCellValueFactory(new PropertyValueFactory<Student,String>("Mobile"));
+//        colRoom.setCellValueFactory(new PropertyValueFactory<Student,String>("Room"));
+//        colResidence.setCellValueFactory(new PropertyValueFactory<Student,String>("Residence"));
+//        colItemissued.setCellValueFactory(new PropertyValueFactory<Student,String>("Itemissued"));
+//        colQuality.setCellValueFactory(new PropertyValueFactory<Student,String>("Quality"));
+//        colIssuedate.setCellValueFactory(new PropertyValueFactory<Student,String>("Isuedate"));
+//        colReturndate.setCellValueFactory(new PropertyValueFactory<Student,String>("Returndate"));
+//    
+//        studentTable.getColumns().addAll(colRoll,colName,colEmail,colMobile,colRoom,colResidence,colItemissued,colQuality,colIssuedate,colReturndate);
+//        studentTable.setItems(loadData());
+//        
+//        System.out.println("In table");
+//    }
+    
+    public ObservableList<Student> loadData(){
+        ObservableList<Student> data=FXCollections.observableArrayList();
+        
+        try{
+            connect();
+            String SQL="SELECT * FROM STUDENT";
+            ResultSet rs=conn.createStatement().executeQuery(SQL);
+            Student student=new Student();
+            while(rs.next()){
+                for(int i=0;i<=rs.getMetaData().getColumnCount();i++){
+                    student.setRoll(rs.getString("Roll Number"));
+                   // MessageBox.show(rs.getString("Roll Number"),"Error");
+                    student.setName(rs.getString("Name"));
+                    student.setEmail(rs.getString("Email Id"));
+                    student.setMobile(rs.getString("Mobile Number"));
+                    student.setRoom(rs.getString("Room Number"));
+                    student.setResidence(rs.getString("Residence"));
+                    //student.setItemissued(rs.getString("Issued Item"));
+                    //student.setQuality(rs.getString("Quality"));
+                    //student.setIssuedate(rs.getString("Issue Date"));
+                    //student.setReturndate(rs.getString("Return Date"));
+                    data.add(student);
+                }
+            }
+        }
+        catch(Exception e){
+            MessageBox.show(e.getMessage(),"Error");
+        }
+        
+        return data;
+    }
+    
+    
+    @FXML 
     private void onStudentUpdateClick(ActionEvent event)throws Exception
     {   
         boolean update;
@@ -197,8 +266,20 @@ public class root implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
-        //itemTable.getColumns().addAll(/* edit and order these*/firstNameCol, lastNameCol, emailCol);
-        //studentTable.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
+        
+        colRoll.setCellValueFactory(new PropertyValueFactory<Student,String>("Roll"));
+        colName.setCellValueFactory(new PropertyValueFactory<Student,String>("Name"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<Student,String>("Email"));
+        colMobile.setCellValueFactory(new PropertyValueFactory<Student,String>("Mobile"));
+        colRoom.setCellValueFactory(new PropertyValueFactory<Student,String>("Room"));
+        colResidence.setCellValueFactory(new PropertyValueFactory<Student,String>("Residence"));
+        colItemissued.setCellValueFactory(new PropertyValueFactory<Student,String>("Itemissued"));
+        colQuality.setCellValueFactory(new PropertyValueFactory<Student,String>("Quality"));
+        colIssuedate.setCellValueFactory(new PropertyValueFactory<Student,String>("Isuedate"));
+        colReturndate.setCellValueFactory(new PropertyValueFactory<Student,String>("Returndate"));
+    
+        studentTable.getColumns().addAll(colRoll,colName,colEmail,colMobile,colRoom,colResidence,colItemissued,colQuality,colIssuedate,colReturndate);
+        studentTable.setItems(loadData());
         
     }
 }

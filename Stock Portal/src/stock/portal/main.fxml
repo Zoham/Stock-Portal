@@ -182,7 +182,7 @@
          <content>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab fx:id="studentRegister" onSelectionChanged="#showStudent" text="Register">
+                <Tab fx:id="studentRegister" text="Register">
                      <content>
                         <GridPane>
                            <children>
@@ -267,7 +267,7 @@
                         </GridPane>
                      </content>
                 </Tab>
-                <Tab fx:id="studentDisplay" onSelectionChanged="#showStudent" text="Search">
+                <Tab fx:id="studentDisplay" text="Search">
                      <content>
                         <GridPane>
                           <columnConstraints>
