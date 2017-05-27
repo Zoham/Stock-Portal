@@ -122,6 +122,17 @@ public class root extends Student implements Initializable {
         return data;
     }
     
+    @FXML 
+    private void onIssue(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void onReturn(ActionEvent event)throws Exception
+    {
+        
+    }
     
     @FXML 
     private void onStudentUpdateClick(ActionEvent event)throws Exception
@@ -177,18 +188,7 @@ public class root extends Student implements Initializable {
                 }
             }
         }
-    }
-    
-    public void connect()
-    {
-        try{
-            conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
-        }
-        catch(Exception e){
-            MessageBox.show(e.getMessage(),"Connection error");
-        }
-    }
-    
+    }    
     
     @FXML 
     private void onEquipmentUpdateClick(ActionEvent event)throws Exception
@@ -280,6 +280,15 @@ public class root extends Student implements Initializable {
     
         studentTable.getColumns().addAll(colRoll,colName,colEmail,colMobile,colRoom,colResidence,colItemissued,colQuality,colIssuedate,colReturndate);
         studentTable.setItems(loadData());
-        
+    }
+    
+    public void connect()
+    {
+        try{
+            conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
+        }
+        catch(Exception e){
+            MessageBox.show(e.getMessage(),"Connection error");
+        }
     }
 }
