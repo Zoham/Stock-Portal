@@ -6,23 +6,20 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 public class root extends Student implements Initializable {
     
@@ -89,16 +86,16 @@ public class root extends Student implements Initializable {
     
     Connection conn = null;
     
-    TableColumn<Student, String> colRoll =new TableColumn<Student, String>();
-    TableColumn<Student, String> colName =new TableColumn<Student, String>();
-    TableColumn<Student, String> colEmail =new TableColumn<Student, String>();
-    TableColumn<Student, String> colMobile =new TableColumn<Student, String>();
-    TableColumn<Student, String> colRoom =new TableColumn<Student, String>();
-    TableColumn<Student, String> colResidence =new TableColumn<Student, String>();
-    TableColumn<Student, String> colItemissued =new TableColumn<Student, String>();
+    TableColumn<Student, String> colRoll =new TableColumn<Student, String>(/*"Roll Number"*/);
+    TableColumn<Student, String> colName =new TableColumn<Student, String>(/*"Name"*/);
+    TableColumn<Student, String> colEmail =new TableColumn<Student, String>(/*"Email Id"*/);
+    TableColumn<Student, String> colMobile =new TableColumn<Student, String>(/*"Mobile Number"*/);
+    TableColumn<Student, String> colRoom =new TableColumn<Student, String>(/*"Room Number"*/);
+    TableColumn<Student, String> colResidence =new TableColumn<Student, String>(/*"Residence"*/);
+    /*TableColumn<Student, String> colItemissued =new TableColumn<Student, String>();
     TableColumn<Student, String> colQuality =new TableColumn<Student, String>();
     TableColumn<Student, String> colIssuedate =new TableColumn<Student, String>();
-    TableColumn<Student, String> colReturndate =new TableColumn<Student, String>();
+    TableColumn<Student, String> colReturndate =new TableColumn<Student, String>();*/
     
 //    @FXML 
 //    private void showStudent(ActionEvent e) throws Exception
@@ -303,13 +300,55 @@ public class root extends Student implements Initializable {
         colMobile.setCellValueFactory(new PropertyValueFactory<Student,String>("Mobile"));
         colRoom.setCellValueFactory(new PropertyValueFactory<Student,String>("Room"));
         colResidence.setCellValueFactory(new PropertyValueFactory<Student,String>("Residence"));
-        colItemissued.setCellValueFactory(new PropertyValueFactory<Student,String>("Itemissued"));
+        /*colItemissued.setCellValueFactory(new PropertyValueFactory<Student,String>("Itemissued"));
         colQuality.setCellValueFactory(new PropertyValueFactory<Student,String>("Quality"));
         colIssuedate.setCellValueFactory(new PropertyValueFactory<Student,String>("Isuedate"));
-        colReturndate.setCellValueFactory(new PropertyValueFactory<Student,String>("Returndate"));
+        colReturndate.setCellValueFactory(new PropertyValueFactory<Student,String>("Returndate"));*/
+        colRoll.setMinWidth(200);
+        colName.setMinWidth(200);
+        colEmail.setMinWidth(200);
+        colMobile.setMinWidth(200);
+        colRoom.setMinWidth(200);
+        colResidence.setMinWidth(200);
+        /*colItemissued.setMinWidth(200);
+        colQuality.setMinWidth(200);
+        colIssuedate.setMinWidth(200);
+        colReturndate.setMinWidth(200);*/
     
-        studentTable.getColumns().addAll(colRoll,colName,colEmail,colMobile,colRoom,colResidence,colItemissued,colQuality,colIssuedate,colReturndate);
+        studentTable.getColumns().addAll(colRoll,colName,colEmail,colMobile,colRoom,colResidence/*,colItemissued,colQuality,colIssuedate,colReturndate*/);
+        studentTable.setEditable(true);
         studentTable.setItems(loadData());
+        
+        colRoll.setCellFactory(TextFieldTableCell.forTableColumn());
+        colRoll.setOnEditCommit( e -> colRoll_OnEditCommit(e) );
+        
+        colName.setCellFactory(TextFieldTableCell.forTableColumn());
+        colName.setOnEditCommit( e -> colName_OnEditCommit(e) );
+        
+        colEmail.setCellFactory(TextFieldTableCell.forTableColumn());
+        colEmail.setOnEditCommit( e -> colEmail_OnEditCommit(e) );
+        
+        colMobile.setCellFactory(TextFieldTableCell.forTableColumn());
+        colMobile.setOnEditCommit( e -> colMobile_OnEditCommit(e) );
+        
+        colRoom.setCellFactory(TextFieldTableCell.forTableColumn());
+        colRoom.setOnEditCommit( e -> colRoom_OnEditCommit(e) );
+        
+        colResidence.setCellFactory(TextFieldTableCell.forTableColumn());
+        colResidence.setOnEditCommit( e -> colResidence_OnEditCommit(e) );
+        
+        /*colItemissued.setCellFactory(TextFieldTableCell.forTableColumn());
+        colItemissued.setOnEditCommit( e -> colItemissued_OnEditCommit(e) );
+        
+        colQuality.setCellFactory(TextFieldTableCell.forTableColumn());
+        colQuality.setOnEditCommit( e -> colQuality_OnEditCommit(e) );
+        
+        colIssuedate.setCellFactory(TextFieldTableCell.forTableColumn());
+        colIssuedate.setOnEditCommit( e -> colIssuedate_OnEditCommit(e) );
+        
+        colReturndate.setCellFactory(TextFieldTableCell.forTableColumn());
+        colReturndate.setOnEditCommit( e -> colReturndate_OnEditCommit(e) );
+        */
     }
     
     public void connect()
@@ -321,4 +360,75 @@ public class root extends Student implements Initializable {
             MessageBox.show(e.getMessage(),"Connection error");
         }
     }
+
+
+public void colRoll_OnEditCommit(Event e){
+    TableColumn.CellEditEvent<Student,String> ce;
+    ce=(TableColumn.CellEditEvent<Student,String>) e;
+    Student s=ce.getRowValue();
+    s.setRoll(ce.getNewValue());
+}
+
+public void colName_OnEditCommit(Event e){
+    TableColumn.CellEditEvent<Student,String> ce;
+    ce=(TableColumn.CellEditEvent<Student,String>) e;
+    Student s=ce.getRowValue();
+    s.setName(ce.getNewValue());
+}
+
+public void colEmail_OnEditCommit(Event e){
+    TableColumn.CellEditEvent<Student,String> ce;
+    ce=(TableColumn.CellEditEvent<Student,String>) e;
+    Student s=ce.getRowValue();
+    s.setEmail(ce.getNewValue());
+}
+
+public void colMobile_OnEditCommit(Event e){
+    TableColumn.CellEditEvent<Student,String> ce;
+    ce=(TableColumn.CellEditEvent<Student,String>) e;
+    Student s=ce.getRowValue();
+    s.setMobile(ce.getNewValue());
+}
+
+public void colRoom_OnEditCommit(Event e){
+    TableColumn.CellEditEvent<Student,String> ce;
+    ce=(TableColumn.CellEditEvent<Student,String>) e;
+    Student s=ce.getRowValue();
+    s.setRoom(ce.getNewValue());
+}
+
+public void colResidence_OnEditCommit(Event e){
+    TableColumn.CellEditEvent<Student,String> ce;
+    ce=(TableColumn.CellEditEvent<Student,String>) e;
+    Student s=ce.getRowValue();
+    s.setResidence(ce.getNewValue());
+}
+/*
+public void colItemissued_OnEditCommit(Event e){
+    TableColumn.CellEditEvent<Student,String> ce;
+    ce=(TableColumn.CellEditEvent<Student,String>) e;
+    Student s=ce.getRowValue();
+    s.setItemissued(ce.getNewValue());
+}
+
+public void colQuality_OnEditCommit(Event e){
+    TableColumn.CellEditEvent<Student,String> ce;
+    ce=(TableColumn.CellEditEvent<Student,String>) e;
+    Student s=ce.getRowValue();
+    s.setQuality(ce.getNewValue());
+}
+
+public void colIssuedate_OnEditCommit(Event e){
+    TableColumn.CellEditEvent<Student,String> ce;
+    ce=(TableColumn.CellEditEvent<Student,String>) e;
+    Student s=ce.getRowValue();
+    s.setIssuedate(ce.getNewValue());
+}
+
+public void colReturndate_OnEditCommit(Event e){
+    TableColumn.CellEditEvent<Student,String> ce;
+    ce=(TableColumn.CellEditEvent<Student,String>) e;
+    Student s=ce.getRowValue();
+    s.setReturndate(ce.getNewValue());
+}*/
 }
