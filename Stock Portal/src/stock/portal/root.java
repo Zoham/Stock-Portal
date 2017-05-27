@@ -17,6 +17,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.sql.*;
+import java.util.List;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class root implements Initializable{
     
@@ -43,123 +46,158 @@ public class root implements Initializable{
     @FXML TextField itemTax;
     @FXML Button itemSubmit;
     
-    @FXML TableView itemTable;
+    @FXML TableView<root> itemTable;
     @FXML TableView studentTable;
-
     
-    @FXML 
+    Connection conn = null;
+    
+     @FXML 
     private void onStudentUpdateClick(ActionEvent event)throws Exception
-    {     
-        String name = studentName.getText();
-        String email = studentEmail.getText();
-        String roll = studentRoll.getText();
-        String mobile = studentMobile.getText();
-        String room = studentRoom.getText();
-        String residence = (String) studentResidence.getValue();
-        String school = (String) studentSchool.getValue();
-        
-        try {
-            connect();
+    {   
+        boolean update;
+        update=ConfirmationBox.show("Are you sure you want to update?","Confirmation");
+        System.out.println("Please show up");
+        if(update)
+        {
+            String name = studentName.getText();
+            String email = studentEmail.getText();
+            String roll = studentRoll.getText();
+            String mobile = studentMobile.getText();
+            String room = studentRoom.getText();
+            String residence = (String) studentResidence.getValue();
+            String school = (String) studentSchool.getValue();
             
-            String query =
-                    "INSERT INTO Student ('Roll Number','Name','School','Residence','Room Number','Email id','Mobile Number') "
-                    + "VALUES (?1,?2,?3,?4,?5,?6,?7)";
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString (1, roll);
-            preparedStmt.setString (2, name);
-            preparedStmt.setString (3, school);
-            preparedStmt.setString (4, residence);
-            preparedStmt.setString (5, room);
-            preparedStmt.setString (6, email);
-            preparedStmt.setString (7, mobile);
-            
-            preparedStmt.execute();
-            //conn.commit();
-            conn.close();
-            System.out.println("Data inserted successfully");
-            
-            studentName.setText("");
-            studentEmail.setText("");
-            studentRoll.setText("");
-            studentMobile.setText("");
-            studentRoom.setText("");
-        }
-        
-        catch (SQLException ex) {
-            System.out.println("Error occured while updating student");
+            String error = "Fill All Fields";
+            String errorBox = "Error";
+            if(name.equals("") || email.equals("") || roll.equals("") || mobile.equals("") || room.equals("")) MessageBox.show(error,errorBox);
+            else if(residence==null || school==null) MessageBox.show(error,errorBox);
+            else
+            {
+                try 
+                {
+                    connect();
+
+                    String query =
+                            "INSERT INTO Student ('Roll Number','Name','School','Residence','Room Number','Email id','Mobile Number') "
+                            + "VALUES (?1,?2,?3,?4,?5,?6,?7)";
+                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                    preparedStmt.setString (1, roll);
+                    preparedStmt.setString (2, name);
+                    preparedStmt.setString (3, school);
+                    preparedStmt.setString (4, residence);
+                    preparedStmt.setString (5, room);
+                    preparedStmt.setString (6, email);
+                    preparedStmt.setString (7, mobile);
+                    preparedStmt.execute();
+                    conn.close();
+                    
+                    MessageBox.show("Update Sucessful","Update");
+                    studentName.setText("");
+                    studentEmail.setText("");
+                    studentRoll.setText("");
+                    studentMobile.setText("");
+                    studentRoom.setText("");
+                    studentResidence.setValue("Residence");
+                    studentSchool.setValue("School");
+                }
+                catch (SQLException e) {
+                    MessageBox.show("Error occured while updating student","Error");
+                }
+            }
         }
     }
-    Connection conn = null;
-    public void connect()//S - connect to sqlite file
+    
+    public void connect()
     {
-        try
-        {
-            conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); //S - to establish connection
-            System.out.println("Database opened successfully");
+        try{
+            conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
         }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage()); //S - to display error message in std-out
+        catch(Exception e){
+            MessageBox.show(e.getMessage(),"Connection error");
         }
+    }
+    
+    @FXML TableColumn<root,String> Brand;
+    @FXML TableColumn <root,String> Model;
+    /*@Override
+    public void initialize(URL location, ResourceBundle resources) {
+        
+    }*/
+    public List<root> parse()
+    {
+      List a=null;  
+      return a;
     }
     
     @FXML 
     private void onEquipmentUpdateClick(ActionEvent event)throws Exception
-    {     
-        String iB=(String)itemBrand.getText();
-        String iN=(String)itemName.getText();
-        String iS=(String)itemSport.getText();
-        String iC=(String)itemCondition.getText();
-        String iV=(String)itemVendor.getText();
-        String iI=(String)itemInvoice.getText();
-        String iM=(String)itemModel.getText();
-        String iQ=(String)itemQuantity.getText();
-        String iSec=(String)itemSecretary.getText();
-        String iP=(String)itemPrice.getText();
-        String iD=(String)itemDate.getText();
-        String iT=(String)itemTax.getText();
-        //String iSub=(String)itemSubmit.getText();
-        try {
-            connect();
-            
-            String query =
-                    "INSERT INTO Stock ('Brand','Item','Sport','Condition','Vendor','InvoiceNo','Model','Quantity','Secretary','UnitPrice','PurchaseDate','Tax') "
-                    + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)";
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString (1, iB);
-            preparedStmt.setString (2, iN);
-            preparedStmt.setString (3, iS);
-            preparedStmt.setString (4, iC);
-            preparedStmt.setString (5, iV);
-            preparedStmt.setString (6, iI);
-            preparedStmt.setString (7, iM);
-            preparedStmt.setString (8, iQ);
-            preparedStmt.setString (9, iSec);
-            preparedStmt.setString (10, iP);
-            preparedStmt.setString (11, iD);
-            preparedStmt.setString (12, iT);
-            //preparedStmt.setString (13, iSub);
-            preparedStmt.execute();
-            //conn.commit();
-            conn.close();
-            System.out.println("Data inserted successfully");
-            itemBrand.setText("");
-            itemName.setText("");
-            itemSport.setText("");
-            itemCondition.setText("");
-            itemVendor.setText("");
-            itemInvoice.setText("");
-            itemModel.setText("");
-            itemQuantity.setText("");
-            itemSecretary.setText("");
-            itemPrice.setText("");
-            itemDate.setText("");
-            itemTax.setText("");
-           // itemSubmit.setText("");
-        }
+    {
+        boolean submit;
+        submit=ConfirmationBox.show("Are you sure that you want to submit?","Confirmation");
         
-        catch (SQLException ex) {
-            System.out.println("Error occured while updating Stock");
+        if(submit)
+        { 
+            String iB=itemBrand.getText();
+            String iN=itemName.getText();
+            String iS=itemSport.getText();
+            String iC=itemCondition.getText();
+            String iV=itemVendor.getText();
+            String iI=itemInvoice.getText();
+            String iM=itemModel.getText();
+            String iQ=itemQuantity.getText();
+            String iSec=itemSecretary.getText();
+            String iP=itemPrice.getText();
+            String iD=itemDate.getText();
+            String iT=itemTax.getText();
+        
+            String error = "Fill All Fields";
+            String errorBox = "Error";
+            if(iB.equals("") || iN.equals("") || iS.equals("") || iC.equals("") || iV.equals("") || iI.equals(""))MessageBox.show(error,errorBox);
+            else if(iM.equals("") || iQ.equals("") || iSec.equals("") || iP.equals("") || iD.equals("") || iT.equals(""))MessageBox.show(error,errorBox);
+            else
+            {
+                try 
+                {
+                    connect();
+
+                    String query =
+                            "INSERT INTO Stock ('Brand','Item','Sport','Condition','Vendor','InvoiceNo','Model','Quantity','Secretary','UnitPrice','PurchaseDate','Tax') "
+                            + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)";
+
+                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                    preparedStmt.setString (1, iB);
+                    preparedStmt.setString (2, iN);
+                    preparedStmt.setString (3, iS);
+                    preparedStmt.setString (4, iC);
+                    preparedStmt.setString (5, iV);
+                    preparedStmt.setString (6, iI);
+                    preparedStmt.setString (7, iM);
+                    preparedStmt.setString (8, iQ);
+                    preparedStmt.setString (9, iSec);
+                    preparedStmt.setString (10, iP);
+                    preparedStmt.setString (11, iD);
+                    preparedStmt.setString (12, iT);
+                    preparedStmt.execute();
+                    conn.close();
+
+                    MessageBox.show("Update Sucessful","Update");
+                    itemBrand.setText("");
+                    itemName.setText("");
+                    itemSport.setText("");
+                    itemCondition.setText("");
+                    itemVendor.setText("");
+                    itemInvoice.setText("");
+                    itemModel.setText("");
+                    itemQuantity.setText("");
+                    itemSecretary.setText("");
+                    itemPrice.setText("");
+                    itemDate.setText("");
+                    itemTax.setText("");
+                }
+                catch (SQLException e) {
+                 MessageBox.show("Error occured while updating stock","Error");
+                }
+            }
         }
     }
     
@@ -167,8 +205,11 @@ public class root implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
+        Brand.setCellValueFactory(new PropertyValueFactory<root, String>("Brand"));
+        Model.setCellValueFactory(new PropertyValueFactory<root, String>("Model"));
+        itemTable.getItems().setAll(parse());
         //itemTable.getColumns().addAll(/* edit and order these*/firstNameCol, lastNameCol, emailCol);
         //studentTable.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
-
+        
     }
 }
