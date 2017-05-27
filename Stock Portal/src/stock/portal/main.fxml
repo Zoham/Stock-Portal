@@ -448,11 +448,12 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                           <children>
+                               <Button fx:id="itemDisplay" mnemonicParsing="false" onAction="#onEquipmentDisplayClick" text="Display" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                               <TableView fx:id="itemTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                 <columns>
-                                  <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Brand" fx:id="Brand"/>
-                                    <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Model" fx:id="Model" />
-                                    <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Item" fx:id="Item"/>
+                                  <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Brand"/>
+                                    <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Model"/>
+                                    <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Item"/>
                                     <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Sport" />
                                     <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Secretary" />
                                     <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Condition" />
@@ -471,6 +472,7 @@
                                     <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="UID" />
                                 </columns>
                               </TableView>
+      
                            </children>
                         </GridPane>
                      </content>
