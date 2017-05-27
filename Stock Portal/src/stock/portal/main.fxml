@@ -178,7 +178,7 @@
             </TabPane>
          </content>
     </Tab>
-      <Tab fx:id="studentDisplay" text="Student">
+      <Tab text="Student">
          <content>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
