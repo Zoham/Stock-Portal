@@ -6,22 +6,16 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class root extends Student implements Initializable {
@@ -79,76 +73,156 @@ public class root extends Student implements Initializable {
     @FXML Button itemRefresh;
     
     @FXML TableView itemTable;
-    @FXML TableView studentTable;
-
-    @FXML Tab studentRegister;
-    @FXML Tab studentDisplay;
-
-    @FXML Tab itemUpate;
-    @FXML Tab itemDisplay;
+    @FXML TableView studentTable;  
+    
+    @FXML TableColumn sRoll;
+    @FXML TableColumn sName;
+    @FXML TableColumn sEmail;
+    @FXML TableColumn sMobile;
+    @FXML TableColumn sRoom;
+    @FXML TableColumn sResidence;
+    @FXML TableColumn sIssuedItem;
+    @FXML TableColumn sQuantity;
+    @FXML TableColumn sIssueDate;
+    @FXML TableColumn sReturnDate;
+    
+    @FXML TableColumn iBrand;
+    @FXML TableColumn iModel;
+    @FXML TableColumn iItem;
+    @FXML TableColumn iSport;
+    @FXML TableColumn iSecretary;
+    @FXML TableColumn iCondition;
+    @FXML TableColumn iStatus;
+    @FXML TableColumn iQuantity;
+    @FXML TableColumn iIssuedTo;
+    @FXML TableColumn iIssuedQuantity;
+    @FXML TableColumn iIssueDate;
+    @FXML TableColumn iReturnDate;
+    @FXML TableColumn iVendor;
+    @FXML TableColumn iInvoice;
+    @FXML TableColumn iPurchaseDate;
+    @FXML TableColumn iUnitPrice;
+    @FXML TableColumn iTax;
+    @FXML TableColumn iTotal;
+    @FXML TableColumn UID;
+    
     
     Connection conn = null;
     
-    TableColumn<Student, String> colRoll =new TableColumn<Student, String>();
-    TableColumn<Student, String> colName =new TableColumn<Student, String>();
-    TableColumn<Student, String> colEmail =new TableColumn<Student, String>();
-    TableColumn<Student, String> colMobile =new TableColumn<Student, String>();
-    TableColumn<Student, String> colRoom =new TableColumn<Student, String>();
-    TableColumn<Student, String> colResidence =new TableColumn<Student, String>();
-    TableColumn<Student, String> colItemissued =new TableColumn<Student, String>();
-    TableColumn<Student, String> colQuality =new TableColumn<Student, String>();
-    TableColumn<Student, String> colIssuedate =new TableColumn<Student, String>();
-    TableColumn<Student, String> colReturndate =new TableColumn<Student, String>();
+    @FXML 
+    private void showStudent(ActionEvent e) throws Exception
+    {
+        sRoll.setCellValueFactory(new PropertyValueFactory<>("Roll"));
+        sName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        sEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        sMobile.setCellValueFactory(new PropertyValueFactory<>("Mobile"));
+        sRoom.setCellValueFactory(new PropertyValueFactory<>("Room"));
+        sResidence.setCellValueFactory(new PropertyValueFactory<>("Residence"));
+//        sIssuedItem.setCellValueFactory(new PropertyValueFactory<>("Itemissued"));
+//        sQuantity.setCellValueFactory(new PropertyValueFactory<>("Quality"));
+//        sIssueDate.setCellValueFactory(new PropertyValueFactory<>("Isuedate"));
+//        sReturnDate.setCellValueFactory(new PropertyValueFactory<>("Returndate"));
     
-//    @FXML 
-//    private void showStudent(ActionEvent e) throws Exception
-//    {
-//        colRoll.setCellValueFactory(new PropertyValueFactory<Student,String>("Roll"));
-//        colName.setCellValueFactory(new PropertyValueFactory<Student,String>("Name"));
-//        colEmail.setCellValueFactory(new PropertyValueFactory<Student,String>("Email"));
-//        colMobile.setCellValueFactory(new PropertyValueFactory<Student,String>("Mobile"));
-//        colRoom.setCellValueFactory(new PropertyValueFactory<Student,String>("Room"));
-//        colResidence.setCellValueFactory(new PropertyValueFactory<Student,String>("Residence"));
-//        colItemissued.setCellValueFactory(new PropertyValueFactory<Student,String>("Itemissued"));
-//        colQuality.setCellValueFactory(new PropertyValueFactory<Student,String>("Quality"));
-//        colIssuedate.setCellValueFactory(new PropertyValueFactory<Student,String>("Isuedate"));
-//        colReturndate.setCellValueFactory(new PropertyValueFactory<Student,String>("Returndate"));
-//    
-//        studentTable.getColumns().addAll(colRoll,colName,colEmail,colMobile,colRoom,colResidence,colItemissued,colQuality,colIssuedate,colReturndate);
-//        studentTable.setItems(loadData());
-//        
-//        System.out.println("In table");
-//    }
+        studentTable.setItems(sloadData());
+    }
     
-    public ObservableList<Student> loadData(){
+    public ObservableList<Student> sloadData(){
         ObservableList<Student> data=FXCollections.observableArrayList();
         
-        try{
+        try
+        {
             connect();
-            String SQL="SELECT * FROM STUDENT";
-            ResultSet rs=conn.createStatement().executeQuery(SQL);
+            
+            String query="SELECT * FROM STUDENT";
+            ResultSet rs=conn.createStatement().executeQuery(query);
+            
             Student student=new Student();
             while(rs.next()){
-                for(int i=0;i<=rs.getMetaData().getColumnCount();i++){
                     student.setRoll(rs.getString("Roll Number"));
-                   // MessageBox.show(rs.getString("Roll Number"),"Error");
                     student.setName(rs.getString("Name"));
                     student.setEmail(rs.getString("Email Id"));
                     student.setMobile(rs.getString("Mobile Number"));
                     student.setRoom(rs.getString("Room Number"));
                     student.setResidence(rs.getString("Residence"));
-                    //student.setItemissued(rs.getString("Issued Item"));
-                    //student.setQuality(rs.getString("Quality"));
-                    //student.setIssuedate(rs.getString("Issue Date"));
-                    //student.setReturndate(rs.getString("Return Date"));
+//                    student.setItemissued(rs.getString("Issued Item"));
+//                    student.setQuality(rs.getString("Quality"));
+//                    student.setIssuedate(rs.getString("Issue Date"));
+//                    student.setReturndate(rs.getString("Return Date"));
                     data.add(student);
-                }
+                //}
             }
         }
-        catch(Exception e){
+        catch(SQLException e){
             MessageBox.show(e.getMessage(),"Error");
         }
+        return data;
+    }
+    
+     @FXML 
+    private void showItem(ActionEvent e) throws Exception
+    {
+        iBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
+        iModel.setCellValueFactory(new PropertyValueFactory<>("Model"));
+        iItem.setCellValueFactory(new PropertyValueFactory<>("Item"));
+        iSport.setCellValueFactory(new PropertyValueFactory<>("Sport"));
+        iSecretary.setCellValueFactory(new PropertyValueFactory<>("Secretary"));
+        iCondition.setCellValueFactory(new PropertyValueFactory<>("Condition"));
+        iStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        iQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+//        iIssuedTo.setCellValueFactory(new PropertyValueFactory<>("Issued To"));
+//        iIssuedQuantity.setCellValueFactory(new PropertyValueFactory<>("Issued Quantity"));
+//        iIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
+//        iReturnDate.setCellValueFactory(new PropertyValueFactory<>("Return Date"));
+        iVendor.setCellValueFactory(new PropertyValueFactory<>("Vendor"));
+//        iInvoice.setCellValueFactory(new PropertyValueFactory<>("Invoice Number"));
+//        iPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("Purchase Date"));
+//        iUnitPrice.setCellValueFactory(new PropertyValueFactory<>("Unit Price"));
+        iTax.setCellValueFactory(new PropertyValueFactory<>("Tax"));
+//        iTotal.setCellValueFactory(new PropertyValueFactory<>("Total"));
+//        UID.setCellValueFactory(new PropertyValueFactory<>("UID"));
+    
+        itemTable.setItems(iloadData());
+    }
+    
+    public ObservableList<Stock> iloadData(){
+        ObservableList<Stock> data=FXCollections.observableArrayList();
         
+        try
+        {
+            connect();
+            
+            String query="SELECT * FROM STOCK";
+            ResultSet rs=conn.createStatement().executeQuery(query);
+            
+            Stock stock=new Stock();
+            while(rs.next())
+            {
+                    stock.setBrand(rs.getString("Brand"));
+                    stock.setModel(rs.getString("Model"));
+                    stock.setItem(rs.getString("Item"));
+                    stock.setSport(rs.getString("Sport"));
+                    stock.setSecretary(rs.getString("Secretary"));
+                    stock.setCondition(rs.getString("Condition"));
+                    stock.setStatus(rs.getString("Status"));
+                    stock.setQuantity(rs.getString("Quantity"));
+//                    stock.setIssuedTo(rs.getString("Issued To"));
+//                    stock.setIssuedQuantity(rs.getString("Issued Quantity"));
+//                    stock.setIssueDate(rs.getString("Issue Date"));
+//                    stock.setReturnDate(rs.getString("Return Date"));
+                    stock.setVendor(rs.getString("Vendor"));
+//                    stock.setInvoice(rs.getString("Invoice Number"));
+//                    stock.setPurchaseDate(rs.getString("Purchase Date"));
+//                    stock.setUnitPrice(rs.getString("Unit Price"));
+                    stock.setTax(rs.getString("Tax"));
+//                    stock.setTotal(rs.getString("Total"));
+//                    stock.setUID(rs.getString("UID"));
+                    
+                    data.add(stock);
+            }
+        }
+        catch(SQLException e){
+            MessageBox.show(e.getMessage(),"Error");
+        }
         return data;
     }
     
@@ -172,18 +246,18 @@ public class root extends Student implements Initializable {
         
         if(update)
         {
-            String name = studentName.getText();
-            String email = studentEmail.getText();
-            String roll = studentRoll.getText();
-            String mobile = studentMobile.getText();
-            String room = studentRoom.getText();
-            String residence = (String) studentResidence.getValue();
-            String school = (String) studentSchool.getValue();
+            String sname = studentName.getText();
+            String semail = studentEmail.getText();
+            String sroll = studentRoll.getText();
+            String smobile = studentMobile.getText();
+            String sroom = studentRoom.getText();
+            String sresidence = (String) studentResidence.getValue();
+            String sschool = (String) studentSchool.getValue();
             
             String error = "Fill All Fields";
             String errorBox = "Error";
-            if(name.equals("") || email.equals("") || roll.equals("") || mobile.equals("") || room.equals("")) MessageBox.show(error,errorBox);
-            else if(residence==null || school==null) MessageBox.show(error,errorBox);
+            if(sname.equals("") || semail.equals("") || sroll.equals("") || smobile.equals("") || sroom.equals("")) MessageBox.show(error,errorBox);
+            else if(sresidence==null || sschool==null) MessageBox.show(error,errorBox);
             else
             {
                 try 
@@ -194,13 +268,13 @@ public class root extends Student implements Initializable {
                             "INSERT INTO Student ('Roll Number','Name','School','Residence','Room Number','Email id','Mobile Number') "
                             + "VALUES (?1,?2,?3,?4,?5,?6,?7)";
                     PreparedStatement preparedStmt = conn.prepareStatement(query);
-                    preparedStmt.setString (1, roll);
-                    preparedStmt.setString (2, name);
-                    preparedStmt.setString (3, school);
-                    preparedStmt.setString (4, residence);
-                    preparedStmt.setString (5, room);
-                    preparedStmt.setString (6, email);
-                    preparedStmt.setString (7, mobile);
+                    preparedStmt.setString (1, sroll);
+                    preparedStmt.setString (2, sname);
+                    preparedStmt.setString (3, sschool);
+                    preparedStmt.setString (4, sresidence);
+                    preparedStmt.setString (5, sroom);
+                    preparedStmt.setString (6, semail);
+                    preparedStmt.setString (7, smobile);
                     preparedStmt.execute();
                     conn.close();
                     
@@ -296,20 +370,6 @@ public class root extends Student implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
-        
-        colRoll.setCellValueFactory(new PropertyValueFactory<Student,String>("Roll"));
-        colName.setCellValueFactory(new PropertyValueFactory<Student,String>("Name"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<Student,String>("Email"));
-        colMobile.setCellValueFactory(new PropertyValueFactory<Student,String>("Mobile"));
-        colRoom.setCellValueFactory(new PropertyValueFactory<Student,String>("Room"));
-        colResidence.setCellValueFactory(new PropertyValueFactory<Student,String>("Residence"));
-        colItemissued.setCellValueFactory(new PropertyValueFactory<Student,String>("Itemissued"));
-        colQuality.setCellValueFactory(new PropertyValueFactory<Student,String>("Quality"));
-        colIssuedate.setCellValueFactory(new PropertyValueFactory<Student,String>("Isuedate"));
-        colReturndate.setCellValueFactory(new PropertyValueFactory<Student,String>("Returndate"));
-    
-        studentTable.getColumns().addAll(colRoll,colName,colEmail,colMobile,colRoom,colResidence,colItemissued,colQuality,colIssuedate,colReturndate);
-        studentTable.setItems(loadData());
     }
     
     public void connect()
@@ -317,7 +377,7 @@ public class root extends Student implements Initializable {
         try{
             conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
         }
-        catch(Exception e){
+        catch(SQLException e){
             MessageBox.show(e.getMessage(),"Connection error");
         }
     }
