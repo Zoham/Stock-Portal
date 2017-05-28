@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import java.sql.*;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
@@ -118,42 +119,50 @@ public class root extends Student implements Initializable {
         sMobile.setCellValueFactory(new PropertyValueFactory<>("Mobile"));
         sRoom.setCellValueFactory(new PropertyValueFactory<>("Room"));
         sResidence.setCellValueFactory(new PropertyValueFactory<>("Residence"));
-//        sIssuedItem.setCellValueFactory(new PropertyValueFactory<>("Itemissued"));
-//        sQuantity.setCellValueFactory(new PropertyValueFactory<>("Quality"));
-//        sIssueDate.setCellValueFactory(new PropertyValueFactory<>("Isuedate"));
-//        sReturnDate.setCellValueFactory(new PropertyValueFactory<>("Returndate"));
+        sIssuedItem.setCellValueFactory(new PropertyValueFactory<>("Issued Item"));
+        sQuantity.setCellValueFactory(new PropertyValueFactory<>("Quality"));
+        sIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
+        sReturnDate.setCellValueFactory(new PropertyValueFactory<>("Return Date"));
     
-        studentTable.setItems(sloadData());
+        
+        ObservableList<Student> data = sloadData();
+        //studentTable.setItems(data);
+        System.out.println(data.get(1).roll);
+        System.out.println(data.get(2).roll);
+        
     }
     
-    public ObservableList<Student> sloadData(){
+    public ObservableList<Student> sloadData()
+    {
         ObservableList<Student> data=FXCollections.observableArrayList();
-        
         try
         {
             connect();
             
             String query="SELECT * FROM STUDENT";
             ResultSet rs=conn.createStatement().executeQuery(query);
-            
-            Student student=new Student();
-            while(rs.next()){
+                      
+            while(rs.next())
+            {
+                    Student student=new Student();  
                     student.setRoll(rs.getString("Roll Number"));
                     student.setName(rs.getString("Name"));
                     student.setEmail(rs.getString("Email Id"));
                     student.setMobile(rs.getString("Mobile Number"));
                     student.setRoom(rs.getString("Room Number"));
                     student.setResidence(rs.getString("Residence"));
-//                    student.setItemissued(rs.getString("Issued Item"));
-//                    student.setQuality(rs.getString("Quality"));
-//                    student.setIssuedate(rs.getString("Issue Date"));
-//                    student.setReturndate(rs.getString("Return Date"));
+                    student.setItemissued(rs.getString("Issued"));
+                    student.setQuality(rs.getString("Quantity"));
+                    student.setIssuedate(rs.getString("IssueDate"));
+                    student.setReturndate(rs.getString("ReturnDate"));
                     data.add(student);
-                //}
+                    System.out.println(data.get(0).roll);
             }
+            
+            studentTable.setItems(data);
         }
         catch(SQLException e){
-            MessageBox.show(e.getMessage(),"Error");
+            MessageBox.show(e.getMessage(),"Error2");
         }
         return data;
     }
@@ -169,17 +178,17 @@ public class root extends Student implements Initializable {
         iCondition.setCellValueFactory(new PropertyValueFactory<>("Condition"));
         iStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
         iQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
-//        iIssuedTo.setCellValueFactory(new PropertyValueFactory<>("Issued To"));
-//        iIssuedQuantity.setCellValueFactory(new PropertyValueFactory<>("Issued Quantity"));
-//        iIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
-//        iReturnDate.setCellValueFactory(new PropertyValueFactory<>("Return Date"));
+        iIssuedTo.setCellValueFactory(new PropertyValueFactory<>("Issued To"));
+        iIssuedQuantity.setCellValueFactory(new PropertyValueFactory<>("Issued Quantity"));
+        iIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
+        iReturnDate.setCellValueFactory(new PropertyValueFactory<>("Return Date"));
         iVendor.setCellValueFactory(new PropertyValueFactory<>("Vendor"));
-//        iInvoice.setCellValueFactory(new PropertyValueFactory<>("Invoice Number"));
-//        iPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("Purchase Date"));
-//        iUnitPrice.setCellValueFactory(new PropertyValueFactory<>("Unit Price"));
+        iInvoice.setCellValueFactory(new PropertyValueFactory<>("Invoice Number"));
+        iPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("PurchaseDate"));
+        iUnitPrice.setCellValueFactory(new PropertyValueFactory<>("UnitPrice"));
         iTax.setCellValueFactory(new PropertyValueFactory<>("Tax"));
-//        iTotal.setCellValueFactory(new PropertyValueFactory<>("Total"));
-//        UID.setCellValueFactory(new PropertyValueFactory<>("UID"));
+        iTotal.setCellValueFactory(new PropertyValueFactory<>("Total"));
+        UID.setCellValueFactory(new PropertyValueFactory<>("UID"));
     
         itemTable.setItems(iloadData());
     }
@@ -194,9 +203,9 @@ public class root extends Student implements Initializable {
             String query="SELECT * FROM STOCK";
             ResultSet rs=conn.createStatement().executeQuery(query);
             
-            Stock stock=new Stock();
             while(rs.next())
             {
+                Stock stock=new Stock();
                     stock.setBrand(rs.getString("Brand"));
                     stock.setModel(rs.getString("Model"));
                     stock.setItem(rs.getString("Item"));
@@ -205,17 +214,17 @@ public class root extends Student implements Initializable {
                     stock.setCondition(rs.getString("Condition"));
                     stock.setStatus(rs.getString("Status"));
                     stock.setQuantity(rs.getString("Quantity"));
-//                    stock.setIssuedTo(rs.getString("Issued To"));
-//                    stock.setIssuedQuantity(rs.getString("Issued Quantity"));
-//                    stock.setIssueDate(rs.getString("Issue Date"));
-//                    stock.setReturnDate(rs.getString("Return Date"));
+                    stock.setIssuedTo(rs.getString("IssuedTo"));
+                    stock.setIssuedQuantity(rs.getString("IssuedQuantity"));
+                    stock.setIssueDate(rs.getString("IssueDate"));
+                    stock.setReturnDate(rs.getString("ReturnDate"));
                     stock.setVendor(rs.getString("Vendor"));
-//                    stock.setInvoice(rs.getString("Invoice Number"));
-//                    stock.setPurchaseDate(rs.getString("Purchase Date"));
-//                    stock.setUnitPrice(rs.getString("Unit Price"));
+                    stock.setInvoice(rs.getString("InvoiceNo"));
+                    stock.setPurchaseDate(rs.getString("PurchaseDate"));
+                    stock.setUnitPrice(rs.getString("UnitPrice"));
                     stock.setTax(rs.getString("Tax"));
-//                    stock.setTotal(rs.getString("Total"));
-//                    stock.setUID(rs.getString("UID"));
+                    stock.setTotal(rs.getString("Total"));
+                    stock.setUID(rs.getString("UID"));
                     
                     data.add(stock);
             }
@@ -253,6 +262,10 @@ public class root extends Student implements Initializable {
             String sroom = studentRoom.getText();
             String sresidence = (String) studentResidence.getValue();
             String sschool = (String) studentSchool.getValue();
+            String sissuedUID = "";
+            String squantity = "";
+            String sissuedate = "";
+            String sreturndate = "";
             
             String error = "Fill All Fields";
             String errorBox = "Error";
@@ -265,8 +278,8 @@ public class root extends Student implements Initializable {
                     connect();
 
                     String query =
-                            "INSERT INTO Student ('Roll Number','Name','School','Residence','Room Number','Email id','Mobile Number') "
-                            + "VALUES (?1,?2,?3,?4,?5,?6,?7)";
+                            "INSERT INTO Student ('Roll Number','Name','School','Residence','Room Number','Email id','Mobile Number','Issued Item','Quantity','Issue Date','Return Date') "
+                            + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11)";
                     PreparedStatement preparedStmt = conn.prepareStatement(query);
                     preparedStmt.setString (1, sroll);
                     preparedStmt.setString (2, sname);
@@ -275,6 +288,10 @@ public class root extends Student implements Initializable {
                     preparedStmt.setString (5, sroom);
                     preparedStmt.setString (6, semail);
                     preparedStmt.setString (7, smobile);
+                    preparedStmt.setString (8, sissuedUID);
+                    preparedStmt.setString (9, squantity);
+                    preparedStmt.setString (10, sissuedate);
+                    preparedStmt.setString (11, sreturndate);
                     preparedStmt.execute();
                     conn.close();
                     

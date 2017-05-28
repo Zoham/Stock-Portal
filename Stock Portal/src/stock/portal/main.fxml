@@ -320,7 +320,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <TableView fx:id="studentTable" editable="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                              <TableView fx:id="studentTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                 <columns>
                                     <TableColumn fx:id="sRoll" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Roll Number" />
                                   <TableColumn fx:id="sName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Name" />
@@ -329,9 +329,9 @@
                                     <TableColumn fx:id="sRoom" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Room Number" />
                                     <TableColumn fx:id="sResidence" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Residence" />
                                     <TableColumn fx:id="sIssuedItem" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Issued Item" />
-                                    <TableColumn fx:id="sQuantity" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Quantity" />
-                                    <TableColumn fx:id="sIssueDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Issue Date" />
-                                    <TableColumn fx:id="sReturnDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Return Date" />
+                                    <TableColumn fx:id="sQuantity" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="108.0" text="Quantity" />
+                                    <TableColumn fx:id="sIssueDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Issue Date" />
+                                    <TableColumn fx:id="sReturnDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="26.0" text="Return Date" />
                                 </columns>
                               </TableView>
                               <GridPane>
