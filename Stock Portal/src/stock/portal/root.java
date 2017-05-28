@@ -6,19 +6,38 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import java.sql.*;
+import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-public class root implements Initializable{
+public class root extends Student implements Initializable {
+    
+    @FXML ComboBox issueSport;
+    @FXML ComboBox issueBrand;
+    @FXML ComboBox issueItem;
+    @FXML ComboBox issueModel;
+    @FXML TextField IssueRoll;
+    @FXML TextField issueQuantity;
+    @FXML DatePicker issueDate;
+    @FXML Button issueUpdate;
+    
+    @FXML ComboBox returnSport;
+    @FXML ComboBox returnBrand;
+    @FXML ComboBox returnItem;
+    @FXML ComboBox returnModel;
+    @FXML TextField returnRoll;
+    @FXML TextField returnQuantity;
+    @FXML DatePicker returnDate;
+    @FXML Button returnUpdate;
     
     @FXML TextField studentEmail;
     @FXML TextField studentRoom;
@@ -43,18 +62,192 @@ public class root implements Initializable{
     @FXML TextField itemTax;
     @FXML Button itemSubmit;
     
+    
+    @FXML ComboBox studentField;
+    @FXML TextField studentSearchT;
+    @FXML Button studentSearchB;
+    @FXML Button studentRefresh;
+    
+    @FXML ComboBox itemField;
+    @FXML TextField itemSearchT;
+    @FXML Button itemSearchB;
+    @FXML Button itemRefresh;
+    
     @FXML TableView itemTable;
-    @FXML TableView studentTable;
-
-	@FXML Tab studentRegister;
-	@FXML Tab studentDisplay;
-
-	@FXML Tab itemUpate
-	@FXML Tab itemDisplay
+    @FXML TableView studentTable;  
+    
+    @FXML TableColumn sRoll;
+    @FXML TableColumn sName;
+    @FXML TableColumn sEmail;
+    @FXML TableColumn sMobile;
+    @FXML TableColumn sRoom;
+    @FXML TableColumn sResidence;
+    @FXML TableColumn sIssuedItem;
+    @FXML TableColumn sQuantity;
+    @FXML TableColumn sIssueDate;
+    @FXML TableColumn sReturnDate;
+    
+    @FXML TableColumn iBrand;
+    @FXML TableColumn iModel;
+    @FXML TableColumn iItem;
+    @FXML TableColumn iSport;
+    @FXML TableColumn iSecretary;
+    @FXML TableColumn iCondition;
+    @FXML TableColumn iStatus;
+    @FXML TableColumn iQuantity;
+    @FXML TableColumn iIssuedTo;
+    @FXML TableColumn iIssuedQuantity;
+    @FXML TableColumn iIssueDate;
+    @FXML TableColumn iReturnDate;
+    @FXML TableColumn iVendor;
+    @FXML TableColumn iInvoice;
+    @FXML TableColumn iPurchaseDate;
+    @FXML TableColumn iUnitPrice;
+    @FXML TableColumn iTax;
+    @FXML TableColumn iTotal;
+    @FXML TableColumn UID;
+    
     
     Connection conn = null;
     
+    @FXML 
+    private void showStudent(ActionEvent e) throws Exception
+    {
+        sRoll.setCellValueFactory(new PropertyValueFactory<>("Roll"));
+        sName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        sEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        sMobile.setCellValueFactory(new PropertyValueFactory<>("Mobile"));
+        sRoom.setCellValueFactory(new PropertyValueFactory<>("Room"));
+        sResidence.setCellValueFactory(new PropertyValueFactory<>("Residence"));
+        sIssuedItem.setCellValueFactory(new PropertyValueFactory<>("Issued Item"));
+        sQuantity.setCellValueFactory(new PropertyValueFactory<>("Quality"));
+        sIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
+        sReturnDate.setCellValueFactory(new PropertyValueFactory<>("Return Date"));
+    
+        
+        ObservableList<Student> data = sloadData();
+        //studentTable.setItems(data);
+        System.out.println(data.get(1).roll);
+        System.out.println(data.get(2).roll);
+        
+    }
+    
+    public ObservableList<Student> sloadData()
+    {
+        ObservableList<Student> data=FXCollections.observableArrayList();
+        try
+        {
+            connect();
+            
+            String query="SELECT * FROM STUDENT";
+            ResultSet rs=conn.createStatement().executeQuery(query);
+                      
+            while(rs.next())
+            {
+                    Student student=new Student();  
+                    student.setRoll(rs.getString("Roll Number"));
+                    student.setName(rs.getString("Name"));
+                    student.setEmail(rs.getString("Email Id"));
+                    student.setMobile(rs.getString("Mobile Number"));
+                    student.setRoom(rs.getString("Room Number"));
+                    student.setResidence(rs.getString("Residence"));
+                    student.setItemissued(rs.getString("Issued"));
+                    student.setQuality(rs.getString("Quantity"));
+                    student.setIssuedate(rs.getString("IssueDate"));
+                    student.setReturndate(rs.getString("ReturnDate"));
+                    data.add(student);
+                    System.out.println(data.get(0).roll);
+            }
+            
+            studentTable.setItems(data);
+        }
+        catch(SQLException e){
+            MessageBox.show(e.getMessage(),"Error2");
+        }
+        return data;
+    }
+    
      @FXML 
+    private void showItem(ActionEvent e) throws Exception
+    {
+        iBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
+        iModel.setCellValueFactory(new PropertyValueFactory<>("Model"));
+        iItem.setCellValueFactory(new PropertyValueFactory<>("Item"));
+        iSport.setCellValueFactory(new PropertyValueFactory<>("Sport"));
+        iSecretary.setCellValueFactory(new PropertyValueFactory<>("Secretary"));
+        iCondition.setCellValueFactory(new PropertyValueFactory<>("Condition"));
+        iStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        iQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        iIssuedTo.setCellValueFactory(new PropertyValueFactory<>("Issued To"));
+        iIssuedQuantity.setCellValueFactory(new PropertyValueFactory<>("Issued Quantity"));
+        iIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
+        iReturnDate.setCellValueFactory(new PropertyValueFactory<>("Return Date"));
+        iVendor.setCellValueFactory(new PropertyValueFactory<>("Vendor"));
+        iInvoice.setCellValueFactory(new PropertyValueFactory<>("Invoice Number"));
+        iPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("PurchaseDate"));
+        iUnitPrice.setCellValueFactory(new PropertyValueFactory<>("UnitPrice"));
+        iTax.setCellValueFactory(new PropertyValueFactory<>("Tax"));
+        iTotal.setCellValueFactory(new PropertyValueFactory<>("Total"));
+        UID.setCellValueFactory(new PropertyValueFactory<>("UID"));
+    
+        itemTable.setItems(iloadData());
+    }
+    
+    public ObservableList<Stock> iloadData(){
+        ObservableList<Stock> data=FXCollections.observableArrayList();
+        
+        try
+        {
+            connect();
+            
+            String query="SELECT * FROM STOCK";
+            ResultSet rs=conn.createStatement().executeQuery(query);
+            
+            while(rs.next())
+            {
+                Stock stock=new Stock();
+                    stock.setBrand(rs.getString("Brand"));
+                    stock.setModel(rs.getString("Model"));
+                    stock.setItem(rs.getString("Item"));
+                    stock.setSport(rs.getString("Sport"));
+                    stock.setSecretary(rs.getString("Secretary"));
+                    stock.setCondition(rs.getString("Condition"));
+                    stock.setStatus(rs.getString("Status"));
+                    stock.setQuantity(rs.getString("Quantity"));
+                    stock.setIssuedTo(rs.getString("IssuedTo"));
+                    stock.setIssuedQuantity(rs.getString("IssuedQuantity"));
+                    stock.setIssueDate(rs.getString("IssueDate"));
+                    stock.setReturnDate(rs.getString("ReturnDate"));
+                    stock.setVendor(rs.getString("Vendor"));
+                    stock.setInvoice(rs.getString("InvoiceNo"));
+                    stock.setPurchaseDate(rs.getString("PurchaseDate"));
+                    stock.setUnitPrice(rs.getString("UnitPrice"));
+                    stock.setTax(rs.getString("Tax"));
+                    stock.setTotal(rs.getString("Total"));
+                    stock.setUID(rs.getString("UID"));
+                    
+                    data.add(stock);
+            }
+        }
+        catch(SQLException e){
+            MessageBox.show(e.getMessage(),"Error");
+        }
+        return data;
+    }
+    
+    @FXML 
+    private void onIssue(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void onReturn(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
     private void onStudentUpdateClick(ActionEvent event)throws Exception
     {   
         boolean update;
@@ -62,18 +255,22 @@ public class root implements Initializable{
         
         if(update)
         {
-            String name = studentName.getText();
-            String email = studentEmail.getText();
-            String roll = studentRoll.getText();
-            String mobile = studentMobile.getText();
-            String room = studentRoom.getText();
-            String residence = (String) studentResidence.getValue();
-            String school = (String) studentSchool.getValue();
+            String sname = studentName.getText();
+            String semail = studentEmail.getText();
+            String sroll = studentRoll.getText();
+            String smobile = studentMobile.getText();
+            String sroom = studentRoom.getText();
+            String sresidence = (String) studentResidence.getValue();
+            String sschool = (String) studentSchool.getValue();
+            String sissuedUID = "";
+            String squantity = "";
+            String sissuedate = "";
+            String sreturndate = "";
             
             String error = "Fill All Fields";
             String errorBox = "Error";
-            if(name.equals("") || email.equals("") || roll.equals("") || mobile.equals("") || room.equals("")) MessageBox.show(error,errorBox);
-            else if(residence==null || school==null) MessageBox.show(error,errorBox);
+            if(sname.equals("") || semail.equals("") || sroll.equals("") || smobile.equals("") || sroom.equals("")) MessageBox.show(error,errorBox);
+            else if(sresidence==null || sschool==null) MessageBox.show(error,errorBox);
             else
             {
                 try 
@@ -81,16 +278,20 @@ public class root implements Initializable{
                     connect();
 
                     String query =
-                            "INSERT INTO Student ('Roll Number','Name','School','Residence','Room Number','Email id','Mobile Number') "
-                            + "VALUES (?1,?2,?3,?4,?5,?6,?7)";
+                            "INSERT INTO Student ('Roll Number','Name','School','Residence','Room Number','Email id','Mobile Number','Issued Item','Quantity','Issue Date','Return Date') "
+                            + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11)";
                     PreparedStatement preparedStmt = conn.prepareStatement(query);
-                    preparedStmt.setString (1, roll);
-                    preparedStmt.setString (2, name);
-                    preparedStmt.setString (3, school);
-                    preparedStmt.setString (4, residence);
-                    preparedStmt.setString (5, room);
-                    preparedStmt.setString (6, email);
-                    preparedStmt.setString (7, mobile);
+                    preparedStmt.setString (1, sroll);
+                    preparedStmt.setString (2, sname);
+                    preparedStmt.setString (3, sschool);
+                    preparedStmt.setString (4, sresidence);
+                    preparedStmt.setString (5, sroom);
+                    preparedStmt.setString (6, semail);
+                    preparedStmt.setString (7, smobile);
+                    preparedStmt.setString (8, sissuedUID);
+                    preparedStmt.setString (9, squantity);
+                    preparedStmt.setString (10, sissuedate);
+                    preparedStmt.setString (11, sreturndate);
                     preparedStmt.execute();
                     conn.close();
                     
@@ -108,18 +309,7 @@ public class root implements Initializable{
                 }
             }
         }
-    }
-    
-    public void connect()
-    {
-        try{
-            conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
-        }
-        catch(Exception e){
-            MessageBox.show(e.getMessage(),"Connection error");
-        }
-    }
-    
+    }    
     
     @FXML 
     private void onEquipmentUpdateClick(ActionEvent event)throws Exception
@@ -197,8 +387,63 @@ public class root implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
-        //itemTable.getColumns().addAll(/* edit and order these*/firstNameCol, lastNameCol, emailCol);
-        //studentTable.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
+    }
+    
+    public void connect()
+    {
+        try{
+            conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
+        }
+        catch(SQLException e){
+            MessageBox.show(e.getMessage(),"Connection error");
+        }
+    }
+    
+    @FXML 
+    private void iSport(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void iItem(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void iBrand(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void iModel(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void rSport(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void rItem(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void rBrand(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void rModel(ActionEvent event)throws Exception
+    {
         
     }
 }
