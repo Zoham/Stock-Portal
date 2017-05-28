@@ -123,10 +123,10 @@ public class root extends Student implements Initializable {
         sMobile.setCellValueFactory(new PropertyValueFactory<>("Mobile"));
         sRoom.setCellValueFactory(new PropertyValueFactory<>("Room"));
         sResidence.setCellValueFactory(new PropertyValueFactory<>("Residence"));
-        sIssuedItem.setCellValueFactory(new PropertyValueFactory<>("Issued Item"));
-        sQuantity.setCellValueFactory(new PropertyValueFactory<>("Quality"));
-        sIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
-        sReturnDate.setCellValueFactory(new PropertyValueFactory<>("Return Date"));
+        sIssuedItem.setCellValueFactory(new PropertyValueFactory<>("Itemissued"));
+        sQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        sIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issuedate"));
+        sReturnDate.setCellValueFactory(new PropertyValueFactory<>("Returndate"));
     
         studentTable.setEditable(true);
         
@@ -175,7 +175,7 @@ public class root extends Student implements Initializable {
                     student.setRoom(rs.getString("Room Number"));
                     student.setResidence(rs.getString("Residence"));
                     student.setItemissued(rs.getString("Issued"));
-                    student.setQuality(rs.getString("Quantity"));
+                    student.setQuantity(rs.getString("Quantity"));
                     student.setIssuedate(rs.getString("IssueDate"));
                     student.setReturndate(rs.getString("ReturnDate"));
                     data.add(student);
@@ -198,12 +198,12 @@ public class root extends Student implements Initializable {
         iCondition.setCellValueFactory(new PropertyValueFactory<>("Condition"));
         iStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
         iQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
-        iIssuedTo.setCellValueFactory(new PropertyValueFactory<>("Issued To"));
-        iIssuedQuantity.setCellValueFactory(new PropertyValueFactory<>("Issued Quantity"));
-        iIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
-        iReturnDate.setCellValueFactory(new PropertyValueFactory<>("Return Date"));
+        iIssuedTo.setCellValueFactory(new PropertyValueFactory<>("IssuedTo"));
+        iIssuedQuantity.setCellValueFactory(new PropertyValueFactory<>("IssuedQuantity"));
+        iIssueDate.setCellValueFactory(new PropertyValueFactory<>("IssueDate"));
+        iReturnDate.setCellValueFactory(new PropertyValueFactory<>("ReturnDate"));
         iVendor.setCellValueFactory(new PropertyValueFactory<>("Vendor"));
-        iInvoice.setCellValueFactory(new PropertyValueFactory<>("Invoice Number"));
+        iInvoice.setCellValueFactory(new PropertyValueFactory<>("Invoice"));
         iPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("PurchaseDate"));
         iUnitPrice.setCellValueFactory(new PropertyValueFactory<>("UnitPrice"));
         iTax.setCellValueFactory(new PropertyValueFactory<>("Tax"));
@@ -316,6 +316,18 @@ public class root extends Student implements Initializable {
     
     @FXML 
     private void onReturn(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void onSSearch(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void onISearch(ActionEvent event)throws Exception
     {
         
     }
@@ -574,7 +586,7 @@ public class root extends Student implements Initializable {
         TableColumn.CellEditEvent<Student,String> ce;
         ce=(TableColumn.CellEditEvent<Student,String>) e;
         Student s=ce.getRowValue();
-        s.setQuality(ce.getNewValue());
+        s.setQuantity(ce.getNewValue());
     }
 
     public void colIssueDate_OnEditCommit(Event e){
