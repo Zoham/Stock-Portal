@@ -20,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class root extends Student implements Initializable {
-    
+    String sport="",brand="",model="",item="";
     @FXML ComboBox issueSport;
     @FXML ComboBox issueBrand;
     @FXML ComboBox issueItem;
@@ -244,7 +244,37 @@ public class root extends Student implements Initializable {
     @FXML 
     private void onReturn(ActionEvent event)throws Exception
     {
-        
+        boolean submit;
+        submit=ConfirmationBox.show("Are you sure that you want to submit?","Confirmation");
+        if(sport.equals("")||item.equals("")||model.equals("")||brand.equals(""))
+           System.out.println("Error");
+        else
+        {
+            try
+            {
+                connect();
+                String student=(String)returnRoll.getText();
+                String quantity=(String)returnQuantity.getText();
+                String sql="SELECT * FROM Stock WHERE Sport=? AND Item=? AND Model=? AND Brand=? AND IssuedTo=?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1,sport);
+                pstmt.setString(2,item);
+                pstmt.setString(1,model);
+                pstmt.setString(1,brand);
+                pstmt.setString(1,student);
+                ResultSet rs=pstmt.executeQuery();
+                String str=rs.getString("Issuedate");
+                
+//if(str.substring(0,2)-)
+                //TODO: SomeCheckings with returnDate, possible fines
+                //TODO: Change Staus to Returned if all conditions are met?
+                
+            }
+            catch(Exception e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
+        }
     }
     
     @FXML 
@@ -387,6 +417,11 @@ public class root extends Student implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
+        returnSport.getItems().addAll("Cricket","Badminton","Volleyball","Tennis","Football","Basketball","3");
+        returnSport.setEditable(true);
+        returnBrand.setEditable(true);
+        returnModel.setEditable(true);
+        returnItem.setEditable(true);
     }
     
     public void connect()
@@ -426,24 +461,77 @@ public class root extends Student implements Initializable {
     @FXML 
     private void rSport(ActionEvent event)throws Exception
     {
-        
+        sport=returnSport.getEditor().getText();
+        try
+        {
+            connect();
+            String sql="SELECT Brand FROM Stock WHERE Sport=?";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setString(1,sport);
+            ResultSet rs=pstmt.executeQuery();
+            while(rs.next())
+                returnBrand.getItems().addAll(rs.getString("Brand")+"");
+                //System.out.println(rs.getString("Brand"));
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     
     @FXML 
     private void rItem(ActionEvent event)throws Exception
     {
-        
+        item=returnItem.getEditor().getText();
     }
     
     @FXML 
     private void rBrand(ActionEvent event)throws Exception
     {
+        String brand=returnBrand.getEditor().getText();
         
+        try
+        {
+            connect();
+            String sql="SELECT Model FROM Stock WHERE Sport=? AND Brand=?";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setString(1,sport);
+            pstmt.setString(2,brand);
+            ResultSet rs=pstmt.executeQuery();
+            while(rs.next())
+                returnModel.getItems().addAll(rs.getString("Model")+"");
+            returnModel.getItems().addAll("Okay");
+                //System.out.println(rs.getString("Brand"));
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     
     @FXML 
     private void rModel(ActionEvent event)throws Exception
     {
+        String model=returnModel.getEditor().getText();
         
+        try
+        {
+            connect();
+            String sql="SELECT Item FROM Stock WHERE Sport=? AND Brand=? AND Model=?";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setString(1,sport);
+            pstmt.setString(2,brand);
+            pstmt.setString(3,model);
+            ResultSet rs=pstmt.executeQuery();
+            while(rs.next())
+                returnItem.getItems().addAll(rs.getString("Item")+"");
+                //System.out.println(rs.getString("Brand"));
+                returnItem.getItems().addAll("Okay");
+                
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }
