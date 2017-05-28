@@ -43,8 +43,8 @@
                               </GridPane>
                               <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <ComboBox fx:id="issueSport" prefWidth="150.0" promptText="Sport" GridPane.halignment="CENTER" />
-                                    <ComboBox fx:id="issueBrand" prefWidth="150.0" promptText="Brand" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="issueSport" onAction="#iSport" prefWidth="150.0" promptText="Sport" GridPane.halignment="CENTER" />
+                                    <ComboBox fx:id="issueBrand" onAction="#iBrand" prefWidth="150.0" promptText="Brand" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                     <TextField fx:id="IssueRoll" promptText="Student Roll Number" GridPane.rowIndex="4" />
                                  </children>
                                  <columnConstraints>
@@ -60,8 +60,8 @@
                               </GridPane>
                               <GridPane GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <children>
-                                    <ComboBox fx:id="issueItem" prefWidth="150.0" promptText="Item" GridPane.halignment="CENTER" />
-                                    <ComboBox fx:id="issueModel" prefWidth="150.0" promptText="Model" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="issueItem" onAction="#iItem" prefWidth="150.0" promptText="Item" GridPane.halignment="CENTER" />
+                                    <ComboBox fx:id="issueModel" onAction="#iModel" prefWidth="150.0" promptText="Model" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                     <TextField fx:id="issueQuantity" promptText="Quantity" GridPane.rowIndex="4" />
                                  </children>
                                  <columnConstraints>
@@ -113,8 +113,8 @@
                            <children>
                               <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <ComboBox fx:id="returnSport" prefWidth="150.0" promptText="Sport" GridPane.halignment="CENTER" />
-                                    <ComboBox fx:id="returnBrand" prefWidth="150.0" promptText="Brand" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="returnSport" onAction="#rSport" prefWidth="150.0" promptText="Sport" GridPane.halignment="CENTER" />
+                                    <ComboBox fx:id="returnBrand" onAction="#rBrand" prefWidth="150.0" promptText="Brand" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                     <TextField fx:id="returnRoll" promptText="Student Roll Number" GridPane.rowIndex="4" />
                                  </children>
                                  <columnConstraints>
@@ -130,8 +130,8 @@
                               </GridPane>
                               <GridPane GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <children>
-                                    <ComboBox fx:id="returnItem" prefWidth="150.0" promptText="Item" GridPane.halignment="CENTER" />
-                                    <ComboBox fx:id="returnModel" prefWidth="150.0" promptText="Model" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="returnItem" onAction="#rItem" prefWidth="150.0" promptText="Item" GridPane.halignment="CENTER" />
+                                    <ComboBox fx:id="returnModel" onAction="#rModel" prefWidth="150.0" promptText="Model" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                     <TextField fx:id="returnQuantity" promptText="Quantity" GridPane.rowIndex="4" />
                                  </children>
                                  <columnConstraints>
@@ -331,7 +331,7 @@
                                     <TableColumn fx:id="sIssuedItem" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Issued Item" />
                                     <TableColumn fx:id="sQuantity" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="108.0" text="Quantity" />
                                     <TableColumn fx:id="sIssueDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Issue Date" />
-                                    <TableColumn fx:id="sReturnDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="26.0" text="Return Date" />
+                                    <TableColumn fx:id="sReturnDate" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" text="Return Date" />
                                 </columns>
                               </TableView>
                               <GridPane>
@@ -355,6 +355,7 @@
                                     <TextField fx:id="studentSearchT" promptText="Search Text" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <Button fx:id="studentSearchB" mnemonicParsing="false" text="Search" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <Button fx:id="studentRefresh" mnemonicParsing="false" onAction="#showStudent" text="Refresh" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="sEdit" mnemonicParsing="false" onAction="#onSEdit" text="Save Edits" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -542,6 +543,7 @@
                                     <TextField fx:id="itemSearchT" promptText="Search Text" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <Button fx:id="itemSearchB" mnemonicParsing="false" text="Search" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <Button fx:id="itemRefresh" mnemonicParsing="false" onAction="#showItem" text="Refresh" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="iEdit" mnemonicParsing="false" onAction="#onIEdit" text="Save Edits" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                  </children>
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
