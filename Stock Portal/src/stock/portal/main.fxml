@@ -322,7 +322,7 @@
                            <children>
                               <TableView fx:id="studentTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                 <columns>
-                                    <TableColumn fx:id="sRoll" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Roll Number" />
+                                    <TableColumn fx:id="sRoll" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Roll Number" />
                                   <TableColumn fx:id="sName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Name" />
                                     <TableColumn fx:id="sEmail" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Email Id" />
                                     <TableColumn fx:id="sMobile" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="75.0" text="Mobile Number" />
@@ -355,6 +355,7 @@
                                     <TextField fx:id="studentSearchT" promptText="Search Text" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <Button fx:id="studentSearchB" mnemonicParsing="false" text="Search" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <Button fx:id="studentRefresh" mnemonicParsing="false" onAction="#showStudent" text="Refresh" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="sEdit" mnemonicParsing="false" onAction="#onSEdit" text="Save Edits" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -524,16 +525,16 @@
                                     <TableColumn fx:id="iStatus" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Status" />
                                     <TableColumn fx:id="iQuantity" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Quantity" />
                                     <TableColumn fx:id="iIssuedTo" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Issued To" />
-                                    <TableColumn fx:id="iIssuedQuantity" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Issued Quantity" />
-                                    <TableColumn fx:id="iIssueDate" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Issue Date" />
-                                    <TableColumn fx:id="iReturnDate" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Return Date" />
-                                    <TableColumn fx:id="iVendor" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Vendor" />
-                                    <TableColumn fx:id="iInvoice" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Invoice Number" />
-                                    <TableColumn fx:id="iPurchaseDate" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Purchase Date" />
-                                    <TableColumn fx:id="iUnitPrice" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Unit Price" />
-                                    <TableColumn fx:id="iTax" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Tax" />
-                                    <TableColumn fx:id="iTotal" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Total" />
-                                    <TableColumn fx:id="UID" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="UID" />
+                                    <TableColumn fx:id="iIssuedQuantity" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Issued Quantity" />
+                                    <TableColumn fx:id="iIssueDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Issue Date" />
+                                    <TableColumn fx:id="iReturnDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Return Date" />
+                                    <TableColumn fx:id="iVendor" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Vendor" />
+                                    <TableColumn fx:id="iInvoice" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Invoice Number" />
+                                    <TableColumn fx:id="iPurchaseDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Purchase Date" />
+                                    <TableColumn fx:id="iUnitPrice" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Unit Price" />
+                                    <TableColumn fx:id="iTax" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Tax" />
+                                    <TableColumn fx:id="iTotal" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="Total" />
+                                    <TableColumn fx:id="UID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="50.0" text="UID" />
                                 </columns>
                               </TableView>
                               <GridPane>
@@ -542,6 +543,7 @@
                                     <TextField fx:id="itemSearchT" promptText="Search Text" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <Button fx:id="itemSearchB" mnemonicParsing="false" text="Search" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <Button fx:id="itemRefresh" mnemonicParsing="false" onAction="#showItem" text="Refresh" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="iEdit" mnemonicParsing="false" onAction="#onIEdit" text="Save Edits" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                  </children>
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
