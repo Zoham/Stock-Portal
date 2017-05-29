@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import java.sql.*;
+import java.time.LocalDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
@@ -24,7 +25,7 @@ public class root extends Student implements Initializable {
     @FXML ComboBox issueBrand;
     @FXML ComboBox issueItem;
     @FXML ComboBox issueModel;
-    @FXML TextField IssueRoll;
+    @FXML TextField issueRoll;
     @FXML TextField issueQuantity;
     @FXML DatePicker issueDate;
     @FXML Button issueUpdate;
@@ -138,7 +139,7 @@ public class root extends Student implements Initializable {
             
             Student student=new Student();
             while(rs.next()){
-                    student.setRoll(rs.getString("Roll Number"));
+                    student.setRoll(rs.getString("Roll"));
                     student.setName(rs.getString("Name"));
                     student.setEmail(rs.getString("Email Id"));
                     student.setMobile(rs.getString("Mobile Number"));
@@ -158,7 +159,7 @@ public class root extends Student implements Initializable {
         return data;
     }
     
-     @FXML 
+    @FXML 
     private void showItem(ActionEvent e) throws Exception
     {
         iBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
@@ -229,7 +230,46 @@ public class root extends Student implements Initializable {
     @FXML 
     private void onIssue(ActionEvent event)throws Exception
     {
+        String sport = (String) issueSport.getValue();
+        String brand = (String) issueBrand.getValue();
+        String item = (String) issueItem.getValue();
+        String model = (String) issueModel.getValue();
+        String roll = issueRoll.getText();
+        String qty = (issueQuantity.getText());
+        LocalDate ldate = issueDate.getValue();
+        java.sql.Date idate = java.sql.Date.valueOf(ldate);
+        java.sql.Date rdate = java.sql.Date.valueOf(ldate.plusDays(7));
+        connect();
+//        System.out.println(qty);
+        System.out.println(idate);
+        String issued = sport + " " + brand + " " + item + " " + model;
         
+        String query =
+                        "UPDATE Student SET Issued=?1, Quantity=?2, IssueDate=?3, ReturnDate=?4 WHERE Roll='"+ 
+                        roll + "';";
+            String error = "Fill All Fields";
+            String errorBox = "Error";
+            if(roll.equals("")) MessageBox.show(error,errorBox);
+            else if(roll==null ) MessageBox.show(error,errorBox);
+            else {
+                try {
+                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+                    preparedStmt.setString (1, issued);
+                    preparedStmt.setString (2, qty);
+                    preparedStmt.setDate(3, idate);
+                    preparedStmt.setDate(4, rdate);
+                    preparedStmt.execute();
+                    conn.close();
+            
+                    MessageBox.show("Update Sucessful","Update");
+                    issueRoll.setText("");
+                }
+                
+                catch (SQLException e){
+                    MessageBox.show(e.getMessage(),"Error");
+                }
+            }
+                                           
     }
     
     @FXML 
@@ -265,7 +305,7 @@ public class root extends Student implements Initializable {
                     connect();
 
                     String query =
-                            "INSERT INTO Student ('Roll Number','Name','School','Residence','Room Number','Email id','Mobile Number') "
+                            "INSERT INTO Student ('Roll','Name','School','Residence','Room Number','Email id','Mobile Number') "
                             + "VALUES (?1,?2,?3,?4,?5,?6,?7)";
                     PreparedStatement preparedStmt = conn.prepareStatement(query);
                     preparedStmt.setString (1, sroll);
@@ -370,15 +410,22 @@ public class root extends Student implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
+        issueSport.getItems().addAll("Cricket","Football","Badminton","Hockey");
+        issueBrand.getItems().addAll("Adidas","Nike");
+        issueItem.getItems().addAll("Bat","Ball","Helmet");
+        issueModel.getItems().addAll("X","Y","Z");
     }
     
     public void connect()
     {
         try{
             conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
+            System.out.println("Connected!");
         }
         catch(SQLException e){
             MessageBox.show(e.getMessage(),"Connection error");
         }
     }
+    
+    
 }
