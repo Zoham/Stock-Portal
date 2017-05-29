@@ -22,6 +22,8 @@ public class MainApplication  extends Application {
     Stage stage;
     boolean loginScreen = true;
     
+    Stage primaryStage;
+    
     private void screen(boolean b)throws Exception
     {
         Parent root;
@@ -38,6 +40,23 @@ public class MainApplication  extends Application {
         stage=stg;
         screen(loginScreen);
         System.out.println("Here");
+        
+        primaryStage=stage;
+        stage.setOnCloseRequest(e -> 
+        {
+            e.consume();
+            Close_Click ();
+        });
+    }
+    
+    private void Close_Click()
+    {
+            boolean reallyQuit = false;
+            reallyQuit = ConfirmationBox.show("Are you sure you want to quit?","Confirmation");
+            if (reallyQuit)
+            {
+                primaryStage.close();
+            }
     }
     
     public static void main(String[] args) {

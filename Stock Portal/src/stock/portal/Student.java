@@ -8,7 +8,7 @@ public class Student {
     String room;
     String residence;
     String itemissued;
-    String quality;
+    String quantity;
     String issuedate;
     String returndate;
     
@@ -19,7 +19,7 @@ public class Student {
     public String getRoom(){return room;}
     public String getResidence(){return residence;}
     public String getItemissued(){return itemissued;}
-    public String getQuality(){return quality;}
+    public String getQuantity(){return quantity;}
     public String getIssuedate(){return issuedate;}
     public String getReturndate(){return returndate;}
     
@@ -30,7 +30,7 @@ public class Student {
     public void setRoom(String r){room=r;}
     public void setResidence(String r){residence=r;}
     public void setItemissued(String r){itemissued=r;}
-    public void setQuality(String r){quality=r;}
+    public void setQuantity(String r){quantity=r;}
     public void setIssuedate(String r){issuedate=r;}
     public void setReturndate(String r){returndate=r;}
 }
