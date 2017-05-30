@@ -235,40 +235,39 @@ public class root extends Student implements Initializable {
         String item = (String) issueItem.getValue();
         String model = (String) issueModel.getValue();
         String roll = issueRoll.getText();
-        String qty = (issueQuantity.getText());
+        int qty = Integer.parseInt(issueQuantity.getText());
         LocalDate ldate = issueDate.getValue();
         java.sql.Date idate = java.sql.Date.valueOf(ldate);
         java.sql.Date rdate = java.sql.Date.valueOf(ldate.plusDays(7));
         connect();
 //        System.out.println(qty);
         System.out.println(idate);
-        String issued = sport + " " + brand + " " + item + " " + model;
         
-        String query =
-                        "UPDATE Student SET Issued=?1, Quantity=?2, IssueDate=?3, ReturnDate=?4 WHERE Roll='"+ 
-                        roll + "';";
+        String query = "INSERT INTO Transaction VALUES(?1, ?2, ?3, ?4, ?5);";
+        String UID = sport.substring(0,2) + brand.substring(0,2) + item.substring(0,2) + model.substring(0,2);
             String error = "Fill All Fields";
             String errorBox = "Error";
-            if(roll.equals("")) MessageBox.show(error,errorBox);
-            else if(roll==null ) MessageBox.show(error,errorBox);
-            else {
-                try {
-                    PreparedStatement preparedStmt = conn.prepareStatement(query);
-                    preparedStmt.setString (1, issued);
-                    preparedStmt.setString (2, qty);
-                    preparedStmt.setDate(3, idate);
-                    preparedStmt.setDate(4, rdate);
-                    preparedStmt.execute();
-                    conn.close();
-            
-                    MessageBox.show("Update Sucessful","Update");
-                    issueRoll.setText("");
-                }
-                
-                catch (SQLException e){
-                    MessageBox.show(e.getMessage(),"Error");
-                }
-            }
+//            if(roll.equals("")) MessageBox.show(error,errorBox);
+//            else if(roll==null ) MessageBox.show(error,errorBox);
+//            else {
+//                try {
+//                    PreparedStatement preparedStmt = conn.prepareStatement(query);
+//                    preparedStmt.setString (1, UID);
+//                    preparedStmt.setString (2, roll);
+//                    preparedStmt.setDate(3, idate);
+//                    preparedStmt.setDate(4, rdate);
+//                    preparedStmt.setInt(5, qty);
+//                    preparedStmt.execute();
+//                    conn.close();
+//            
+//                    MessageBox.show("Update Sucessful","Update");
+//                    issueRoll.setText("");
+//                }
+//                
+//                catch (SQLException e){
+//                    MessageBox.show(e.getMessage(),"Error");
+//                }
+//            }
                                            
     }
     
@@ -305,7 +304,7 @@ public class root extends Student implements Initializable {
                     connect();
 
                     String query =
-                            "INSERT INTO Student ('Roll','Name','School','Residence','Room Number','Email id','Mobile Number') "
+                            "INSERT INTO Student ('Roll','Name','School','Residence','Room','Email','Mobile') "
                             + "VALUES (?1,?2,?3,?4,?5,?6,?7)";
                     PreparedStatement preparedStmt = conn.prepareStatement(query);
                     preparedStmt.setString (1, sroll);
