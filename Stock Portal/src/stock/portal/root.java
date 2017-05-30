@@ -67,6 +67,8 @@ public class root extends Student implements Initializable {
     @FXML TableColumn sMobile;
     @FXML TableColumn sRoom;
     @FXML TableColumn sResidence;
+     @FXML TableColumn sSchool;
+    
     
     @FXML TableColumn iBrand;
     @FXML TableColumn iModel;
@@ -86,7 +88,42 @@ public class root extends Student implements Initializable {
     @FXML Button iEdit;
     @FXML Button sEdit;
     
+    @FXML ComboBox titleFA;
+    @FXML TextField newFA; 
+    @FXML ComboBox titleFD;
+    @FXML ComboBox listFD;
+    
     Connection conn = null;
+    
+    @FXML 
+    private void addField(ActionEvent e) throws Exception
+    {
+        String tfa = (String)titleFA.getValue();
+        String nfa = newFA.getText();
+            
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        if((tfa==null) || nfa.equals("")) MessageBox.show(error,errorBox);
+        else
+        {
+            
+        }
+    }
+    
+    @FXML 
+    private void delField(ActionEvent e) throws Exception
+    {
+        String tfd = (String)titleFD.getValue();
+        String ffd = (String)listFD.getValue();
+            
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        if((tfd==null) || ffd==null) MessageBox.show(error,errorBox);
+        else
+        {
+            
+        }
+    }
     
     @FXML 
     private void showStudent(ActionEvent e) throws Exception
@@ -97,6 +134,7 @@ public class root extends Student implements Initializable {
         sMobile.setCellValueFactory(new PropertyValueFactory<>("Mobile"));
         sRoom.setCellValueFactory(new PropertyValueFactory<>("Room"));
         sResidence.setCellValueFactory(new PropertyValueFactory<>("Residence"));
+        sSchool.setCellValueFactory(new PropertyValueFactory<>("School"));
     
         studentTable.setEditable(true);
         
@@ -115,6 +153,8 @@ public class root extends Student implements Initializable {
         sRoom.setOnEditCommit( event -> colRoom_OnEditCommit(event) );
         sResidence.setCellFactory(TextFieldTableCell.forTableColumn());
         sResidence.setOnEditCommit( event -> colResidence_OnEditCommit(event) );
+        sSchool.setCellFactory(TextFieldTableCell.forTableColumn());
+        sSchool.setOnEditCommit( event -> colSchool_OnEditCommit(event) );
     }
     
     public ObservableList<Student> sloadData()
@@ -136,6 +176,7 @@ public class root extends Student implements Initializable {
                     student.setMobile(rs.getString("Mobile Number"));
                     student.setRoom(rs.getString("Room Number"));
                     student.setResidence(rs.getString("Residence"));
+                    student.setSchool(rs.getString("School"));
                     data.add(student);
             }          
         }
@@ -145,7 +186,7 @@ public class root extends Student implements Initializable {
         return data;
     }
     
-     @FXML 
+    @FXML 
     private void showItem(ActionEvent e) throws Exception
     {
         iBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
@@ -386,6 +427,8 @@ public class root extends Student implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
+        titleFA.getItems().addAll("Sport","Secretary","Condition","Residence","School");
+        titleFD.getItems().addAll("Sport","Secretary","Condition","Residence","School");
     }
     
     public void connect()
@@ -487,6 +530,13 @@ public class root extends Student implements Initializable {
         ce=(TableColumn.CellEditEvent<Student,String>) e;
         Student s=ce.getRowValue();
         s.setResidence(ce.getNewValue());
+    }
+    
+    public void colSchool_OnEditCommit(Event e){
+        TableColumn.CellEditEvent<Student,String> ce;
+        ce=(TableColumn.CellEditEvent<Student,String>) e;
+        Student s=ce.getRowValue();
+        s.setSchool(ce.getNewValue());
     }
     
     

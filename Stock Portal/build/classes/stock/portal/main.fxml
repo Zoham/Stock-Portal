@@ -108,12 +108,13 @@
                            <children>
                               <TableView fx:id="studentTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                 <columns>
-                                    <TableColumn fx:id="sRoll" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="213.0" text="Roll Number" />
-                                  <TableColumn fx:id="sName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="213.0" text="Name" />
-                                    <TableColumn fx:id="sEmail" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="213.0" text="Email Id" />
-                                    <TableColumn fx:id="sMobile" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="213.0" text="Mobile Number" />
-                                    <TableColumn fx:id="sRoom" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="213.0" text="Room Number" />
-                                    <TableColumn fx:id="sResidence" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="213.0" text="Residence" />
+                                    <TableColumn fx:id="sRoll" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="182.0" text="Roll Number" />
+                                  <TableColumn fx:id="sName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="182.0" text="Name" />
+                                    <TableColumn fx:id="sEmail" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="182.0" text="Email Id" />
+                                    <TableColumn fx:id="sMobile" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="182.0" text="Mobile Number" />
+                                    <TableColumn fx:id="sRoom" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="182.0" text="Room Number" />
+                                    <TableColumn fx:id="sResidence" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="182.0" text="Residence" />
+                                    <TableColumn fx:id="sSchool" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="182.0" text="School" />
                                 </columns>
                               </TableView>
                               <GridPane>
@@ -298,21 +299,20 @@
                           <children>
                               <TableView fx:id="itemTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                 <columns>
-                                  <TableColumn fx:id="iBrand" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Brand" />
-                                    <TableColumn fx:id="iModel" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Model" />
-                                    <TableColumn fx:id="iItem" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Item" />
-                                    <TableColumn fx:id="iSport" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Sport" />
-                                    <TableColumn fx:id="iSecretary" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Secretary" />
-                                    <TableColumn fx:id="iCondition" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Condition" />
-                                    <TableColumn fx:id="iStatus" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Status" />
-                                    <TableColumn fx:id="iQuantity" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Quantity" />
-                                    <TableColumn fx:id="iVendor" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Vendor" />
-                                    <TableColumn fx:id="iInvoice" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Invoice Number" />
-                                    <TableColumn fx:id="iPurchaseDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Purchase Date" />
-                                    <TableColumn fx:id="iUnitPrice" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Unit Price" />
-                                    <TableColumn fx:id="iTax" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Tax" />
-                                    <TableColumn fx:id="iTotal" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Total" />
-                                    <TableColumn fx:id="UID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="UID" />
+                                  <TableColumn fx:id="iBrand" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Brand" />
+                                    <TableColumn fx:id="iModel" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Model" />
+                                    <TableColumn fx:id="iItem" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Item" />
+                                    <TableColumn fx:id="iSport" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Sport" />
+                                    <TableColumn fx:id="iSecretary" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Secretary" />
+                                    <TableColumn fx:id="iCondition" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Condition" />
+                                    <TableColumn fx:id="iStatus" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Status" />
+                                    <TableColumn fx:id="iQuantity" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Quantity" />
+                                    <TableColumn fx:id="iVendor" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Vendor" />
+                                    <TableColumn fx:id="iInvoice" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Invoice Number" />
+                                    <TableColumn fx:id="iPurchaseDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Purchase Date" />
+                                    <TableColumn fx:id="iUnitPrice" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Unit Price" />
+                                    <TableColumn fx:id="iTax" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Tax" />
+                                    <TableColumn fx:id="iTotal" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Total" />
                                 </columns>
                               </TableView>
                               <GridPane>
@@ -345,6 +345,62 @@
                   </Tab>
                </tabs>
             </TabPane>
+         </content>
+      </Tab>
+      <Tab text="Admin">
+         <content>
+            <GridPane>
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <TextField fx:id="newFA" promptText="New Field" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="titleFA" prefWidth="150.0" promptText="Title" GridPane.halignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#addField" text="Add FIeld" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <children>
+                        <ComboBox fx:id="titleFD" prefWidth="150.0" promptText="Title" GridPane.halignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#delField" text="Delete Field" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="listFD" prefWidth="150.0" promptText="Fields" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </GridPane>
          </content>
       </Tab>
   </tabs>

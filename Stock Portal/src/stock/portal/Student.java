@@ -7,6 +7,7 @@ public class Student {
     String mobile;
     String room;
     String residence;
+    String school;
     
     public String getRoll(){return roll;}
     public String getName(){return name;}
@@ -14,6 +15,7 @@ public class Student {
     public String getMobile(){return mobile;}
     public String getRoom(){return room;}
     public String getResidence(){return residence;}
+    public String getSchool(){return residence;}
     
     public void setRoll(String r){roll=r;}
     public void setName(String r){name=r;}
@@ -21,4 +23,5 @@ public class Student {
     public void setMobile(String r){mobile=r;}
     public void setRoom(String r){room=r;}
     public void setResidence(String r){residence=r;}
+    public void setSchool(String r){school=r;}
 }
