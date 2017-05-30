@@ -298,21 +298,20 @@
                           <children>
                               <TableView fx:id="itemTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                 <columns>
-                                  <TableColumn fx:id="iBrand" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Brand" />
-                                    <TableColumn fx:id="iModel" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Model" />
-                                    <TableColumn fx:id="iItem" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Item" />
-                                    <TableColumn fx:id="iSport" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Sport" />
-                                    <TableColumn fx:id="iSecretary" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Secretary" />
-                                    <TableColumn fx:id="iCondition" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Condition" />
-                                    <TableColumn fx:id="iStatus" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Status" />
-                                    <TableColumn fx:id="iQuantity" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Quantity" />
-                                    <TableColumn fx:id="iVendor" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Vendor" />
-                                    <TableColumn fx:id="iInvoice" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Invoice Number" />
-                                    <TableColumn fx:id="iPurchaseDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Purchase Date" />
-                                    <TableColumn fx:id="iUnitPrice" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Unit Price" />
-                                    <TableColumn fx:id="iTax" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Tax" />
-                                    <TableColumn fx:id="iTotal" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="Total" />
-                                    <TableColumn fx:id="UID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="85.0" text="UID" />
+                                  <TableColumn fx:id="iBrand" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Brand" />
+                                    <TableColumn fx:id="iModel" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Model" />
+                                    <TableColumn fx:id="iItem" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Item" />
+                                    <TableColumn fx:id="iSport" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Sport" />
+                                    <TableColumn fx:id="iSecretary" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Secretary" />
+                                    <TableColumn fx:id="iCondition" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Condition" />
+                                    <TableColumn fx:id="iStatus" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Status" />
+                                    <TableColumn fx:id="iQuantity" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Quantity" />
+                                    <TableColumn fx:id="iVendor" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Vendor" />
+                                    <TableColumn fx:id="iInvoice" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Invoice Number" />
+                                    <TableColumn fx:id="iPurchaseDate" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Purchase Date" />
+                                    <TableColumn fx:id="iUnitPrice" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Unit Price" />
+                                    <TableColumn fx:id="iTax" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Tax" />
+                                    <TableColumn fx:id="iTotal" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="91.0" text="Total" />
                                 </columns>
                               </TableView>
                               <GridPane>
