@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,15 +53,15 @@ public class root extends Student implements Initializable {
     
     @FXML TextField itemBrand;
     @FXML TextField itemName;
-    @FXML TextField itemSport;
-    @FXML TextField itemCondition;
+    @FXML ComboBox itemSport;
+    @FXML ComboBox itemCondition;
     @FXML TextField itemVendor;
     @FXML TextField itemInvoice;
     @FXML TextField itemModel;
     @FXML TextField itemQuantity;
-    @FXML TextField itemSecretary;
+    @FXML ComboBox itemSecretary;
     @FXML TextField itemPrice;
-    @FXML TextField itemDate;
+    @FXML DatePicker itemDate;
     @FXML TextField itemTax;
     @FXML Button itemSubmit;
     
@@ -406,15 +407,15 @@ public class root extends Student implements Initializable {
         { 
             String iB=itemBrand.getText();
             String iN=itemName.getText();
-            String iS=itemSport.getText();
-            String iC=itemCondition.getText();
+            String iS=(String)itemSport.getValue();
+            String iC=(String)itemCondition.getValue();
             String iV=itemVendor.getText();
             String iI=itemInvoice.getText();
             String iM=itemModel.getText();
             String iQ=itemQuantity.getText();
-            String iSec=itemSecretary.getText();
+            String iSec=(String)itemSecretary.getValue();
             String iP=itemPrice.getText();
-            String iD=itemDate.getText();
+            LocalDate iD=itemDate.getValue();
             String iT=itemTax.getText();
         
             String error = "Fill All Fields";
@@ -429,7 +430,7 @@ public class root extends Student implements Initializable {
 
                     String query =
                             "INSERT INTO Stock ('Brand','Item','Sport','Condition','Vendor','InvoiceNo','Model','Quantity','Secretary','UnitPrice','PurchaseDate','Tax') "
-                            + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)";
+                            + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,iD,?12)";
 
                     PreparedStatement preparedStmt = conn.prepareStatement(query);
                     preparedStmt.setString (1, iB);
@@ -442,7 +443,7 @@ public class root extends Student implements Initializable {
                     preparedStmt.setString (8, iQ);
                     preparedStmt.setString (9, iSec);
                     preparedStmt.setString (10, iP);
-                    preparedStmt.setString (11, iD);
+                    //preparedStmt.setString (11, iD);
                     preparedStmt.setString (12, iT);
                     preparedStmt.execute();
                     conn.close();
@@ -450,15 +451,15 @@ public class root extends Student implements Initializable {
                     MessageBox.show("Update Sucessful","Update");
                     itemBrand.setText("");
                     itemName.setText("");
-                    itemSport.setText("");
-                    itemCondition.setText("");
+                    //itemSport.setText("");
+                    //itemCondition.setText("");
                     itemVendor.setText("");
                     itemInvoice.setText("");
                     itemModel.setText("");
                     itemQuantity.setText("");
-                    itemSecretary.setText("");
+                    //itemSecretary.setText("");
                     itemPrice.setText("");
-                    itemDate.setText("");
+                    //itemDate.setText("");
                     itemTax.setText("");
                 }
                 catch (SQLException e) {
