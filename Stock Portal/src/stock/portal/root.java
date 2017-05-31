@@ -84,8 +84,8 @@ public class root extends Student implements Initializable {
     @FXML TableColumn iTax;
     @FXML TableColumn iTotal;
     
-    @FXML Button iEdit;
-    @FXML Button sEdit;
+    //@FXML Button iEdit;
+    //@FXML Button sEdit;
     
     Connection conn = null;
     
@@ -226,7 +226,7 @@ public class root extends Student implements Initializable {
                     stock.setQuantity(rs.getString("Quantity"));
                     stock.setVendor(rs.getString("Vendor"));
                     stock.setInvoice(rs.getString("Invoice"));
-                    stock.setPurchase(rs.getDate("Purchase"));
+                    //stock.setPurchase(rs.getDate("Purchase"));
                     stock.setUnit(rs.getString("Unit"));
                     stock.setTax(rs.getString("Tax"));
                     stock.setTotal(rs.getString("Total"));
@@ -434,7 +434,7 @@ public class root extends Student implements Initializable {
                     stock.setQuantity(rs.getString("Quantity"));
                     stock.setVendor(rs.getString("Vendor"));
                     stock.setInvoice(rs.getString("Invoice"));
-                    stock.setPurchase(rs.getDate("Purchase"));
+                    //stock.setPurchase(rs.getDate("Purchase"));
                     stock.setUnit(rs.getString("Unit"));
                     stock.setTax(rs.getString("Tax"));
                     stock.setTotal(rs.getString("Total"));
@@ -495,8 +495,8 @@ public class root extends Student implements Initializable {
                     studentRoll.setText("");
                     studentMobile.setText("");
                     studentRoom.setText("");
-                    studentResidence.setValue("Residence");
-                    studentSchool.setValue("School");
+                    studentResidence.setValue(null);
+                    studentSchool.setValue(null);
                 }
                 catch (SQLException e) {
                     System.out.print(e.getMessage());
@@ -568,6 +568,9 @@ public class root extends Student implements Initializable {
                     itemPrice.setText("");
                     itemTax.setText("");
                     itemDate.setValue(null);
+                    itemSport.setValue(null);
+                    itemSecretary.setValue(null);
+                    itemCondition.setValue(null);
                 }
                 catch (SQLException e) {
                     System.out.println(e.getMessage());
@@ -593,9 +596,10 @@ public class root extends Student implements Initializable {
     public void connect()
     {
         try{
+            Class.forName("org.sqlite.JDBC");
             conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
         }
-        catch(SQLException e){
+        catch(Exception e){
             MessageBox.show(e.getMessage(),"Connection error");
         }
     }
