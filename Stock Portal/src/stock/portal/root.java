@@ -362,18 +362,18 @@ public class root extends Student implements Initializable {
                 try 
                 {
                     //connect();
-                    Connection c=null;
+                    /*Connection c=null;
                     try{
                              c=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
                         }
                         catch(SQLException e){
                                 MessageBox.show(e.getMessage(),"Connection error");
-                        }
+                        }*/
                     String query2 =
                             /*"UPDATE Student SET('Name','Residence','Room','Email','Mobile','School') "
                             + "VALUES (?1,?2,?3,?4,?5,?6) WHERE Roll=?7";*/
                             "UPDATE Student SET 'Name'=?1,'Residence'=?2,'Room'=?3,'Email'=?4,'Mobile'=?5,'School'=?6 WHERE Roll=?7";
-                    PreparedStatement preparedStmt = c.prepareStatement(query2);
+                    PreparedStatement preparedStmt = conn.prepareStatement(query2);
                     preparedStmt.setString (1, students.get(i).getName());
                     preparedStmt.setString (2, students.get(i).getResidence());
                     preparedStmt.setString (3, students.get(i).getRoom());
@@ -382,8 +382,8 @@ public class root extends Student implements Initializable {
                     preparedStmt.setString (6, students.get(i).getSchool());
                     preparedStmt.setString (7, students.get(i).getRoll());
                     
-                    preparedStmt.execute();
-                    c.close();
+                    preparedStmt.executeUpdate();
+                    //c.close();
                     preparedStmt.close();
                     MessageBox.show("Sucessfully Saved","Update");
                     
@@ -408,7 +408,100 @@ public class root extends Student implements Initializable {
     private void onIEdit(ActionEvent event)throws Exception
     {
         
-    }
+        int i=-1;
+        ObservableList<Stock> items;
+        items=itemTable.getItems();
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        String UID;
+        try
+        {
+            connect();
+            
+            String query="SELECT * FROM STOCK";
+            ResultSet rs=conn.createStatement().executeQuery(query);
+                      
+            while(rs.next())
+            {
+                    i++;
+                    Stock stock=new Stock();  
+                    stock.setBrand(rs.getString("Brand"));
+                    stock.setModel(rs.getString("Model"));
+                    stock.setItem(rs.getString("Item"));
+                    stock.setSport(rs.getString("Sport"));
+                    stock.setSecretary(rs.getString("Secretary"));
+                    stock.setCondition(rs.getString("Condition"));
+                    stock.setStatus(rs.getString("Status"));
+                    stock.setQuantity(rs.getString("Quantity"));
+                    stock.setVendor(rs.getString("Vendor"));
+                    stock.setInvoice(rs.getString("Invoice"));
+                    stock.setPurchaseDate(rs.getString("Purchase"));
+                    stock.setUnitPrice(rs.getString("Unit"));
+                    stock.setTax(rs.getString("Tax"));
+                    stock.setTotal(rs.getString("Total"));
+                    //stock.setUID(rs.getString("uid"); remove // after adding uid in table
+                    UID=rs.getString("uid");
+                    
+                    if(items.get(i).getBrand().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getModel().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getItem().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getSport().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getSecretary().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getCondition().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getStatus().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getQuantity().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getVendor().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getInvoice().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getPurchaseDate().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getUnitPrice().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getTax().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getTotal().equals("")) MessageBox.show(error,errorBox);
+                    
+                   else if(!stock.equals(items.get(i)))
+                       
+            
+            {
+                try 
+                {
+                    
+                    
+                    String query2 ="UPDATE Stock SET 'Brand'=?1,'Model'=?2,'Item'=?3,'Sport'=?4,'Secretary'=?5,'Condition'=?6,'Status'=?7,'Quantity'=?8,'Vendor'=?9,'Invoice'=?10,'PurchaseDate'=?11,'UnitPrice'=?12,'Tax'=?13,'Total'=?14, WHERE uid=?15";
+                    PreparedStatement preparedStmt = conn.prepareStatement(query2);
+                    preparedStmt.setString (1, items.get(i).getBrand());
+                    preparedStmt.setString (2, items.get(i).getModel());
+                    preparedStmt.setString (3, items.get(i).getItem());
+                    preparedStmt.setString (4, items.get(i).getSport());
+                    preparedStmt.setString (5, items.get(i).getSecretary());
+                    preparedStmt.setString (6, items.get(i).getCondition());
+                    preparedStmt.setString (7, items.get(i).getStatus());
+                    preparedStmt.setString (8, items.get(i).getQuantity());
+                    preparedStmt.setString (9, items.get(i).getVendor());
+                    preparedStmt.setString (10, items.get(i).getInvoice());
+                    preparedStmt.setString (11, items.get(i).getPurchaseDate());
+                    preparedStmt.setString (12, items.get(i).getUnitPrice());
+                    preparedStmt.setString (13, items.get(i).getTax());
+                    preparedStmt.setString (14, items.get(i).getTotal());
+                    preparedStmt.setString (15, UID);
+                    
+        
+                    preparedStmt.executeUpdate();
+                    
+                    preparedStmt.close();
+                    MessageBox.show("Sucessfully Saved","Update");
+                    
+                }
+                catch (SQLException e) {
+                    MessageBox.show(e.getMessage(),"Error");
+                } 
+            }
+            }          
+            conn.close();
+            }
+        catch(SQLException e){
+            MessageBox.show(e.getMessage(),"Error");
+        }
+    
+}
     
     @FXML 
     private void onTEdit(ActionEvent event)throws Exception
@@ -968,3 +1061,57 @@ public class root extends Student implements Initializable {
         s.setTotal(ce.getNewValue());
     }
 }
+//Delete button code
+/*
+public void sDelete()
+{
+    ObservableList<Student> selected,students;
+    students=studentTable.getItems();
+    selected=studentTable.getSelectionModel().getSelectedItems();
+    for(student s:selected){
+    String roll=s.getRoll();
+    try
+    {
+        connect();
+        String query ="DELETE from STUDENT WHERE Roll=?1
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString (1, roll);
+        preparedStmt.execute();
+        conn.close();
+        MessageBox.show("Sucessfully Deleted","Delete");
+        students.remove(s);
+        
+    }   
+    catch
+    {
+        MessageBox.show(e.getMessage(),"Error");
+    }
+}
+}
+public void iDelete()
+{
+    ObservableList<Stock> selected,items;
+    items=itemTable.getItems();
+    selected=itemTable.getSelectionModel().getSelectedItems();
+    for(Stock s:selected){
+    String uid=s.getUID();
+    try
+    {
+        connect();
+        String query ="DELETE from STOCK WHERE uid=?1
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString (1, uid);
+        preparedStmt.execute();
+        conn.close();
+        MessageBox.show("Sucessfully Deleted","Delete");
+        items.remove(s);
+        
+    }   
+    catch
+    {
+        MessageBox.show(e.getMessage(),"Error");
+    }
+}
+}
+
+*/
