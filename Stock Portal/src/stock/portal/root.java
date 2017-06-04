@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,15 +53,15 @@ public class root extends Student implements Initializable {
     
     @FXML TextField itemBrand;
     @FXML TextField itemName;
-    @FXML TextField itemSport;
-    @FXML TextField itemCondition;
+    @FXML ComboBox itemSport;
+    @FXML ComboBox itemCondition;
     @FXML TextField itemVendor;
     @FXML TextField itemInvoice;
     @FXML TextField itemModel;
     @FXML TextField itemQuantity;
-    @FXML TextField itemSecretary;
+    @FXML ComboBox itemSecretary;
     @FXML TextField itemPrice;
-    @FXML TextField itemDate;
+    @FXML DatePicker itemDate;
     @FXML TextField itemTax;
     @FXML Button itemSubmit;
     
@@ -84,10 +85,8 @@ public class root extends Student implements Initializable {
     @FXML TableColumn sMobile;
     @FXML TableColumn sRoom;
     @FXML TableColumn sResidence;
-    @FXML TableColumn sIssuedItem;
-    @FXML TableColumn sQuantity;
-    @FXML TableColumn sIssueDate;
-    @FXML TableColumn sReturnDate;
+     @FXML TableColumn sSchool;
+    
     
     @FXML TableColumn iBrand;
     @FXML TableColumn iModel;
@@ -97,22 +96,64 @@ public class root extends Student implements Initializable {
     @FXML TableColumn iCondition;
     @FXML TableColumn iStatus;
     @FXML TableColumn iQuantity;
-    @FXML TableColumn iIssuedTo;
-    @FXML TableColumn iIssuedQuantity;
-    @FXML TableColumn iIssueDate;
-    @FXML TableColumn iReturnDate;
     @FXML TableColumn iVendor;
     @FXML TableColumn iInvoice;
     @FXML TableColumn iPurchaseDate;
     @FXML TableColumn iUnitPrice;
     @FXML TableColumn iTax;
     @FXML TableColumn iTotal;
-    @FXML TableColumn UID;
     
     @FXML Button iEdit;
     @FXML Button sEdit;
     
+    @FXML ComboBox titleFA;
+    @FXML TextField newFA; 
+    @FXML ComboBox titleFD;
+    @FXML ComboBox listFD;
+    
+    @FXML TableColumn tRoll;
+    @FXML TableColumn tUID;
+    @FXML TableColumn tQuantity;
+    @FXML TableColumn tIssueDate;
+    @FXML TableColumn tReturnDate;
+    
+    @FXML Button tRefresh;
+    @FXML Button tEdit;
+    @FXML Button tSearchB;
+    @FXML TextField tSearchT;
+    @FXML ComboBox tField;
+    
     Connection conn = null;
+    
+    @FXML 
+    private void addField(ActionEvent e) throws Exception
+    {
+        String tfa = (String)titleFA.getValue();
+        String nfa = newFA.getText();
+            
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        if((tfa==null) || nfa.equals("")) MessageBox.show(error,errorBox);
+        else
+        {
+            
+        }
+    }
+    
+    @FXML 
+    private void delField(ActionEvent e) throws Exception
+    {
+        String tfd = (String)titleFD.getValue();
+        String ffd = (String)listFD.getValue();
+            
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        if((tfd==null) || ffd==null) MessageBox.show(error,errorBox);
+        else
+        {
+            
+        }
+    }
     
     @FXML 
     private void showStudent(ActionEvent e) throws Exception
@@ -123,18 +164,15 @@ public class root extends Student implements Initializable {
         sMobile.setCellValueFactory(new PropertyValueFactory<>("Mobile"));
         sRoom.setCellValueFactory(new PropertyValueFactory<>("Room"));
         sResidence.setCellValueFactory(new PropertyValueFactory<>("Residence"));
-        sIssuedItem.setCellValueFactory(new PropertyValueFactory<>("Itemissued"));
-        sQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
-        sIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issuedate"));
-        sReturnDate.setCellValueFactory(new PropertyValueFactory<>("Returndate"));
+        sSchool.setCellValueFactory(new PropertyValueFactory<>("School"));
     
         studentTable.setEditable(true);
         
         ObservableList<Student> data = sloadData();
         studentTable.setItems(data);
         
-        sRoll.setCellFactory(TextFieldTableCell.forTableColumn());
-        sRoll.setOnEditCommit( event -> colRoll_OnEditCommit(event) );
+        //sRoll.setCellFactory(TextFieldTableCell.forTableColumn());
+        //sRoll.setOnEditCommit( event -> colRoll_OnEditCommit(event) );
         sName.setCellFactory(TextFieldTableCell.forTableColumn());
         sName.setOnEditCommit( event -> colName_OnEditCommit(event) );
         sEmail.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -145,14 +183,8 @@ public class root extends Student implements Initializable {
         sRoom.setOnEditCommit( event -> colRoom_OnEditCommit(event) );
         sResidence.setCellFactory(TextFieldTableCell.forTableColumn());
         sResidence.setOnEditCommit( event -> colResidence_OnEditCommit(event) );
-        sIssuedItem.setCellFactory(TextFieldTableCell.forTableColumn());
-        sIssuedItem.setOnEditCommit( event -> colIssuedItem_OnEditCommit(event) );
-        sQuantity.setCellFactory(TextFieldTableCell.forTableColumn());
-        sQuantity.setOnEditCommit( event -> colQuantity_OnEditCommit(event) );
-        sIssueDate.setCellFactory(TextFieldTableCell.forTableColumn());
-        sIssueDate.setOnEditCommit( event -> colIssueDate_OnEditCommit(event) );
-        sReturnDate.setCellFactory(TextFieldTableCell.forTableColumn());
-        sReturnDate.setOnEditCommit( event -> colReturnDate_OnEditCommit(event) );
+        sSchool.setCellFactory(TextFieldTableCell.forTableColumn());
+        sSchool.setOnEditCommit( event -> colSchool_OnEditCommit(event) );
     }
     
     public ObservableList<Student> sloadData()
@@ -168,26 +200,23 @@ public class root extends Student implements Initializable {
             while(rs.next())
             {
                     Student student=new Student();  
-                    student.setRoll(rs.getString("Roll Number"));
+                    student.setRoll(rs.getString("Roll"));
                     student.setName(rs.getString("Name"));
-                    student.setEmail(rs.getString("Email Id"));
-                    student.setMobile(rs.getString("Mobile Number"));
-                    student.setRoom(rs.getString("Room Number"));
+                    student.setEmail(rs.getString("Email"));
+                    student.setMobile(rs.getString("Mobile"));
+                    student.setRoom(rs.getString("Room"));
                     student.setResidence(rs.getString("Residence"));
-                    student.setItemissued(rs.getString("Issued"));
-                    student.setQuantity(rs.getString("Quantity"));
-                    student.setIssuedate(rs.getString("IssueDate"));
-                    student.setReturndate(rs.getString("ReturnDate"));
+                    student.setSchool(rs.getString("School"));
                     data.add(student);
             }          
         }
         catch(SQLException e){
-            MessageBox.show(e.getMessage(),"Error2");
+            MessageBox.show(e.getMessage(),"Error");
         }
         return data;
     }
     
-     @FXML 
+    @FXML 
     private void showItem(ActionEvent e) throws Exception
     {
         iBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
@@ -198,17 +227,12 @@ public class root extends Student implements Initializable {
         iCondition.setCellValueFactory(new PropertyValueFactory<>("Condition"));
         iStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
         iQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
-        iIssuedTo.setCellValueFactory(new PropertyValueFactory<>("IssuedTo"));
-        iIssuedQuantity.setCellValueFactory(new PropertyValueFactory<>("IssuedQuantity"));
-        iIssueDate.setCellValueFactory(new PropertyValueFactory<>("IssueDate"));
-        iReturnDate.setCellValueFactory(new PropertyValueFactory<>("ReturnDate"));
         iVendor.setCellValueFactory(new PropertyValueFactory<>("Vendor"));
         iInvoice.setCellValueFactory(new PropertyValueFactory<>("Invoice"));
-        iPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("PurchaseDate"));
-        iUnitPrice.setCellValueFactory(new PropertyValueFactory<>("UnitPrice"));
+        iPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("Purchase"));
+        iUnitPrice.setCellValueFactory(new PropertyValueFactory<>("Unit"));
         iTax.setCellValueFactory(new PropertyValueFactory<>("Tax"));
         iTotal.setCellValueFactory(new PropertyValueFactory<>("Total"));
-        UID.setCellValueFactory(new PropertyValueFactory<>("UID"));
     
         itemTable.setItems(iloadData());
         
@@ -230,14 +254,6 @@ public class root extends Student implements Initializable {
         iStatus.setOnEditCommit( event -> iStatus_OnEditCommit(event) );
         iQuantity.setCellFactory(TextFieldTableCell.forTableColumn());
         iQuantity.setOnEditCommit( event -> iQuantity_OnEditCommit(event) );
-        iIssuedTo.setCellFactory(TextFieldTableCell.forTableColumn());
-        iIssuedTo.setOnEditCommit( event -> iIssuedTo_OnEditCommit(event) );
-        iIssuedQuantity.setCellFactory(TextFieldTableCell.forTableColumn());
-        iIssuedQuantity.setOnEditCommit( event -> iIssuedQuantity_OnEditCommit(event) );
-        iIssueDate.setCellFactory(TextFieldTableCell.forTableColumn());
-        iIssueDate.setOnEditCommit( event -> iIssueDate_OnEditCommit(event) );
-        iReturnDate.setCellFactory(TextFieldTableCell.forTableColumn());
-        iReturnDate.setOnEditCommit( event -> iReturnDate_OnEditCommit(event) );
         iVendor.setCellFactory(TextFieldTableCell.forTableColumn());
         iVendor.setOnEditCommit( event -> iVendor_OnEditCommit(event) );
         iInvoice.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -250,11 +266,10 @@ public class root extends Student implements Initializable {
         iTax.setOnEditCommit( event -> iTax_OnEditCommit(event) );
         iTotal.setCellFactory(TextFieldTableCell.forTableColumn());
         iTotal.setOnEditCommit( event -> iTotal_OnEditCommit(event) );
-        UID.setCellFactory(TextFieldTableCell.forTableColumn());
-        UID.setOnEditCommit( event -> UID_OnEditCommit(event) );
     }
     
-    public ObservableList<Stock> iloadData(){
+    public ObservableList<Stock> iloadData()
+    {
         ObservableList<Stock> data=FXCollections.observableArrayList();
         
         try
@@ -275,17 +290,12 @@ public class root extends Student implements Initializable {
                     stock.setCondition(rs.getString("Condition"));
                     stock.setStatus(rs.getString("Status"));
                     stock.setQuantity(rs.getString("Quantity"));
-                    stock.setIssuedTo(rs.getString("IssuedTo"));
-                    stock.setIssuedQuantity(rs.getString("IssuedQuantity"));
-                    stock.setIssueDate(rs.getString("IssueDate"));
-                    stock.setReturnDate(rs.getString("ReturnDate"));
                     stock.setVendor(rs.getString("Vendor"));
-                    stock.setInvoice(rs.getString("InvoiceNo"));
-                    stock.setPurchaseDate(rs.getString("PurchaseDate"));
-                    stock.setUnitPrice(rs.getString("UnitPrice"));
+                    stock.setInvoice(rs.getString("Invoice"));
+                    stock.setPurchaseDate(rs.getString("Purchase"));
+                    stock.setUnitPrice(rs.getString("Unit"));
                     stock.setTax(rs.getString("Tax"));
                     stock.setTotal(rs.getString("Total"));
-                    stock.setUID(rs.getString("UID"));
                     
                     data.add(stock);
             }
@@ -297,13 +307,7 @@ public class root extends Student implements Initializable {
     }
     
     @FXML 
-    private void onSEdit(ActionEvent event)throws Exception
-    {
-        
-    }
-    
-    @FXML 
-    private void onIEdit(ActionEvent event)throws Exception
+    private void showTransaction(ActionEvent e) throws Exception
     {
         
     }
@@ -321,47 +325,139 @@ public class root extends Student implements Initializable {
     }
     
     @FXML 
+    private void onSEdit(ActionEvent event)throws Exception
+    {
+        int i=-1;
+        ObservableList<Student> students;
+        students=studentTable.getItems();
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        //String roll_no;
+        try
+        {
+            connect();
+            
+            String query="SELECT * FROM STUDENT";
+            ResultSet rs=conn.createStatement().executeQuery(query);
+                      
+            while(rs.next())
+            {
+                    i++;
+                    Student student=new Student();  
+                    student.setRoll(rs.getString("Roll"));
+                    student.setName(rs.getString("Name"));
+                    student.setEmail(rs.getString("Email"));
+                    student.setMobile(rs.getString("Mobile"));
+                    student.setRoom(rs.getString("Room"));
+                    student.setResidence(rs.getString("Residence"));
+                    student.setSchool(rs.getString("School"));
+                    
+                    //add(student);
+                    if(students.get(i).getRoll().equals("") || students.get(i).getEmail().equals("") || students.get(i).getName().equals("") || students.get(i).getMobile().equals("") || students.get(i).getRoom().equals("")) MessageBox.show(error,errorBox);
+                   else if(students.get(i).getResidence().equals("") || students.get(i).getSchool().equals("")) MessageBox.show(error,errorBox);
+                   else if(!student.equals(students.get(i)))
+                       
+            
+            {
+                try 
+                {
+                    //connect();
+                    Connection c=null;
+                    try{
+                             c=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
+                        }
+                        catch(SQLException e){
+                                MessageBox.show(e.getMessage(),"Connection error");
+                        }
+                    String query2 =
+                            /*"UPDATE Student SET('Name','Residence','Room','Email','Mobile','School') "
+                            + "VALUES (?1,?2,?3,?4,?5,?6) WHERE Roll=?7";*/
+                            "UPDATE Student SET 'Name'=?1,'Residence'=?2,'Room'=?3,'Email'=?4,'Mobile'=?5,'School'=?6 WHERE Roll=?7";
+                    PreparedStatement preparedStmt = c.prepareStatement(query2);
+                    preparedStmt.setString (1, students.get(i).getName());
+                    preparedStmt.setString (2, students.get(i).getResidence());
+                    preparedStmt.setString (3, students.get(i).getRoom());
+                    preparedStmt.setString (4, students.get(i).getEmail());
+                    preparedStmt.setString (5, students.get(i).getMobile());
+                    preparedStmt.setString (6, students.get(i).getSchool());
+                    preparedStmt.setString (7, students.get(i).getRoll());
+                    
+                    preparedStmt.execute();
+                    c.close();
+                    preparedStmt.close();
+                    MessageBox.show("Sucessfully Saved","Update");
+                    
+                }
+                catch (SQLException e) {
+                    MessageBox.show(e.getMessage(),"Error");
+                } 
+               /* finally{
+                   preparedStmt.close(); 
+                }*/   
+            }          
+            }
+        conn.close();}
+        catch(SQLException e){
+            MessageBox.show(e.getMessage(),"Error");
+        }
+    
+        
+    }
+    
+    @FXML 
+    private void onIEdit(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void onTEdit(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void onTSearch(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
     private void onSSearch(ActionEvent event)throws Exception
     {
-    String type=(String)studentField.getValue();
+        String type=(String)studentField.getValue();
         String search=(String)studentSearchT.getText();
         
-        sRoll.setCellValueFactory(new PropertyValueFactory<>("Roll"));
-        sName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        sEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        sMobile.setCellValueFactory(new PropertyValueFactory<>("Mobile"));
-        sRoom.setCellValueFactory(new PropertyValueFactory<>("Room"));
-        sResidence.setCellValueFactory(new PropertyValueFactory<>("Residence"));
-        sIssuedItem.setCellValueFactory(new PropertyValueFactory<>("Issued Item"));
-        sQuantity.setCellValueFactory(new PropertyValueFactory<>("Quality"));
-        sIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
-        sReturnDate.setCellValueFactory(new PropertyValueFactory<>("Return Date"));
-    
-        studentTable.setEditable(true);
-        
-        ObservableList<Student> data = sloadData2(type,search);
-        studentTable.setItems(data);
-        
-        sRoll.setCellFactory(TextFieldTableCell.forTableColumn());
-        sRoll.setOnEditCommit( ev -> colRoll_OnEditCommit(ev) );
-        sName.setCellFactory(TextFieldTableCell.forTableColumn());
-        sName.setOnEditCommit( ev -> colName_OnEditCommit(ev) );
-        sEmail.setCellFactory(TextFieldTableCell.forTableColumn());
-        sEmail.setOnEditCommit( ev -> colEmail_OnEditCommit(ev) );
-        sMobile.setCellFactory(TextFieldTableCell.forTableColumn());
-        sMobile.setOnEditCommit( ev -> colMobile_OnEditCommit(ev) );
-        sRoom.setCellFactory(TextFieldTableCell.forTableColumn());
-        sRoom.setOnEditCommit( ev -> colRoom_OnEditCommit(ev) );
-        sResidence.setCellFactory(TextFieldTableCell.forTableColumn());
-        sResidence.setOnEditCommit( ev -> colResidence_OnEditCommit(ev) );
-        sIssuedItem.setCellFactory(TextFieldTableCell.forTableColumn());
-        sIssuedItem.setOnEditCommit( ev -> colIssuedItem_OnEditCommit(ev) );
-        sQuantity.setCellFactory(TextFieldTableCell.forTableColumn());
-        sQuantity.setOnEditCommit( ev -> colQuantity_OnEditCommit(ev) );
-        sIssueDate.setCellFactory(TextFieldTableCell.forTableColumn());
-        sIssueDate.setOnEditCommit( ev -> colIssueDate_OnEditCommit(ev) );
-        sReturnDate.setCellFactory(TextFieldTableCell.forTableColumn());
-        sReturnDate.setOnEditCommit( ev -> colReturnDate_OnEditCommit(ev) );
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        if(search.equals("") || type==null) MessageBox.show(error,errorBox);
+        else
+        {
+            sRoll.setCellValueFactory(new PropertyValueFactory<>("Roll"));
+            sName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+            sEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+            sMobile.setCellValueFactory(new PropertyValueFactory<>("Mobile"));
+            sRoom.setCellValueFactory(new PropertyValueFactory<>("Room"));
+            sResidence.setCellValueFactory(new PropertyValueFactory<>("Residence"));
+
+            studentTable.setEditable(true);
+
+            ObservableList<Student> data = sloadData2(type,search);
+            studentTable.setItems(data);
+
+            sRoll.setCellFactory(TextFieldTableCell.forTableColumn());
+            sRoll.setOnEditCommit( ev -> colRoll_OnEditCommit(ev) );
+            sName.setCellFactory(TextFieldTableCell.forTableColumn());
+            sName.setOnEditCommit( ev -> colName_OnEditCommit(ev) );
+            sEmail.setCellFactory(TextFieldTableCell.forTableColumn());
+            sEmail.setOnEditCommit( ev -> colEmail_OnEditCommit(ev) );
+            sMobile.setCellFactory(TextFieldTableCell.forTableColumn());
+            sMobile.setOnEditCommit( ev -> colMobile_OnEditCommit(ev) );
+            sRoom.setCellFactory(TextFieldTableCell.forTableColumn());
+            sRoom.setOnEditCommit( ev -> colRoom_OnEditCommit(ev) );
+            sResidence.setCellFactory(TextFieldTableCell.forTableColumn());
+            sResidence.setOnEditCommit( ev -> colResidence_OnEditCommit(ev) );
+        }
     }
     
     public ObservableList<Student> sloadData2( String type,String search)
@@ -373,35 +469,13 @@ public class root extends Student implements Initializable {
         try
         {
             connect();
-            if(type.equals("Roll Number"))
-            query="SELECT * FROM STUDENT WHERE Roll Number =?";
-            
-            else if(type.equals("Room Number"))
-            query="SELECT * FROM STUDENT WHERE Room Number = ?";
-            
-            else if(type.equals("Name"))
-            query="SELECT * FROM STUDENT WHERE Name = ?";
-            
-            else if(type.equals("Email"))
-            query="SELECT * FROM STUDENT WHERE Email id=?";
-            
-            else if(type.equals("Mobile Number"))
-            query="SELECT * FROM STUDENT WHERE Mobile Number=?";
-            
-            else if(type.equals("Residence"))
-            query="SELECT * FROM STUDENT WHERE Residence=?";
-            
-            else if(type.equals("Quantity"))
-            query="SELECT * FROM STUDENT WHERE Quantity=?";
-            
-            else if(type.equals("Item Issued"))
-            query="SELECT * FROM STUDENT WHERE Issued=?";
-            
-            else if(type.equals("Issue Date"))
-            query="SELECT * FROM STUDENT WHERE IssueDate=?";
-            
-            else if(type.equals("Return Date"))
-            query="SELECT * FROM STUDENT WHERE ReturnDate=?";
+            if(type.equals("Roll")) query="SELECT * FROM STUDENT WHERE Roll =?";
+            else if(type.equals("Room")) query="SELECT * FROM STUDENT WHERE Room = ?";
+            else if(type.equals("Name")) query="SELECT * FROM STUDENT WHERE Name = ?";
+            else if(type.equals("Email")) query="SELECT * FROM STUDENT WHERE Email =?";
+            else if(type.equals("Mobile")) query="SELECT * FROM STUDENT WHERE Mobile =?";
+            else if(type.equals("Residence")) query="SELECT * FROM STUDENT WHERE Residence =?";
+            else if(type.equals("School")) query="SELECT * FROM STUDENT WHERE School =?";
             
             ps=conn.prepareStatement(query);
             ps.setString(1,search);
@@ -409,95 +483,82 @@ public class root extends Student implements Initializable {
             while(rs.next())
             {
                     Student student=new Student();  
-                    student.setRoll(rs.getString("Roll Number"));
+                    student.setRoll(rs.getString("Roll"));
                     student.setName(rs.getString("Name"));
-                    student.setEmail(rs.getString("Email Id"));
-                    student.setMobile(rs.getString("Mobile Number"));
-                    student.setRoom(rs.getString("Room Number"));
+                    student.setEmail(rs.getString("Email"));
+                    student.setMobile(rs.getString("Mobile"));
+                    student.setRoom(rs.getString("Room"));
                     student.setResidence(rs.getString("Residence"));
-                    student.setItemissued(rs.getString("Issued"));
-                    student.setQuantity(rs.getString("Quantity"));
-                    student.setIssuedate(rs.getString("IssueDate"));
-                    student.setReturndate(rs.getString("ReturnDate"));
+                    student.setSchool(rs.getString("School"));
                     data.add(student);
             }          
         }
         catch(SQLException e){
-            MessageBox.show(e.getMessage(),"Error2");
+            MessageBox.show(e.getMessage(),"Error");
         }
         return data;
-    } 
-    
+    }
     
     @FXML 
     private void onISearch(ActionEvent event)throws Exception
     {
-        
-    String type=(String)itemField.getValue();
+        String type=(String)itemField.getValue();
         String search=(String)itemSearchT.getText();
         
-        iBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
-        iModel.setCellValueFactory(new PropertyValueFactory<>("Model"));
-        iItem.setCellValueFactory(new PropertyValueFactory<>("Item"));
-        iSport.setCellValueFactory(new PropertyValueFactory<>("Sport"));
-        iSecretary.setCellValueFactory(new PropertyValueFactory<>("Secretary"));
-        iCondition.setCellValueFactory(new PropertyValueFactory<>("Condition"));
-        iStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
-        iQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
-        iIssuedTo.setCellValueFactory(new PropertyValueFactory<>("Issued To"));
-        iIssuedQuantity.setCellValueFactory(new PropertyValueFactory<>("Issued Quantity"));
-        iIssueDate.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
-        iReturnDate.setCellValueFactory(new PropertyValueFactory<>("Return Date"));
-        iVendor.setCellValueFactory(new PropertyValueFactory<>("Vendor"));
-        iInvoice.setCellValueFactory(new PropertyValueFactory<>("Invoice Number"));
-        iPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("PurchaseDate"));
-        iUnitPrice.setCellValueFactory(new PropertyValueFactory<>("UnitPrice"));
-        iTax.setCellValueFactory(new PropertyValueFactory<>("Tax"));
-        iTotal.setCellValueFactory(new PropertyValueFactory<>("Total"));
-        UID.setCellValueFactory(new PropertyValueFactory<>("UID"));
-    
-        itemTable.setItems(iloadData2(type,search));
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        if(type==null || search.equals("")) MessageBox.show(error,errorBox);
+        else
+        {
         
-        itemTable.setEditable(true);
-        
-        iBrand.setCellFactory(TextFieldTableCell.forTableColumn());
-        iBrand.setOnEditCommit( ev -> iBrand_OnEditCommit(ev) );
-        iModel.setCellFactory(TextFieldTableCell.forTableColumn());
-        iModel.setOnEditCommit( ev -> iModel_OnEditCommit(ev) );
-        iItem.setCellFactory(TextFieldTableCell.forTableColumn());
-        iItem.setOnEditCommit( ev -> iItem_OnEditCommit(ev) );
-        iSport.setCellFactory(TextFieldTableCell.forTableColumn());
-        iSport.setOnEditCommit( ev -> iSport_OnEditCommit(ev) );
-        iSecretary.setCellFactory(TextFieldTableCell.forTableColumn());
-        iSecretary.setOnEditCommit( ev -> iSecretary_OnEditCommit(ev) );
-        iCondition.setCellFactory(TextFieldTableCell.forTableColumn());
-        iCondition.setOnEditCommit( ev -> iCondition_OnEditCommit(ev) );
-        iStatus.setCellFactory(TextFieldTableCell.forTableColumn());
-        iStatus.setOnEditCommit( ev -> iStatus_OnEditCommit(ev) );
-        iQuantity.setCellFactory(TextFieldTableCell.forTableColumn());
-        iQuantity.setOnEditCommit( ev -> iQuantity_OnEditCommit(ev) );
-        iIssuedTo.setCellFactory(TextFieldTableCell.forTableColumn());
-        iIssuedTo.setOnEditCommit( ev -> iIssuedTo_OnEditCommit(ev) );
-        iIssuedQuantity.setCellFactory(TextFieldTableCell.forTableColumn());
-        iIssuedQuantity.setOnEditCommit( ev -> iIssuedQuantity_OnEditCommit(ev) );
-        iIssueDate.setCellFactory(TextFieldTableCell.forTableColumn());
-        iIssueDate.setOnEditCommit( ev -> iIssueDate_OnEditCommit(ev) );
-        iReturnDate.setCellFactory(TextFieldTableCell.forTableColumn());
-        iReturnDate.setOnEditCommit( ev -> iReturnDate_OnEditCommit(ev) );
-        iVendor.setCellFactory(TextFieldTableCell.forTableColumn());
-        iVendor.setOnEditCommit( ev -> iVendor_OnEditCommit(ev) );
-        iInvoice.setCellFactory(TextFieldTableCell.forTableColumn());
-        iInvoice.setOnEditCommit( ev -> iInvoice_OnEditCommit(ev) );
-        iPurchaseDate.setCellFactory(TextFieldTableCell.forTableColumn());
-        iPurchaseDate.setOnEditCommit( ev -> iPurchaseDate_OnEditCommit(ev) );
-        iUnitPrice.setCellFactory(TextFieldTableCell.forTableColumn());
-        iUnitPrice.setOnEditCommit( ev -> iUnitPrice_OnEditCommit(ev) );
-        iTax.setCellFactory(TextFieldTableCell.forTableColumn());
-        iTax.setOnEditCommit( ev -> iTax_OnEditCommit(ev) );
-        iTotal.setCellFactory(TextFieldTableCell.forTableColumn());
-        iTotal.setOnEditCommit( ev -> iTotal_OnEditCommit(ev) );
-        UID.setCellFactory(TextFieldTableCell.forTableColumn());
-        UID.setOnEditCommit( ev -> UID_OnEditCommit(ev) );
+            iBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
+            iModel.setCellValueFactory(new PropertyValueFactory<>("Model"));
+            iItem.setCellValueFactory(new PropertyValueFactory<>("Item"));
+            iSport.setCellValueFactory(new PropertyValueFactory<>("Sport"));
+            iSecretary.setCellValueFactory(new PropertyValueFactory<>("Secretary"));
+            iCondition.setCellValueFactory(new PropertyValueFactory<>("Condition"));
+            iStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+            iQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+            iVendor.setCellValueFactory(new PropertyValueFactory<>("Vendor"));
+            iInvoice.setCellValueFactory(new PropertyValueFactory<>("Invoice"));
+            iPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("Purchase"));
+            iUnitPrice.setCellValueFactory(new PropertyValueFactory<>("Unit"));
+            iTax.setCellValueFactory(new PropertyValueFactory<>("Tax"));
+            iTotal.setCellValueFactory(new PropertyValueFactory<>("Total"));
+
+            itemTable.setItems(iloadData2(type,search));
+
+            itemTable.setEditable(true);
+
+            iBrand.setCellFactory(TextFieldTableCell.forTableColumn());
+            iBrand.setOnEditCommit( ev -> iBrand_OnEditCommit(ev) );
+            iModel.setCellFactory(TextFieldTableCell.forTableColumn());
+            iModel.setOnEditCommit( ev -> iModel_OnEditCommit(ev) );
+            iItem.setCellFactory(TextFieldTableCell.forTableColumn());
+            iItem.setOnEditCommit( ev -> iItem_OnEditCommit(ev) );
+            iSport.setCellFactory(TextFieldTableCell.forTableColumn());
+            iSport.setOnEditCommit( ev -> iSport_OnEditCommit(ev) );
+            iSecretary.setCellFactory(TextFieldTableCell.forTableColumn());
+            iSecretary.setOnEditCommit( ev -> iSecretary_OnEditCommit(ev) );
+            iCondition.setCellFactory(TextFieldTableCell.forTableColumn());
+            iCondition.setOnEditCommit( ev -> iCondition_OnEditCommit(ev) );
+            iStatus.setCellFactory(TextFieldTableCell.forTableColumn());
+            iStatus.setOnEditCommit( ev -> iStatus_OnEditCommit(ev) );
+            iQuantity.setCellFactory(TextFieldTableCell.forTableColumn());
+            iQuantity.setOnEditCommit( ev -> iQuantity_OnEditCommit(ev) );
+            iVendor.setCellFactory(TextFieldTableCell.forTableColumn());
+            iVendor.setOnEditCommit( ev -> iVendor_OnEditCommit(ev) );
+            iInvoice.setCellFactory(TextFieldTableCell.forTableColumn());
+            iInvoice.setOnEditCommit( ev -> iInvoice_OnEditCommit(ev) );
+            iPurchaseDate.setCellFactory(TextFieldTableCell.forTableColumn());
+            iPurchaseDate.setOnEditCommit( ev -> iPurchaseDate_OnEditCommit(ev) );
+            iUnitPrice.setCellFactory(TextFieldTableCell.forTableColumn());
+            iUnitPrice.setOnEditCommit( ev -> iUnitPrice_OnEditCommit(ev) );
+            iTax.setCellFactory(TextFieldTableCell.forTableColumn());
+            iTax.setOnEditCommit( ev -> iTax_OnEditCommit(ev) );
+            iTotal.setCellFactory(TextFieldTableCell.forTableColumn());
+            iTotal.setOnEditCommit( ev -> iTotal_OnEditCommit(ev) );
+        }
     }
     
     public ObservableList<Stock> iloadData2(String type,String search){
@@ -511,66 +572,21 @@ public class root extends Student implements Initializable {
             PreparedStatement ps;
             String query="";
             
-            if(type.equals("Brand"))
-            query="SELECT * FROM STOCK WHERE Brand=?";
-            
-            if(type.equals("Model"))
-            query="SELECT * FROM STOCK WHERE Model=?";
-            
-            if(type.equals("Item"))
-            query="SELECT * FROM STOCK WHERE Item=?";
-            
-            if(type.equals("Sport"))
-            query="SELECT * FROM STOCK WHERE Sport=?";
-            
-            if(type.equals("Secretary"))
-            query="SELECT * FROM STOCK WHERE Secretary=?";
-            
-            if(type.equals("Condition"))
-            query="SELECT * FROM STOCK WHERE Condition=?";
-            
-            if(type.equals("Status"))
-            query="SELECT * FROM STOCK WHERE Status=?";
-            
-            if(type.equals("Quantity"))
-            query="SELECT * FROM STOCK WHERE Quantity=?";
-            
-            if(type.equals("Issued To"))
-            query="SELECT * FROM STOCK WHERE IssuedTo=?";
-            
-            if(type.equals("Issued Quantity"))
-            query="SELECT * FROM STOCK WHERE IssuedQuantity=?";
-            
-            if(type.equals("Issue Date"))
-            query="SELECT * FROM STOCK WHERE IssueDate=?";
-            
-            if(type.equals("Return Date"))
-            query="SELECT * FROM STOCK WHERE ReturnDate=?";
-            
-            if(type.equals("Vendor"))
-            query="SELECT * FROM STOCK WHERE Vendor=?";
-            
-            if(type.equals("Invoice"))
-            query="SELECT * FROM STOCK WHERE InvoiceNo=?";
-            
-            if(type.equals("Purchase Date"))
-            query="SELECT * FROM STOCK WHERE PurchaseDate=?";
-            
-            if(type.equals("Unit Price"))
-            query="SELECT * FROM STOCK WHERE UnitPrice=?";
-            
-            if(type.equals("Tax"))
-            query="SELECT * FROM STOCK WHERE Tax=?";
-            
-            if(type.equals("Total"))
-            query="SELECT * FROM STOCK WHERE Total=?";
-            
-            if(type.equals("UID"))
-            query="SELECT * FROM STOCK WHERE UID=?";
-            
-            
-            
-            
+            if(type.equals("Brand")) query="SELECT * FROM STOCK WHERE Brand=?";
+            else if(type.equals("Model")) query="SELECT * FROM STOCK WHERE Model=?";
+            else if(type.equals("Item")) query="SELECT * FROM STOCK WHERE Item=?";
+            else if(type.equals("Sport")) query="SELECT * FROM STOCK WHERE Sport=?";
+            else if(type.equals("Secretary")) query="SELECT * FROM STOCK WHERE Secretary=?";
+            else if(type.equals("Condition")) query="SELECT * FROM STOCK WHERE Condition=?";
+            else if(type.equals("Status")) query="SELECT * FROM STOCK WHERE Status=?";
+            else if(type.equals("Quantity")) query="SELECT * FROM STOCK WHERE Quantity=?";
+            else if(type.equals("Vendor")) query="SELECT * FROM STOCK WHERE Vendor=?";
+            else if(type.equals("Invoice")) query="SELECT * FROM STOCK WHERE Invoice=?";
+            else if(type.equals("Purchase Date")) query="SELECT * FROM STOCK WHERE Purchase=?";
+            else if(type.equals("Unit Price")) query="SELECT * FROM STOCK WHERE Unit=?";
+            else if(type.equals("Tax")) query="SELECT * FROM STOCK WHERE Tax=?";
+            else if(type.equals("Total")) query="SELECT * FROM STOCK WHERE Total=?";
+            else if(type.equals("UID")) query="SELECT * FROM STOCK WHERE UID=?";
             
             ps=conn.prepareStatement(query);
             ps.setString(1,search);
@@ -586,17 +602,12 @@ public class root extends Student implements Initializable {
                     stock.setCondition(rs.getString("Condition"));
                     stock.setStatus(rs.getString("Status"));
                     stock.setQuantity(rs.getString("Quantity"));
-                    stock.setIssuedTo(rs.getString("IssuedTo"));
-                    stock.setIssuedQuantity(rs.getString("IssuedQuantity"));
-                    stock.setIssueDate(rs.getString("IssueDate"));
-                    stock.setReturnDate(rs.getString("ReturnDate"));
                     stock.setVendor(rs.getString("Vendor"));
-                    stock.setInvoice(rs.getString("InvoiceNo"));
-                    stock.setPurchaseDate(rs.getString("PurchaseDate"));
-                    stock.setUnitPrice(rs.getString("UnitPrice"));
+                    stock.setInvoice(rs.getString("Invoice"));
+                    stock.setPurchaseDate(rs.getString("Purchase"));
+                    stock.setUnitPrice(rs.getString("Unit"));
                     stock.setTax(rs.getString("Tax"));
                     stock.setTotal(rs.getString("Total"));
-                    stock.setUID(rs.getString("UID"));
                     
                     data.add(stock);
             }
@@ -623,10 +634,6 @@ public class root extends Student implements Initializable {
             String sroom = studentRoom.getText();
             String sresidence = (String) studentResidence.getValue();
             String sschool = (String) studentSchool.getValue();
-            String sissuedUID = "";
-            String squantity = "";
-            String sissuedate = "";
-            String sreturndate = "";
             
             String error = "Fill All Fields";
             String errorBox = "Error";
@@ -639,8 +646,8 @@ public class root extends Student implements Initializable {
                     connect();
 
                     String query =
-                            "INSERT INTO Student ('Roll Number','Name','School','Residence','Room Number','Email id','Mobile Number','Issued Item','Quantity','Issue Date','Return Date') "
-                            + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11)";
+                            "INSERT INTO Student ('Roll','Name','School','Residence','Room','Email','Mobile') "
+                            + "VALUES (?1,?2,?3,?4,?5,?6,?7)";
                     PreparedStatement preparedStmt = conn.prepareStatement(query);
                     preparedStmt.setString (1, sroll);
                     preparedStmt.setString (2, sname);
@@ -649,10 +656,6 @@ public class root extends Student implements Initializable {
                     preparedStmt.setString (5, sroom);
                     preparedStmt.setString (6, semail);
                     preparedStmt.setString (7, smobile);
-                    preparedStmt.setString (8, sissuedUID);
-                    preparedStmt.setString (9, squantity);
-                    preparedStmt.setString (10, sissuedate);
-                    preparedStmt.setString (11, sreturndate);
                     preparedStmt.execute();
                     conn.close();
                     
@@ -666,6 +669,7 @@ public class root extends Student implements Initializable {
                     studentSchool.setValue("School");
                 }
                 catch (SQLException e) {
+                    System.out.print(e.getMessage());
                     MessageBox.show("Error occured while updating student","Error");
                 }
             }
@@ -682,15 +686,15 @@ public class root extends Student implements Initializable {
         { 
             String iB=itemBrand.getText();
             String iN=itemName.getText();
-            String iS=itemSport.getText();
-            String iC=itemCondition.getText();
+            String iS=(String)itemSport.getValue();
+            String iC=(String)itemCondition.getValue();
             String iV=itemVendor.getText();
             String iI=itemInvoice.getText();
             String iM=itemModel.getText();
             String iQ=itemQuantity.getText();
-            String iSec=itemSecretary.getText();
+            String iSec=(String)itemSecretary.getValue();
             String iP=itemPrice.getText();
-            String iD=itemDate.getText();
+            LocalDate iD=itemDate.getValue();
             String iT=itemTax.getText();
         
             String error = "Fill All Fields";
@@ -704,8 +708,8 @@ public class root extends Student implements Initializable {
                     connect();
 
                     String query =
-                            "INSERT INTO Stock ('Brand','Item','Sport','Condition','Vendor','InvoiceNo','Model','Quantity','Secretary','UnitPrice','PurchaseDate','Tax') "
-                            + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)";
+                            "INSERT INTO Stock ('Brand','Item','Sport','Condition','Vendor','Invoice','Model','Quantity','Secretary','Unit','Purchase','Tax') "
+                            + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?iD,?12)";
 
                     PreparedStatement preparedStmt = conn.prepareStatement(query);
                     preparedStmt.setString (1, iB);
@@ -718,7 +722,7 @@ public class root extends Student implements Initializable {
                     preparedStmt.setString (8, iQ);
                     preparedStmt.setString (9, iSec);
                     preparedStmt.setString (10, iP);
-                    preparedStmt.setString (11, iD);
+                    //preparedStmt.setDate (11, iD);
                     preparedStmt.setString (12, iT);
                     preparedStmt.execute();
                     conn.close();
@@ -726,18 +730,15 @@ public class root extends Student implements Initializable {
                     MessageBox.show("Update Sucessful","Update");
                     itemBrand.setText("");
                     itemName.setText("");
-                    itemSport.setText("");
-                    itemCondition.setText("");
                     itemVendor.setText("");
                     itemInvoice.setText("");
                     itemModel.setText("");
                     itemQuantity.setText("");
-                    itemSecretary.setText("");
                     itemPrice.setText("");
-                    itemDate.setText("");
                     itemTax.setText("");
                 }
                 catch (SQLException e) {
+                    System.out.println(e.getMessage());
                  MessageBox.show("Error occured while updating stock","Error");
                 }
             }
@@ -748,9 +749,16 @@ public class root extends Student implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
-        studentField.getItems().addAll("Roll Number","Name","Email","Mobile Number","Room Number","Residence","Item Issued","Quantity","Issue Date","Return Date");
-        itemField.getItems().addAll("Brand","Model","Item","Sport","Secretary","Condition","Status","Quantity","Issued To","Issued Quantity","Issue Date","Return Date","Vendor","Invoice","Purchase Date","Unit Price","Tax","Total","UID");
-    
+        
+        itemSport.getItems().addAll("Athletics","Badminton","Basketball","Carrom","Chess","Cricket","Football","Lawn Tennis","Swimming","Table Tennis","Volleyball");
+        itemSecretary.getItems().addAll("Athletics","Cricket","Football","Indoor Games","Small Area Sports");
+        itemCondition.getItems().addAll("New","Not Usable");
+        
+        titleFA.getItems().addAll("Sport","Secretary","Condition","Residence","School");
+        titleFD.getItems().addAll("Sport","Secretary","Condition","Residence","School");
+        
+        studentField.getItems().addAll("Roll","Name","Email","Mobile","Room","Residence","School");
+        itemField.getItems().addAll("Brand","Model","Item","Sport","Secretary","Condition","Status","Quantity","Vendor","Invoice","Purchase","Unit","Tax","Total");
     }
     
     public void connect()
@@ -853,33 +861,12 @@ public class root extends Student implements Initializable {
         Student s=ce.getRowValue();
         s.setResidence(ce.getNewValue());
     }
-
-    public void colIssuedItem_OnEditCommit(Event e){
+    
+    public void colSchool_OnEditCommit(Event e){
         TableColumn.CellEditEvent<Student,String> ce;
         ce=(TableColumn.CellEditEvent<Student,String>) e;
         Student s=ce.getRowValue();
-        s.setItemissued(ce.getNewValue());
-    }
-
-    public void colQuantity_OnEditCommit(Event e){
-        TableColumn.CellEditEvent<Student,String> ce;
-        ce=(TableColumn.CellEditEvent<Student,String>) e;
-        Student s=ce.getRowValue();
-        s.setQuantity(ce.getNewValue());
-    }
-
-    public void colIssueDate_OnEditCommit(Event e){
-        TableColumn.CellEditEvent<Student,String> ce;
-        ce=(TableColumn.CellEditEvent<Student,String>) e;
-        Student s=ce.getRowValue();
-        s.setIssuedate(ce.getNewValue());
-    }
-
-    public void colReturnDate_OnEditCommit(Event e){
-        TableColumn.CellEditEvent<Student,String> ce;
-        ce=(TableColumn.CellEditEvent<Student,String>) e;
-        Student s=ce.getRowValue();
-        s.setReturndate(ce.getNewValue());
+        s.setSchool(ce.getNewValue());
     }
     
     
@@ -939,34 +926,6 @@ public class root extends Student implements Initializable {
         s.setQuantity(ce.getNewValue());
     }
     
-    public void iIssuedTo_OnEditCommit(Event e){
-        TableColumn.CellEditEvent<Stock,String> ce;
-        ce=(TableColumn.CellEditEvent<Stock,String>) e;
-        Stock s=ce.getRowValue();
-        s.setIssuedTo(ce.getNewValue());
-    }
-    
-    public void iIssuedQuantity_OnEditCommit(Event e){
-        TableColumn.CellEditEvent<Stock,String> ce;
-        ce=(TableColumn.CellEditEvent<Stock,String>) e;
-        Stock s=ce.getRowValue();
-        s.setIssuedQuantity(ce.getNewValue());
-    }
-    
-    public void iIssueDate_OnEditCommit(Event e){
-        TableColumn.CellEditEvent<Stock,String> ce;
-        ce=(TableColumn.CellEditEvent<Stock,String>) e;
-        Stock s=ce.getRowValue();
-        s.setIssueDate(ce.getNewValue());
-    }
-    
-    public void iReturnDate_OnEditCommit(Event e){
-        TableColumn.CellEditEvent<Stock,String> ce;
-        ce=(TableColumn.CellEditEvent<Stock,String>) e;
-        Stock s=ce.getRowValue();
-        s.setReturnDate(ce.getNewValue());
-    }
-    
     public void iVendor_OnEditCommit(Event e){
         TableColumn.CellEditEvent<Stock,String> ce;
         ce=(TableColumn.CellEditEvent<Stock,String>) e;
@@ -1007,12 +966,5 @@ public class root extends Student implements Initializable {
         ce=(TableColumn.CellEditEvent<Stock,String>) e;
         Stock s=ce.getRowValue();
         s.setTotal(ce.getNewValue());
-    }
-
-    public void UID_OnEditCommit(Event e){
-        TableColumn.CellEditEvent<Stock,String> ce;
-        ce=(TableColumn.CellEditEvent<Stock,String>) e;
-        Stock s=ce.getRowValue();
-        s.setUID(ce.getNewValue());
     }
 }
