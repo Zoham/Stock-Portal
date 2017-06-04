@@ -78,6 +78,7 @@
                               <GridPane GridPane.columnIndex="3" GridPane.rowIndex="2">
                                  <children>
                                     <Button fx:id="issueUpdate" mnemonicParsing="false" onAction="#onIssue" text="Update" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="iReset" mnemonicParsing="false" onAction="#iReset" text="Reset Fields" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                  </children>
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -169,9 +170,10 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                               </GridPane>
-                              <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <GridPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                  <children>
                                     <DatePicker fx:id="returnDate" promptText="Return Date" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="rReset" mnemonicParsing="false" onAction="#rReset" text="Reset Fields" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                  </children>
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

@@ -123,6 +123,9 @@ public class root extends Student implements Initializable {
     @FXML TextField tSearchT;
     @FXML ComboBox tField;
     
+    @FXML Button rReset;
+    @FXML Button iReset;
+    
     Connection conn = null;
     
     @FXML 
@@ -344,6 +347,18 @@ public class root extends Student implements Initializable {
     
     @FXML 
     private void onTSearch(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void rReset(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void iReset(ActionEvent event)throws Exception
     {
         
     }
