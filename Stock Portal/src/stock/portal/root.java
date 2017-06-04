@@ -332,13 +332,17 @@ public class root extends Student implements Initializable {
         returnItem.getSelectionModel().clearSelection();
         returnSport.getSelectionModel().clearSelection();
         returnModel.getItems().removeAll(returnModel.getItems());
-        returnModel.getItems().addAll("");
+        //returnModel.getItems().addAll("");
         returnSport.getItems().removeAll(returnSport.getItems());
-        returnSport.getItems().addAll("");
+        //returnSport.getItems().addAll("");
         returnItem.getItems().removeAll(returnItem.getItems());
-        returnItem.getItems().addAll("");
+        //returnItem.getItems().addAll("");
         returnBrand.getItems().removeAll(returnBrand.getItems());
-        returnBrand.getItems().addAll("");
+        //returnBrand.getItems().addAll("");
+        Event.fireEvent(returnSport,new ActionEvent());
+        /*Event.fireEvent(returnBrand,new ActionEvent());
+        Event.fireEvent(returnModel,new ActionEvent());
+        Event.fireEvent(returnItem,new ActionEvent());*/
     }
     
     @FXML 
@@ -697,10 +701,15 @@ public class root extends Student implements Initializable {
         itemSecretary.getItems().addAll("Athletics","Cricket","Football","Indoor Games","Small Area Sports");
         itemCondition.getItems().addAll("New","Not Usable");
         
-        returnSport.getItems().addAll("");
-        returnBrand.getItems().addAll("");
+        //returnSport.getItems().addAll("");
+        //returnSport.setValue("");
+        Event.fireEvent(returnSport,new ActionEvent());
+        
+        
+        
+        /*returnBrand.getItems().addAll("");
         returnModel.getItems().addAll("");
-        returnItem.getItems().addAll("");
+        returnItem.getItems().addAll("");*/
         titleFA.getItems().addAll("Sport","Secretary","Condition","Residence","School");
         titleFD.getItems().addAll("Sport","Secretary","Condition","Residence","School");
         
@@ -745,6 +754,7 @@ public class root extends Student implements Initializable {
     private void rSport(ActionEvent event)throws Exception
     {
         returnSport.getItems().addAll("Athletics","Badminton","Basketball","Carrom","Chess","Cricket","Football","Lawn Tennis","Swimming","Table Tennis","Volleyball");
+        Event.fireEvent(returnBrand,new ActionEvent());
         System.out.println("In rSport");
     }
     
@@ -754,11 +764,12 @@ public class root extends Student implements Initializable {
         /*String item=returnItem.getEditor().getText();
         System.out.println("In rItem");
         System.out.println("In rItem");*/
-        String model=returnModel.getValue().toString();
-        String brand=returnBrand.getValue().toString();
-        String sport=returnSport.getValue().toString();
         try
         {
+            String model=returnModel.getValue().toString();
+            String brand=returnBrand.getValue().toString();
+            String sport=returnSport.getValue().toString();
+        
             connect();
             String sql="SELECT Item FROM Stock WHERE Sport=? AND Brand=? AND Model=?";
             PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -782,11 +793,11 @@ public class root extends Student implements Initializable {
     @FXML 
     private void rBrand(ActionEvent event)throws Exception
     {
-        String sport=returnSport.getValue().toString();
-        System.out.println(sport);
-        System.out.println("In rBrand");
         try
         {
+            String sport=returnSport.getValue().toString();
+            System.out.println(sport);
+            System.out.println("In rBrand");
             connect();
             String sql="SELECT Brand FROM Stock WHERE Sport=?";
             PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -797,6 +808,7 @@ public class root extends Student implements Initializable {
                 returnBrand.getItems().addAll(rs.getString("Brand")+"");
                 System.out.println(rs.getString("Brand"));
             }
+            Event.fireEvent(returnModel,new ActionEvent());
         }
         catch(Exception e)
         {
@@ -831,11 +843,11 @@ public class root extends Student implements Initializable {
     @FXML 
     private void rModel(ActionEvent event)throws Exception
     {
-        System.out.println("In rModel");
-        String brand=returnBrand.getValue().toString();
-        String sport=returnSport.getValue().toString();
         try
         {
+            System.out.println("In rModel");
+            String brand=returnBrand.getValue().toString();
+            String sport=returnSport.getValue().toString();
             connect();
             String sql="SELECT Model FROM Stock WHERE Sport=? AND Brand=?";
             PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -848,6 +860,7 @@ public class root extends Student implements Initializable {
                 System.out.println(rs.getString("Model")+"");
             }
             conn.close();
+            Event.fireEvent(returnItem,new ActionEvent());
             //returnModel.getItems().addAll("Okay");
                 //System.out.println(rs.getString("Brand"));
         }
