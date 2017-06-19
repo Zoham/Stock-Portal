@@ -908,4 +908,36 @@ public class root extends Student implements Initializable {
         Stock s=ce.getRowValue();
         s.setTotal(ce.getNewValue());
     }
+
+    public void onSDel()
+    {
+        ObservableList<Student> selected,students;
+        students=studentTable.getItems();
+        selected=studentTable.getSelectionModel().getSelectedItems();
+        for(Student s:selected)
+        {
+            String roll=s.getRoll();
+            try
+            {
+                connect();
+                String query ="DELETE from STUDENT WHERE Roll=?1";
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString (1, roll);
+                preparedStmt.execute();
+                conn.close();
+                MessageBox.show("Sucessfully Deleted","Delete");
+                students.remove(s);
+
+            }   
+            catch(Exception e)
+            {
+                MessageBox.show(e.getMessage(),"Error");
+            }
+        }
+    }  
+    
+    public void onIDel()
+    {
+        
+    }
 }

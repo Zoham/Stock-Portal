@@ -78,6 +78,7 @@
                               <GridPane GridPane.columnIndex="3" GridPane.rowIndex="2">
                                  <children>
                                     <Button fx:id="issueUpdate" mnemonicParsing="false" onAction="#onIssue" text="Update" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="iReset" mnemonicParsing="false" onAction="#iReset" text="Reset Fields" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                  </children>
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -169,9 +170,10 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                               </GridPane>
-                              <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <GridPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                  <children>
                                     <DatePicker fx:id="returnDate" promptText="Return Date" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="rReset" mnemonicParsing="false" onAction="#rReset" text="Reset Fields" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                  </children>
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -401,6 +403,7 @@
                                     <Button fx:id="studentSearchB" mnemonicParsing="false" onAction="#onSSearch" text="Search" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <Button fx:id="studentRefresh" mnemonicParsing="false" onAction="#showStudent" text="Refresh" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <Button fx:id="sEdit" mnemonicParsing="false" onAction="#onSEdit" text="Save Edits" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Button fx:id="sDel" mnemonicParsing="false" onAction="#onSDel" text="Delete Row" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
