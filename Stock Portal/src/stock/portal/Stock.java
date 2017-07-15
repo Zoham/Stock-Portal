@@ -1,7 +1,4 @@
 package stock.portal;
-
-import java.sql.Date;
-
 public class Stock 
 {
     String brand;
@@ -14,7 +11,7 @@ public class Stock
     String quantity;
     String vendor;
     String invoice;
-    java.sql.Date purchasedate;
+    String purchasedate;
     String unitprice;
     String tax;
     String total;
@@ -29,8 +26,8 @@ public class Stock
     public String getQuantity(){return quantity;}
     public String getVendor(){return vendor;}
     public String getInvoice(){return invoice;}
-    public java.sql.Date getPurchase(){return purchasedate;}
-    public String getUnit(){return unitprice;}
+    public String getPurchaseDate(){return purchasedate;}
+    public String getUnitPrice(){return unitprice;}
     public String getTax(){return tax;}
     public String getTotal(){return total;}
     
@@ -44,8 +41,8 @@ public class Stock
     public void setQuantity(String r){quantity=r;}
     public void setVendor(String r){vendor=r;}
     public void setInvoice(String r){invoice=r;}
-    public void setPurchase(java.sql.Date r){purchasedate=r;}
-    public void setUnit(String r){unitprice=r;}
+    public void setPurchaseDate(String r){purchasedate=r;}
+    public void setUnitPrice(String r){unitprice=r;}
     public void setTax(String r){tax=r;}
     public void setTotal(String r){total=r;}
 }

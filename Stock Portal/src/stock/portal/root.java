@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -22,6 +23,24 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
 public class root extends Student implements Initializable {
+    
+    @FXML ComboBox issueSport;
+    @FXML ComboBox issueBrand;
+    @FXML ComboBox issueItem;
+    @FXML ComboBox issueModel;
+    @FXML TextField IssueRoll;
+    @FXML TextField issueQuantity;
+    @FXML DatePicker issueDate;
+    @FXML Button issueUpdate;
+    
+    @FXML ComboBox returnSport;
+    @FXML ComboBox returnBrand;
+    @FXML ComboBox returnItem;
+    @FXML ComboBox returnModel;
+    @FXML TextField returnRoll;
+    @FXML TextField returnQuantity;
+    @FXML DatePicker returnDate;
+    @FXML Button returnUpdate;
     
     @FXML TextField studentEmail;
     @FXML TextField studentRoom;
@@ -66,7 +85,7 @@ public class root extends Student implements Initializable {
     @FXML TableColumn sMobile;
     @FXML TableColumn sRoom;
     @FXML TableColumn sResidence;
-     @FXML TableColumn sSchool;
+    @FXML TableColumn sSchool;
     
     
     @FXML TableColumn iBrand;
@@ -84,10 +103,60 @@ public class root extends Student implements Initializable {
     @FXML TableColumn iTax;
     @FXML TableColumn iTotal;
     
-    //@FXML Button iEdit;
-    //@FXML Button sEdit;
+    @FXML Button iEdit;
+    @FXML Button sEdit;
+    
+    @FXML ComboBox titleFA;
+    @FXML TextField newFA; 
+    @FXML ComboBox titleFD;
+    @FXML ComboBox listFD;
+    
+    @FXML TableColumn tRoll;
+    @FXML TableColumn tUID;
+    @FXML TableColumn tQuantity;
+    @FXML TableColumn tIssueDate;
+    @FXML TableColumn tReturnDate;
+    
+    @FXML Button tRefresh;
+    @FXML Button tEdit;
+    @FXML Button tSearchB;
+    @FXML TextField tSearchT;
+    @FXML ComboBox tField;
+    
+    @FXML Button rReset;
+    @FXML Button iReset;
     
     Connection conn = null;
+    
+    @FXML 
+    private void addField(ActionEvent e) throws Exception
+    {
+        String tfa = (String)titleFA.getValue();
+        String nfa = newFA.getText();
+            
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        if((tfa==null) || nfa.equals("")) MessageBox.show(error,errorBox);
+        else
+        {
+            
+        }
+    }
+    
+    @FXML 
+    private void delField(ActionEvent e) throws Exception
+    {
+        String tfd = (String)titleFD.getValue();
+        String ffd = (String)listFD.getValue();
+            
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        if((tfd==null) || ffd==null) MessageBox.show(error,errorBox);
+        else
+        {
+            
+        }
+    }
     
     @FXML 
     private void showStudent(ActionEvent e) throws Exception
@@ -226,8 +295,8 @@ public class root extends Student implements Initializable {
                     stock.setQuantity(rs.getString("Quantity"));
                     stock.setVendor(rs.getString("Vendor"));
                     stock.setInvoice(rs.getString("Invoice"));
-                    //stock.setPurchase(rs.getDate("Purchase"));
-                    stock.setUnit(rs.getString("Unit"));
+                    stock.setPurchaseDate(rs.getString("Purchase"));
+                    stock.setUnitPrice(rs.getString("Unit"));
                     stock.setTax(rs.getString("Tax"));
                     stock.setTotal(rs.getString("Total"));
                     
@@ -241,6 +310,24 @@ public class root extends Student implements Initializable {
     }
     
     @FXML 
+    private void showTransaction(ActionEvent e) throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void onIssue(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void onReturn(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
     private void onSEdit(ActionEvent event)throws Exception
     {
         
@@ -248,6 +335,30 @@ public class root extends Student implements Initializable {
     
     @FXML 
     private void onIEdit(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void onTEdit(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void onTSearch(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void rReset(ActionEvent event)throws Exception
+    {
+        
+    }
+    
+    @FXML 
+    private void iReset(ActionEvent event)throws Exception
     {
         
     }
@@ -340,7 +451,6 @@ public class root extends Student implements Initializable {
         if(type==null || search.equals("")) MessageBox.show(error,errorBox);
         else
         {
-        
             iBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
             iModel.setCellValueFactory(new PropertyValueFactory<>("Model"));
             iItem.setCellValueFactory(new PropertyValueFactory<>("Item"));
@@ -434,8 +544,8 @@ public class root extends Student implements Initializable {
                     stock.setQuantity(rs.getString("Quantity"));
                     stock.setVendor(rs.getString("Vendor"));
                     stock.setInvoice(rs.getString("Invoice"));
-                    //stock.setPurchase(rs.getDate("Purchase"));
-                    stock.setUnit(rs.getString("Unit"));
+                    stock.setPurchaseDate(rs.getString("Purchase"));
+                    stock.setUnitPrice(rs.getString("Unit"));
                     stock.setTax(rs.getString("Tax"));
                     stock.setTotal(rs.getString("Total"));
                     
@@ -495,8 +605,8 @@ public class root extends Student implements Initializable {
                     studentRoll.setText("");
                     studentMobile.setText("");
                     studentRoom.setText("");
-                    studentResidence.setValue(null);
-                    studentSchool.setValue(null);
+                    studentResidence.setValue("Residence");
+                    studentSchool.setValue("School");
                 }
                 catch (SQLException e) {
                     System.out.print(e.getMessage());
@@ -513,7 +623,7 @@ public class root extends Student implements Initializable {
         submit=ConfirmationBox.show("Are you sure that you want to submit?","Confirmation");
         
         if(submit)
-        {           
+        { 
             String iB=itemBrand.getText();
             String iN=itemName.getText();
             String iS=(String)itemSport.getValue();
@@ -524,16 +634,15 @@ public class root extends Student implements Initializable {
             String iQ=itemQuantity.getText();
             String iSec=(String)itemSecretary.getValue();
             String iP=itemPrice.getText();
-            LocalDate ilD=itemDate.getValue();
+            String iD=(itemDate.getValue()).toString(); 
             String iT=itemTax.getText();
         
             String error = "Fill All Fields";
             String errorBox = "Error";
-            if(iB.equals("") || iN.equals("") || iS==null || iC==null || iV.equals("") || iI.equals(""))MessageBox.show(error,errorBox);
-            else if(iM.equals("") || iQ.equals("") || iSec==null || iP.equals("") || ilD==null || iT.equals(""))MessageBox.show(error,errorBox);
+            if(iB.equals("") || iN.equals("") || iS.equals("") || iC.equals("") || iV.equals("") || iI.equals(""))MessageBox.show(error,errorBox);
+            else if(iM.equals("") || iQ.equals("") || iSec.equals("") || iP.equals("") || iD.equals("") || iT.equals(""))MessageBox.show(error,errorBox);
             else
             {
-                java.sql.Date iD = java.sql.Date.valueOf(ilD);
                 try 
                 {
                     connect();
@@ -553,11 +662,11 @@ public class root extends Student implements Initializable {
                     preparedStmt.setString (8, iQ);
                     preparedStmt.setString (9, iSec);
                     preparedStmt.setString (10, iP);
-                    preparedStmt.setDate (11, iD);
+                    preparedStmt.setString (11, iD);
                     preparedStmt.setString (12, iT);
                     preparedStmt.execute();
                     conn.close();
-                   
+
                     MessageBox.show("Update Sucessful","Update");
                     itemBrand.setText("");
                     itemName.setText("");
@@ -567,14 +676,10 @@ public class root extends Student implements Initializable {
                     itemQuantity.setText("");
                     itemPrice.setText("");
                     itemTax.setText("");
-                    itemDate.setValue(null);
-                    itemSport.setValue(null);
-                    itemSecretary.setValue(null);
-                    itemCondition.setValue(null);
                 }
                 catch (SQLException e) {
                     System.out.println(e.getMessage());
-                 MessageBox.show("Error occured while updating stock","Error1");
+                 MessageBox.show("Error occured while updating stock","Error");
                 }
             }
         }
@@ -589,6 +694,9 @@ public class root extends Student implements Initializable {
         itemSecretary.getItems().addAll("Athletics","Cricket","Football","Indoor Games","Small Area Sports");
         itemCondition.getItems().addAll("New","Not Usable");
         
+        titleFA.getItems().addAll("Sport","Secretary","Condition","Residence","School");
+        titleFD.getItems().addAll("Sport","Secretary","Condition","Residence","School");
+        
         studentField.getItems().addAll("Roll","Name","Email","Mobile","Room","Residence","School");
         itemField.getItems().addAll("Brand","Model","Item","Sport","Secretary","Condition","Status","Quantity","Vendor","Invoice","Purchase","Unit","Tax","Total");
     }
@@ -596,10 +704,9 @@ public class root extends Student implements Initializable {
     public void connect()
     {
         try{
-            Class.forName("org.sqlite.JDBC");
             conn=DriverManager.getConnection("jdbc:sqlite:stock portal.sqlite"); 
         }
-        catch(Exception e){
+        catch(SQLException e){
             MessageBox.show(e.getMessage(),"Connection error");
         }
     }
@@ -774,17 +881,17 @@ public class root extends Student implements Initializable {
     }
     
     public void iPurchaseDate_OnEditCommit(Event e){
-        TableColumn.CellEditEvent<Stock,java.sql.Date> ce;
-        ce=(TableColumn.CellEditEvent<Stock,java.sql.Date>) e;
+        TableColumn.CellEditEvent<Stock,String> ce;
+        ce=(TableColumn.CellEditEvent<Stock,String>) e;
         Stock s=ce.getRowValue();
-        s.setPurchase(ce.getNewValue());
+        s.setPurchaseDate(ce.getNewValue());
     }
     
     public void iUnitPrice_OnEditCommit(Event e){
         TableColumn.CellEditEvent<Stock,String> ce;
         ce=(TableColumn.CellEditEvent<Stock,String>) e;
         Stock s=ce.getRowValue();
-        s.setUnit(ce.getNewValue());
+        s.setUnitPrice(ce.getNewValue());
     }
     
     public void iTax_OnEditCommit(Event e){
@@ -799,5 +906,37 @@ public class root extends Student implements Initializable {
         ce=(TableColumn.CellEditEvent<Stock,String>) e;
         Stock s=ce.getRowValue();
         s.setTotal(ce.getNewValue());
+    }
+
+    public void onSDel()
+    {
+        ObservableList<Student> selected,students;
+        students=studentTable.getItems();
+        selected=studentTable.getSelectionModel().getSelectedItems();
+        for(Student s:selected)
+        {
+            String roll=s.getRoll();
+            try
+            {
+                connect();
+                String query ="DELETE from STUDENT WHERE Roll=?1";
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setString (1, roll);
+                preparedStmt.execute();
+                conn.close();
+                MessageBox.show("Sucessfully Deleted","Delete");
+                students.remove(s);
+
+            }   
+            catch(Exception e)
+            {
+                MessageBox.show(e.getMessage(),"Error");
+            }
+        }
+    }  
+    
+    public void onIDel()
+    {
+        
     }
 }
