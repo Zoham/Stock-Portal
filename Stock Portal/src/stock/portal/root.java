@@ -85,7 +85,7 @@ public class root extends Student implements Initializable {
     @FXML TableColumn sMobile;
     @FXML TableColumn sRoom;
     @FXML TableColumn sResidence;
-     @FXML TableColumn sSchool;
+    @FXML TableColumn sSchool;
     
     
     @FXML TableColumn iBrand;
@@ -451,7 +451,6 @@ public class root extends Student implements Initializable {
         if(type==null || search.equals("")) MessageBox.show(error,errorBox);
         else
         {
-        
             iBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
             iModel.setCellValueFactory(new PropertyValueFactory<>("Model"));
             iItem.setCellValueFactory(new PropertyValueFactory<>("Item"));
@@ -523,8 +522,8 @@ public class root extends Student implements Initializable {
             else if(type.equals("Quantity")) query="SELECT * FROM STOCK WHERE Quantity=?";
             else if(type.equals("Vendor")) query="SELECT * FROM STOCK WHERE Vendor=?";
             else if(type.equals("Invoice")) query="SELECT * FROM STOCK WHERE Invoice=?";
-            else if(type.equals("Purchase Date")) query="SELECT * FROM STOCK WHERE Purchase=?";
-            else if(type.equals("Unit Price")) query="SELECT * FROM STOCK WHERE Unit=?";
+            else if(type.equals("Purchase")) query="SELECT * FROM STOCK WHERE Purchase=?";
+            else if(type.equals("Unit")) query="SELECT * FROM STOCK WHERE Unit=?";
             else if(type.equals("Tax")) query="SELECT * FROM STOCK WHERE Tax=?";
             else if(type.equals("Total")) query="SELECT * FROM STOCK WHERE Total=?";
             else if(type.equals("UID")) query="SELECT * FROM STOCK WHERE UID=?";
@@ -635,7 +634,7 @@ public class root extends Student implements Initializable {
             String iQ=itemQuantity.getText();
             String iSec=(String)itemSecretary.getValue();
             String iP=itemPrice.getText();
-            LocalDate iD=itemDate.getValue();
+            String iD=(itemDate.getValue()).toString(); 
             String iT=itemTax.getText();
         
             String error = "Fill All Fields";
@@ -650,7 +649,7 @@ public class root extends Student implements Initializable {
 
                     String query =
                             "INSERT INTO Stock ('Brand','Item','Sport','Condition','Vendor','Invoice','Model','Quantity','Secretary','Unit','Purchase','Tax') "
-                            + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?iD,?12)";
+                            + "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)";
 
                     PreparedStatement preparedStmt = conn.prepareStatement(query);
                     preparedStmt.setString (1, iB);
@@ -663,7 +662,7 @@ public class root extends Student implements Initializable {
                     preparedStmt.setString (8, iQ);
                     preparedStmt.setString (9, iSec);
                     preparedStmt.setString (10, iP);
-                    //preparedStmt.setDate (11, iD);
+                    preparedStmt.setString (11, iD);
                     preparedStmt.setString (12, iT);
                     preparedStmt.execute();
                     conn.close();
