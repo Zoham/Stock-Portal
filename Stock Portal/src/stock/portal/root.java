@@ -634,7 +634,11 @@ public class root extends Student implements Initializable {
             String iQ=itemQuantity.getText();
             String iSec=(String)itemSecretary.getValue();
             String iP=itemPrice.getText();
-            String iD=(itemDate.getValue()).toString(); 
+            String iD=(String)itemDate.getValue(); 
+            LocalDate localDate = LocalDate.now();//For reference
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+            String formattedString = localDate.format(formatter);   
+            System.out.println(iD);
             String iT=itemTax.getText();
         
             String error = "Fill All Fields";
