@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -330,13 +331,154 @@ public class root extends Student implements Initializable {
     @FXML 
     private void onSEdit(ActionEvent event)throws Exception
     {
-        
+        int i=-1;
+        ObservableList<Student> students;
+        students=studentTable.getItems();
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        try
+        {
+            connect();
+            
+            String query="SELECT * FROM STUDENT";
+            ResultSet rs=conn.createStatement().executeQuery(query);
+                      
+            while(rs.next())
+            {
+                    i++;
+                    Student student=new Student();  
+                    student.setRoll(rs.getString("Roll"));
+                    student.setName(rs.getString("Name"));
+                    student.setEmail(rs.getString("Email"));
+                    student.setMobile(rs.getString("Mobile"));
+                    student.setRoom(rs.getString("Room"));
+                    student.setResidence(rs.getString("Residence"));
+                    student.setSchool(rs.getString("School"));
+
+                    if(students.get(i).getRoll().equals("") || students.get(i).getEmail().equals("") || students.get(i).getName().equals("") || students.get(i).getMobile().equals("") || students.get(i).getRoom().equals("")) MessageBox.show(error,errorBox);
+                   else if(students.get(i).getResidence().equals("") || students.get(i).getSchool().equals("")) MessageBox.show(error,errorBox);
+                   else if(!student.equals(students.get(i)))
+                   {
+                        try 
+                        {
+                            String query2 = "UPDATE Student SET 'Name'=?1,'Residence'=?2,'Room'=?3,'Email'=?4,'Mobile'=?5,'School'=?6 WHERE Roll=?7";
+                            PreparedStatement preparedStmt = conn.prepareStatement(query2);
+                            preparedStmt.setString (1, students.get(i).getName());
+                            preparedStmt.setString (2, students.get(i).getResidence());
+                            preparedStmt.setString (3, students.get(i).getRoom());
+                            preparedStmt.setString (4, students.get(i).getEmail());
+                            preparedStmt.setString (5, students.get(i).getMobile());
+                            preparedStmt.setString (6, students.get(i).getSchool());
+                            preparedStmt.setString (7, students.get(i).getRoll());
+
+                            preparedStmt.executeUpdate();
+                            preparedStmt.close();
+                            MessageBox.show("Sucessfully Saved","Update");
+
+                        }
+                        catch (SQLException e) {
+                            MessageBox.show(e.getMessage(),"Error");
+                        } 
+                    }          
+                }
+                conn.close();
+        }
+        catch(SQLException e){
+            MessageBox.show(e.getMessage(),"Error");
+        }
     }
     
     @FXML 
     private void onIEdit(ActionEvent event)throws Exception
     {
-        
+        int i=-1;
+        ObservableList<Stock> items;
+        items=itemTable.getItems();
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        String UID;
+        try
+        {
+            connect();
+            
+            String query="SELECT * FROM STOCK";
+            ResultSet rs=conn.createStatement().executeQuery(query);
+                      
+            while(rs.next())
+            {
+                    i++;
+                    Stock stock=new Stock();  
+                    stock.setBrand(rs.getString("Brand"));
+                    stock.setModel(rs.getString("Model"));
+                    stock.setItem(rs.getString("Item"));
+                    stock.setSport(rs.getString("Sport"));
+                    stock.setSecretary(rs.getString("Secretary"));
+                    stock.setCondition(rs.getString("Condition"));
+                    stock.setStatus(rs.getString("Status"));
+                    stock.setQuantity(rs.getString("Quantity"));
+                    stock.setVendor(rs.getString("Vendor"));
+                    stock.setInvoice(rs.getString("Invoice"));
+                    stock.setPurchaseDate(rs.getString("Purchase"));
+                    stock.setUnitPrice(rs.getString("Unit"));
+                    stock.setTax(rs.getString("Tax"));
+                    stock.setTotal(rs.getString("Total"));
+                    //stock.setUID(rs.getString("uid"); remove // after adding uid in table
+                    UID=rs.getString("uid");
+                    
+                    if(items.get(i).getBrand().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getModel().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getItem().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getSport().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getSecretary().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getCondition().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getStatus().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getQuantity().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getVendor().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getInvoice().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getPurchaseDate().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getUnitPrice().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getTax().equals("")) MessageBox.show(error,errorBox);
+                    else if(items.get(i).getTotal().equals("")) MessageBox.show(error,errorBox);
+                    
+                    else if(!stock.equals(items.get(i)))
+                    {
+                        try 
+                        {
+                            String query2 ="UPDATE Stock SET 'Brand'=?1,'Model'=?2,'Item'=?3,'Sport'=?4,'Secretary'=?5,'Condition'=?6,'Status'=?7,'Quantity'=?8,'Vendor'=?9,'Invoice'=?10,'PurchaseDate'=?11,'UnitPrice'=?12,'Tax'=?13,'Total'=?14, WHERE uid=?15";
+                            PreparedStatement preparedStmt = conn.prepareStatement(query2);
+                            preparedStmt.setString (1, items.get(i).getBrand());
+                            preparedStmt.setString (2, items.get(i).getModel());
+                            preparedStmt.setString (3, items.get(i).getItem());
+                            preparedStmt.setString (4, items.get(i).getSport());
+                            preparedStmt.setString (5, items.get(i).getSecretary());
+                            preparedStmt.setString (6, items.get(i).getCondition());
+                            preparedStmt.setString (7, items.get(i).getStatus());
+                            preparedStmt.setString (8, items.get(i).getQuantity());
+                            preparedStmt.setString (9, items.get(i).getVendor());
+                            preparedStmt.setString (10, items.get(i).getInvoice());
+                            preparedStmt.setString (11, items.get(i).getPurchaseDate());
+                            preparedStmt.setString (12, items.get(i).getUnitPrice());
+                            preparedStmt.setString (13, items.get(i).getTax());
+                            preparedStmt.setString (14, items.get(i).getTotal());
+                            preparedStmt.setString (15, UID);
+
+
+                            preparedStmt.executeUpdate();
+
+                            preparedStmt.close();
+                            MessageBox.show("Sucessfully Saved","Update");
+                        }
+                        catch (SQLException e) 
+                        {
+                            MessageBox.show(e.getMessage(),"Error");
+                        } 
+                    }
+                }          
+                conn.close();
+            }
+        catch(SQLException e){
+            MessageBox.show(e.getMessage(),"Error");
+        }
     }
     
     @FXML 
@@ -634,7 +776,10 @@ public class root extends Student implements Initializable {
             String iQ=itemQuantity.getText();
             String iSec=(String)itemSecretary.getValue();
             String iP=itemPrice.getText();
-            String iD=(itemDate.getValue()).toString(); 
+            LocalDate iD = itemDate.getValue(); 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+            String formattedString = iD.format(formatter);   
+            System.out.println(iD);
             String iT=itemTax.getText();
         
             String error = "Fill All Fields";
@@ -662,7 +807,7 @@ public class root extends Student implements Initializable {
                     preparedStmt.setString (8, iQ);
                     preparedStmt.setString (9, iSec);
                     preparedStmt.setString (10, iP);
-                    preparedStmt.setString (11, iD);
+                    preparedStmt.setString (11, formattedString);
                     preparedStmt.setString (12, iT);
                     preparedStmt.execute();
                     conn.close();
