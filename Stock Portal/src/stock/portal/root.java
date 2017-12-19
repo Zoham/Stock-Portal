@@ -324,7 +324,86 @@ public class root extends Student implements Initializable {
     @FXML 
     private void onReturn(ActionEvent event)throws Exception
     {
-        
+        String error = "Fill All Fields";
+        String errorBox = "Error";
+        boolean update;
+        update=ConfirmationBox.show("Are you sure you want to update?","Confirmation");
+        String model="",brand="",roll="",sport="",item="",quantity="",date="";
+        if(update)
+        {
+                try
+                {
+                    model=returnModel.getValue().toString();
+                    brand=returnBrand.getValue().toString();
+                    sport=returnSport.getValue().toString();
+                    item=returnItem.getValue().toString();
+                    roll=(String)returnRoll.getText();
+                    System.out.println(roll.equals(""));
+                    System.out.println(roll);
+                    quantity=(String)returnQuantity.getText();
+                    date=returnDate.getValue().toString();
+                }
+                catch(Exception e)
+                {
+                    System.out.println(e.getMessage());
+                }
+                /*Assuming UID is set by sport.substring(0,2)+brand.substring(0,2)+model.substring(0,2)+item.substring(0,2)
+                This is obviously subject to change*/
+                finally
+                {
+                    if(model.equals("")||brand.equals("")||roll.equals("")||quantity.equals("")||sport.equals("")||item.equals("")||date.equals(""))
+                    {
+                        MessageBox.show(error,errorBox);
+                    }
+                    else
+                    {
+                        try
+                        {   
+                        connect();
+                        String uid=sport.substring(0,2)+brand.substring(0,2)+model.substring(0,2)+item.substring(0,2);
+                        System.out.println(date+" "+roll+" "+uid);
+                        String rd="";
+                        String sql="SELECT Issue_date from Transaction2 WHERE Roll=? AND UID=?";
+                        PreparedStatement pstmt=conn.prepareStatement(sql);
+                        pstmt.setString(1,roll);
+                        pstmt.setString(2, uid);
+                        ResultSet rs=pstmt.executeQuery();
+                        while(rs.next())
+                        {
+                            System.out.println("Umm");
+                            rd=rs.getString("Issue_date");
+                        }
+                        System.out.println(rd);
+                        if(Integer.parseInt(rd.substring(9))-Integer.parseInt(date.substring(9))>7)
+                            System.out.println("Fine!");
+                        sql="UPDATE Transaction2 SET Return_date=? WHERE Roll=? AND UID=?";
+                        pstmt=conn.prepareStatement(sql);
+                        pstmt.setString(1,date);
+                        pstmt.setString(2, roll);
+                        pstmt.setString(3,uid);
+                        pstmt.executeUpdate();
+                        conn.close();
+                    }
+                        catch(Exception e)
+                        {
+                            System.out.println(e.getMessage());
+                        }
+
+                }
+            returnModel.getSelectionModel().clearSelection();
+            returnBrand.getSelectionModel().clearSelection();
+            returnItem.getSelectionModel().clearSelection();
+            returnSport.getSelectionModel().clearSelection();
+            returnModel.getItems().removeAll(returnModel.getItems());
+            returnSport.getItems().removeAll(returnSport.getItems());
+            returnItem.getItems().removeAll(returnItem.getItems());
+            returnBrand.getItems().removeAll(returnBrand.getItems());
+            returnRoll.setText("");
+            returnQuantity.setText("");
+            returnDate.setValue(null);
+            Event.fireEvent(returnSport,new ActionEvent());
+                }
+        }
     }
     
     @FXML 
@@ -693,11 +772,20 @@ public class root extends Student implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         studentResidence.getItems().addAll("MHR","SHR");
         studentSchool.getItems().addAll("SES","SBS","SMS","SIF","SMMMS");
-        
+  
         itemSport.getItems().addAll("Athletics","Badminton","Basketball","Carrom","Chess","Cricket","Football","Lawn Tennis","Swimming","Table Tennis","Volleyball");
         itemSecretary.getItems().addAll("Athletics","Cricket","Football","Indoor Games","Small Area Sports");
         itemCondition.getItems().addAll("New","Not Usable");
         
+        //returnSport.getItems().addAll("");
+        //returnSport.setValue("");
+        Event.fireEvent(returnSport,new ActionEvent());
+        
+        
+        
+        /*returnBrand.getItems().addAll("");
+        returnModel.getItems().addAll("");
+        returnItem.getItems().addAll("");*/
         titleFA.getItems().addAll("Sport","Secretary","Condition","Residence","School");
         titleFD.getItems().addAll("Sport","Secretary","Condition","Residence","School");
         
@@ -738,29 +826,102 @@ public class root extends Student implements Initializable {
     {
         
     }
-    
-    @FXML 
+        @FXML 
     private void rSport(ActionEvent event)throws Exception
     {
-        
+        returnSport.getItems().addAll("Athletics","Badminton","Basketball","Carrom","Chess","Cricket","Football","Lawn Tennis","Swimming","Table Tennis","Volleyball");
+        Event.fireEvent(returnBrand,new ActionEvent());
+        System.out.println("In rSport");
     }
     
     @FXML 
     private void rItem(ActionEvent event)throws Exception
     {
+        /*String item=returnItem.getEditor().getText();
+        System.out.println("In rItem");
+        System.out.println("In rItem");*/
+        try
+        {
+            String model=returnModel.getValue().toString();
+            String brand=returnBrand.getValue().toString();
+            String sport=returnSport.getValue().toString();
         
+            connect();
+            String sql="SELECT Item FROM Stock WHERE Sport=? AND Brand=? AND Model=?";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setString(1,sport);
+            pstmt.setString(2,brand);
+            pstmt.setString(3,model);
+            ResultSet rs=pstmt.executeQuery();
+            while(rs.next())
+            {returnItem.getItems().addAll(rs.getString("Item")+"");
+            System.out.println(rs.getString("Item")+"");}
+                //System.out.println(rs.getString("Brand"));
+                //returnItem.getItems().addAll("Okay");
+                conn.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     
     @FXML 
     private void rBrand(ActionEvent event)throws Exception
     {
+        try
+        {
+            String sport=returnSport.getValue().toString();
+            System.out.println(sport);
+            System.out.println("In rBrand");
+            connect();
+            String sql="SELECT Brand FROM Stock WHERE Sport=?";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setString(1,sport);
+            ResultSet rs=pstmt.executeQuery();
+            while(rs.next())
+            {
+                returnBrand.getItems().addAll(rs.getString("Brand")+"");
+                System.out.println(rs.getString("Brand"));
+            }
+            Event.fireEvent(returnModel,new ActionEvent());
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
         
     }
     
     @FXML 
     private void rModel(ActionEvent event)throws Exception
     {
-        
+        try
+        {
+            System.out.println("In rModel");
+            String brand=returnBrand.getValue().toString();
+            String sport=returnSport.getValue().toString();
+            connect();
+            String sql="SELECT Model FROM Stock WHERE Sport=? AND Brand=?";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setString(1,sport);
+            pstmt.setString(2,brand);
+            ResultSet rs=pstmt.executeQuery();
+            while(rs.next())
+            {
+                returnModel.getItems().addAll(rs.getString("Model")+"");
+                System.out.println(rs.getString("Model")+"");
+            }
+            conn.close();
+            Event.fireEvent(returnItem,new ActionEvent());
+            //returnModel.getItems().addAll("Okay");
+                //System.out.println(rs.getString("Brand"));
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+       
     }
     
     
